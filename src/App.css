@@ -1,0 +1,224 @@
+@import url("https://fonts.googleapis.com/css?family=Audiowide");
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* GENERAL FEATURES */
+
+/* SCROLL BAR */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px rgb(70, 2, 104);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: rgb(124, 111, 159);
+    border-radius: 15px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/*============================*/
+
+/* NAVBAR */
+.nav-ctn {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(54, 38, 96);
+    height: 100px;
+}
+.nav-one ul {
+    display: flex;
+    list-style-type: none;
+    justify-content: space-between;
+}
+.nav-logo {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+}
+.nav-two ul {
+    display: flex;
+    list-style-type: none;
+    gap: 20px;
+}
+.nav-two-item {
+    text-decoration: none;
+    color: white;
+}
+.nav-login {
+    text-decoration: none;
+    color: white;
+    border: 2px white solid;
+    border-radius: 20px;
+    padding: 10px 15px;
+}
+.nav-login:hover {    
+    background-color: white;
+    color: purple;
+    font-weight: bold;
+}
+
+/* HOME */
+.landing-font {
+    font-family: "Audiowide", "Tahoma", "Serif";
+}
+.landing-main-ctn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(80, 53, 142);
+    height: 650px;
+}
+.landing-main-title-ctn {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+}
+.landing-main-title-ctn h1 {
+    color: white;
+    font-size: 65px;
+    font-weight: bold;
+}
+.landing-main-title-ctn h2 {
+    color: white;
+    font-size: 35px;
+}
+
+.landing-section-one-ctn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 650px;
+}
+.landing-section-one-ctn div {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50vw;
+    height: 325px;
+}
+
+.landing-section-two-ctn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: rgb(229, 227, 227);
+    height: 650px;
+}
+.landing-section-two-ctn div {
+    text-align: center;
+    width: 50vw;
+}
+
+.landing-section-three-ctn {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    height: 650px;
+}
+.landing-section-three-ctn div {
+    text-align: center;
+    width: 50vw;
+}
+
+.landing-section-four-ctn { 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: rgb(229, 227, 227);
+    height: 650px;
+}
+.landing-section-four-ctn div {
+    text-align: center;
+    width: 50vw;
+}
+
+.landing-section-five-ctn { 
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    height: 650px;
+}
+.landing-section-five-ctn div {
+    text-align: center;
+    width: 50vw;
+}
+
+
+
+/* LANDING PAGE FOOTER */
+.landing-footer-ctn {
+    display: flex;
+    flex-direction: column;
+}
+.landing-footer-top-ctn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(80, 53, 142);
+    height: 500px;
+}
+.landing-footer-top-ctn h1 {
+    color: white;
+    text-align: center;
+}
+.landing-footer-top-ctn h2 {
+    color: white;
+    text-align: center;
+}
+.landing-footer-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+.landing-footer-buttons > * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    border: 2px solid white;
+    padding: 10px;
+    width: 150px;
+}
+.landing-footer-buttons > *:hover{
+    background-color: white;
+    color: purple;
+    font-weight: bold;
+}
+
+.landing-footer-bottom-ctn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(54, 38, 96);
+    height: 200px;
+}
+.landing-footer-bottom-ctn h4 {
+    text-align: center;
+    color: silver;
+}
+.landing-footer-bottom-ctn span {
+    font-weight: bold;
+    color: orange;
+}
