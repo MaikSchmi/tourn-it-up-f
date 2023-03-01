@@ -80,6 +80,7 @@ body {
 }
 .landing-main-ctn img {
     height: 400px;
+    transform: rotate(-72deg);
 }
 .landing-main-title-ctn {
     display: flex;
