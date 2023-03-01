@@ -13,7 +13,7 @@ function LandingPage() {
           <h2>Join challengers around the world for competitions that suit your needs!</h2>
         </div>
         <div>
-          <img src="" alt="someAwesomeImageHere" />
+          <img src="/images/tournament.png" alt="someAwesomeImageHere" />
         </div>
       </section>
       <section className="landing-section-one-ctn">
@@ -23,7 +23,7 @@ function LandingPage() {
           <Link to="/">Check out some tournaments</Link>
         </div>
         <div>
-          <img src="" alt="amazingImage"/>
+          <img src="/images/interests.png" alt="amazingImage"/>
         </div>
       </section>
       <section className="landing-section-two-ctn">
@@ -33,7 +33,7 @@ function LandingPage() {
           <Link to="/">See pricing plans</Link>
         </div>
         <div>
-          <img src="" alt="amazingImage"/>
+          <img src="/images/host.png" alt="amazingImage"/>
         </div>
       </section>
       <section className="landing-section-three-ctn">
@@ -43,7 +43,7 @@ function LandingPage() {
           <Link to="/">Find tournaments by location</Link>
         </div>
         <div>
-          <img src="" alt="amazingImage"/>
+          <img src="/images/map.png" alt="amazingImage"/>
         </div>
       </section>
       <section className="landing-section-four-ctn">
@@ -53,7 +53,7 @@ function LandingPage() {
           <Link to="/">Go to our forums</Link>
         </div>
         <div>
-          <img src="" alt="amazingImage"/>
+          <img src="/images/community.png" alt="amazingImage"/>
         </div>
       </section>
       <section className="landing-section-five-ctn">
@@ -63,7 +63,7 @@ function LandingPage() {
           <Link to="/">Learn More</Link>
         </div>
         <div>
-          <img src="" alt="amazingImage"/>
+          <img src="/images/recover.png" alt="amazingImage"/>
         </div>
       </section>
       <LandingPageFooter/>
