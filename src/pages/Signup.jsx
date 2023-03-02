@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import {useNavigate} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 function Signup() {
   const [username , setUsername ] = useState ('')
   const [password , setPassword ] = useState ('')
@@ -25,23 +25,32 @@ navigate('/login')
     else {console.log("passwords don't match")}
 } 
   return (
-    <div>
-      <h1>SignUp</h1>
-      <form onSubmit={handleUserCreate }>
-       <label>UserName: 
-        <input type="text" placeholder="Name" value = {username} onChange = {(event)=> { setUsername(event.target.value)}} />
-       </label>
-       <label>Email Address:
-        <input type="email" placeholder="Email" value = {email} onChange = {(event)=> { setEmail(event.target.value)}} />
-       </label>
-       <label>Password:
-        <input type="password" placeholder="password" value = {password} onChange = {(event)=> { setPassword(event.target.value)}} />
-       </label>
-       <label>Repeat Password:
-        <input type="password" placeholder="repeat"  value = {repeatPassword} onChange = {(event)=> { setRepeatPassword(event.target.value)}} />
-       </label>
-       <button type= 'submit'>Create Account</button>
-      </form>
+    <div className="form-page-top-level">
+      <div className="form-ctn">
+        <h1>SignUp</h1>
+        <form onSubmit={handleUserCreate } className="form-signup">
+        <div className="form-field-ctn">
+          <label htmlFor="username">Username: </label>
+          <input type="text" name="username" placeholder="Username" value = {username} onChange = {(event)=> { setUsername(event.target.value)}} />
+        </div>
+        <div className="form-field-ctn">
+          <label htmlFor="email">Email address:</label>
+          <input type="email" name="email" placeholder="email@domain.com" value = {email} onChange = {(event)=> { setEmail(event.target.value)}} />
+        </div>
+        <div className="form-field-ctn">
+          <label htmlFor="password">Password:</label>
+          <input type="password" name="password" placeholder="*********" value = {password} onChange = {(event)=> { setPassword(event.target.value)}} />
+        </div>
+        <div className="form-field-ctn">
+          <label htmlFor="repeatPassword">Repeat password:</label>
+          <input type="password" name="repeatPassword" placeholder="*********"  value = {repeatPassword} onChange = {(event)=> { setRepeatPassword(event.target.value)}} />
+        </div>
+        <button type= 'submit'>Create Account</button>
+        </form>
+        <div>
+          <Link to="/login"><p>Already have an account?</p></Link>
+        </div>
+      </div>
     </div>
   )
 }
