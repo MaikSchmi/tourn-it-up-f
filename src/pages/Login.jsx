@@ -1,12 +1,13 @@
 import React from 'react'
-import {useState} from 'react'
+import {useState , useContext} from 'react'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
-
+import { AuthContext } from '../contexts/Auth.context'
 function Login() {
   const [email , setEmail ] = useState ('')
   const [password , setPassword ] = useState ('')
   const navigate = useNavigate()
+  const {storeToken , authenticateUser} = useContext(AuthContext)
   const handleLogin = async (event) => {
     event.preventDefault()
     
@@ -17,6 +18,8 @@ function Login() {
    
    })
 console.log(user.data)
+const token = user.data.token 
+storeToken (token)
 navigate('/profile')
  }
 catch (error){console.log(error)}
