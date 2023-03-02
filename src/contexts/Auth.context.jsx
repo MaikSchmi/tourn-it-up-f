@@ -10,16 +10,29 @@ const storeToken = (token ) => {
     localStorage.setItem ("token" , token)
 }
 const authenticateUser = async () => {
-    const storageToken = localStorage.getItem('token')
-    if (storageToken) {
+    const storedToken = localStorage.getItem('token')
+    if (storedToken) {
         try{
-            const response = await axios.get('http://localhost:5005/auth/verify')
+            const response = await axios.get('http://localhost:5005/auth/verify' , {
+                headers : {
+                    Authorization : `Bearer ${storedToken}`
+                }
+            })
             const userDetails = response.data
             console.log ("HALLO: ", userDetails)
+          setIsAuthenticated(true)
+          setIsLoading(false)
+          setUser(userDetails)
         } catch(err) {
+            setIsAuthenticated(false)
+          setIsLoading(true)
+          setUser(null)
             console.log(err)
         }
     }
+    else {setIsAuthenticated(false)
+        setIsLoading(true)
+        setUser(null) }
 }
     useEffect (()=> {
  authenticateUser() 
