@@ -6,17 +6,17 @@ const AuthContext= React.createContext()
 function AuthContextWrapper(props) {
 const [isAuthenticated , setIsAuthenticated] = useState(false)
 const [isLoading , setIsLoading] = useState(true)
-const [user , setUser] = useState({})
+const [user , setUser] = useState(null)
 const navigate = useNavigate();
 
 const loginUser = async (email, password) => {
     try {
-      const user = await axios.post('http://localhost:5005/auth/login', {
+      const token = await axios.post('http://localhost:5005/auth/login', {
         email: email ,
         password: password,
       })
-      const token = await user.data.token 
-      storeToken(token)
+      const receivedToken = await token.data.token 
+      storeToken(receivedToken)
       authenticateUser();
       navigate("/home");
     } catch (error) {
@@ -27,6 +27,7 @@ const loginUser = async (email, password) => {
 const storeToken = (token) => {
     localStorage.setItem ("token", token)
 }
+
 const authenticateUser = async () => {
     const storedToken = localStorage.getItem('token')
     if (storedToken) {
@@ -36,11 +37,10 @@ const authenticateUser = async () => {
                     Authorization : `Bearer ${storedToken}`
                 }
             })
-            const userDetails = await response.data
-            console.log ("HALLO: ", userDetails)
+            const userData = await response.data
             setIsAuthenticated(true)
             setIsLoading(false)
-            setUser(userDetails)
+            setUser({username: userData.username, email: userData.email})
         } catch(err) {
             console.log(err)
             setIsAuthenticated(false)
@@ -48,6 +48,7 @@ const authenticateUser = async () => {
             setUser(null)
         }
     } else {
+        console.log("USER RESET")
         setIsAuthenticated(false)
         setIsLoading(false)
         setUser(null) 
@@ -67,6 +68,7 @@ const logoutUser = () => {
 useEffect(()=> {
     authenticateUser() 
 }, [])
+
  return( 
     <AuthContext.Provider  value = {{isAuthenticated , isLoading , user , storeToken , authenticateUser, loginUser, logoutUser}}>
     {props.children}

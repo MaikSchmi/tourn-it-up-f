@@ -31,7 +31,7 @@ function Signup() {
     <div className="form-page-top-level">
       <div className="form-ctn">
         <h1>SignUp</h1>
-        <form onSubmit={handleUserCreate } className="form-signup">
+        <form onSubmit={handleUserCreate } className="form-auth">
         <div className="form-field-ctn">
           <label htmlFor="username">Username: </label>
           <input type="text" name="username" placeholder="Username" value = {username} onChange = {(event)=> { setUsername(event.target.value)}} />

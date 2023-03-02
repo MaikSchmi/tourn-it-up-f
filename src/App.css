@@ -27,6 +27,7 @@ body {
 
 /* NAVBAR */
 .nav-ctn {
+    font-family: "Audiowide", "Tahoma", "Serif";
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -46,6 +47,7 @@ body {
 }
 .nav-two ul {
     display: flex;
+    align-items: center;
     list-style-type: none;
     gap: 20px;
 }
@@ -59,14 +61,30 @@ body {
     border: 2px white solid;
     border-radius: 20px;
     padding: 10px 15px;
+    font-size: 15px
 }
 .nav-login:hover {    
     background-color: white;
     color: purple;
     font-weight: bold;
 }
+.nav-logout {
+    font-family: "Audiowide", "Tahoma", "Serif";
+    background-color: rgb(54, 38, 96);
+    color: white;
+    border: 2px white solid;
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 15px
+}
+.nav-logout:hover {    
+    background-color: white;
+    color: purple;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-/* HOME */
+/* LANDING PAGE */
 .landing-font {
     font-family: "Audiowide", "Tahoma", "Serif";
 }
@@ -115,7 +133,8 @@ body {
     height: 325px;
 }
 .landing-section-one-ctn img {
-    height: 300px;
+    width: auto;
+    height: 100%;
 }
 
 .landing-section-two-ctn {
@@ -129,6 +148,10 @@ body {
 .landing-section-two-ctn div {
     text-align: center;
     width: 50vw;
+}
+.landing-section-two-ctn img {
+    width: auto;
+    height: 100%;
 }
 
 .landing-section-three-ctn {
@@ -144,7 +167,8 @@ body {
     width: 50vw;
 }
 .landing-section-three-ctn img {
-    height: 800px;
+    width: 100%;
+    height: auto;
 }
 
 .landing-section-four-ctn { 
@@ -160,7 +184,8 @@ body {
     width: 50vw;
 }
 .landing-section-four-ctn img {
-    height: 500px;
+    width: auto;
+    height: 100%;
 }
 
 .landing-section-five-ctn { 
@@ -176,17 +201,111 @@ body {
     width: 50vw;
 }
 .landing-section-five-ctn img {
-    height: 500px;
+    width: 100%;
+    height: auto;
+}
+
+/* HOME */
+.home-ctn {
+    /* background-color: rgb(229, 227, 227); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 100px;
+    gap: 10px;
+}
+.home-ctn section {
+    padding: 50px;
+    border: 1px black solid;
+}
+.home-top-ctn {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 50px;
+    align-self: flex-start;
+
+}
+.home-bottom-ctn {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 75vw;
 }
 
 
+/* TOURNAMENTS */
 
-/* LANDING PAGE FOOTER */
-.landing-footer-ctn {
+/* CREATE TOURNAMENT */
+.tournament-create-frm-ctn {
+    font-family: "Audiowide", "Tahoma", "Serif";
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(229, 227, 227);
+    padding: 50px 0;
+}
+
+.tournament-create-frm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 800px;
+}
+.tournament-create-form-field-ctn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    color: black;
+}
+.tournament-create-form-subgroup-ctn {
+    display: flex;
+}
+.tournament-create-form-subgroup {
+    display: flex;
+    flex-direction: column;
+    width: 390px;
+    padding: 0 5px;
+}
+.tournament-create-form-subgroup input {
+    font-family: "Audiowide", "Tahoma", "Serif";
+    background-color: ivory;
+    color: black;
+}
+.tournament-create-form-field-ctn input, textarea {
+    font-family: "Audiowide", "Tahoma", "Serif";
+    background-color: ivory;
+    color: black;
+}
+.tournament-create-form-field-ctn ::placeholder {
+    color: rgb(188, 188, 188);
+}
+.tournament-create-form-field-ctn button {
+    font-family: "Audiowide", "Tahoma", "Serif";
+    align-self: center;
+    padding: 25px 50px;
+    border-radius: 20px;
+}
+.tournament-create-form-field-ctn button:hover {
+    background-color: rgb(142, 205, 115);
+    color: white;
+    cursor: pointer;
+}
+.form-hidden {
+    visibility: hidden;
+}
+.small-print {
+    font-size: 12px;
+    color: gray;
+}
+
+/* FOOTER */
+.footer-ctn {
     display: flex;
     flex-direction: column;
 }
-.landing-footer-top-ctn {
+.footer-top-ctn {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -194,20 +313,21 @@ body {
     background-color: rgb(80, 53, 142);
     height: 500px;
 }
-.landing-footer-top-ctn h1 {
+.footer-top-ctn h1 {
     color: white;
     text-align: center;
 }
-.landing-footer-top-ctn h2 {
+.footer-top-ctn h2 {
     color: white;
     text-align: center;
 }
-.landing-footer-buttons {
+.footer-buttons {
+    font-family: "Audiowide", "Tahoma", "Serif";
     display: flex;
     flex-direction: row;
     gap: 30px;
 }
-.landing-footer-buttons > * {
+.footer-buttons > * {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -218,13 +338,13 @@ body {
     padding: 10px;
     width: 150px;
 }
-.landing-footer-buttons > *:hover{
+.footer-buttons > *:hover{
     background-color: white;
     color: purple;
     font-weight: bold;
 }
 
-.landing-footer-bottom-ctn {
+.footer-bottom-ctn {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -232,11 +352,11 @@ body {
     background-color: rgb(54, 38, 96);
     height: 200px;
 }
-.landing-footer-bottom-ctn h4 {
+.footer-bottom-ctn h4 {
     text-align: center;
     color: silver;
 }
-.landing-footer-bottom-ctn span {
+.footer-bottom-ctn span {
     font-weight: bold;
     color: orange;
 }
@@ -255,13 +375,23 @@ body {
 .form-ctn h1 {
     text-decoration: underline;
 }
-.form-signup {
+.form-auth {
     border: double 10px black;
     display: flex;
     flex-direction: column;
     gap: 10px;
     padding: 20px;
     background-color: rgb(80, 53, 142);
+}
+.form-auth button {
+    font-family: "Audiowide", "Tahoma", "Serif";
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    border-radius: 20px;
+    border-color: greenyellow;
+    padding: 10px;
+    margin-top: 20px;
 }
 .form-field-ctn {
     display: flex;
@@ -275,13 +405,4 @@ body {
 }
 .form-field-ctn ::placeholder {
     color: rgb(188, 188, 188);
-}
-.form-signup button {
-    font-family: "Audiowide", "Tahoma", "Serif";
-    background-color: green;
-    color: white;
-    font-weight: bold;
-    border-radius: 20px;
-    border-color: greenyellow;
-    padding: 10px;
 }

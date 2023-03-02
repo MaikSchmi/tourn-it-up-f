@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './App.css'
 import { Route , Routes } from 'react-router'
 import Home from './pages/Home'
@@ -6,21 +5,24 @@ import Signup from './pages/Signup'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
 import LandingPage from './pages/LandingPage'
-import IsPrivate from './components/AuthComponents/IsPrivate'
-import IsPublic from './components/AuthComponents/IsPublic'
+import IsPrivate from './components/auth/IsPrivate'
+import IsPublic from './components/auth/IsPublic'
+import NavBar from './components/NavBar'
+import Footer from './components/Footer'
+import TournamentCreate from './pages/tournament/TournamentCreate'
 
 function App() {
-
-
   return (
     <div className="App">
-
      <Routes>
-      <Route path="/" element={  <IsPublic> <LandingPage/> </IsPublic>} />
-      <Route path="/home" element={ <IsPrivate> <Home /> </IsPrivate>} />
+      <Route path="/" element={<><NavBar /><Footer /></>}>
+        <Route path="/" element={  <IsPublic> <LandingPage/> </IsPublic>} />
+        <Route path="/home" element={ <IsPrivate> <Home /> </IsPrivate>} />
+        <Route path="/profile" element={ <IsPrivate> <Profile /> </IsPrivate>} />
+        <Route path="/tournament/create" element={<IsPrivate><TournamentCreate /></IsPrivate> } />
+      </Route>
       <Route path="/signup" element={  <IsPublic> <Signup /> </IsPublic>} />
       <Route path="/login" element={<IsPublic> <Login /> </IsPublic>} />
-      <Route path="/profile" element={ <IsPrivate> <Profile /> </IsPrivate>} />
      </Routes>
     </div>
   )

@@ -1,12 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import LandingPageFooter from '../components/LandingPageFooter'
-import LandingPageNavbar from '../components/LandingPageNavbar'
 
 function LandingPage() {
   return (
     <div className="landing-font">
-      <LandingPageNavbar />
       <section className="landing-main-ctn">
         <div className="landing-main-title-ctn">
           <h1>Ready For The Challenge?</h1>
@@ -66,7 +63,6 @@ function LandingPage() {
           <img src="/images/recover.png" alt="amazingImage"/>
         </div>
       </section>
-      <LandingPageFooter/>
     </div>
   )
 }
