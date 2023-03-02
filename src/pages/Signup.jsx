@@ -1,26 +1,29 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import axios from 'axios'
-import {Link, useNavigate} from 'react-router-dom'
+import {Link} from 'react-router-dom'
+import { AuthContext } from '../contexts/Auth.context'
+
 function Signup() {
   const [username , setUsername ] = useState ('')
   const [password , setPassword ] = useState ('')
   const [email , setEmail ] = useState ('')
   const [repeatPassword , setRepeatPassword ] = useState ('')
-   const navigate = useNavigate()
+  const {loginUser} = useContext(AuthContext)
  
   const handleUserCreate = async (event) => {
-       event.preventDefault()
-       if (password === repeatPassword){
-    try{ 
-      const user = await axios.post('http://localhost:5005/auth/signup', {
-        username: username,
-        password: password,
-        email: email
-      })
-console.log(user)
-navigate('/login')
+      event.preventDefault()
+      if (password === repeatPassword){
+      try { 
+        await axios.post('http://localhost:5005/auth/signup', {
+          username: username,
+          password: password,
+          email: email
+        })
+        loginUser(email, password);
     }
-  catch (error){console.log(error)}
+    catch (error) {
+      console.log(error)
+    }
   }
     else {console.log("passwords don't match")}
 } 

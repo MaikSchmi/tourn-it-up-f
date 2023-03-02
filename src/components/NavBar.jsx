@@ -1,10 +1,12 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { AuthContext } from '../contexts/Auth.context'
 
 function NavBar() {
+  const { logoutUser } = useContext(AuthContext);
+
   return (
     <nav>
-      <button type="submit">Logout</button>
+      <button type="submit" onClick={logoutUser}>Logout</button>
     </nav>
   )
 }
