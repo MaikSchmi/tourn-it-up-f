@@ -1,15 +1,29 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../../contexts/Auth.context';
 import hobbies from "../../hobbies.json";
 
 function TournamentCreate() {
   const [hobbyList, setHobbyList] = useState([]);
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
+  const { user } = useContext(AuthContext);
   
+  const [name, setName] = useState("");
+  const [type, setType] = useState("Cooperative");
+  const [challenge, setChallenge] = useState("");
+  const [description, setDescription] = useState(``);
+  const [reward, setReward] = useState("");
   const [locationCountry, setLocationCountry] = useState("");
   const [locationCity, setLocationCities] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [additionalInfo, setAdditionalInfo] = useState(``);
+  const [media, setMedia] = useState(undefined);
+  const [tasChecked, setTasChecked] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessageArr, setErrorMessageArr] = useState()
 
   const getCountries = async () => {
     // Fill Country List
@@ -27,6 +41,31 @@ function TournamentCreate() {
     setCities(cityList);
   }
 
+  const handleFormSubmit = async (e) => {+
+    e.preventDefault();
+/*     if (endDate < startDate) {
+      console.log(errorMessageArr.eType);
+    } */
+
+
+    const formDetails = {
+      name,
+      type,
+      challenge,
+      organizer: user.username,
+      description,
+      reward,
+      locationCountry,
+      locationCity,
+      startDate,
+      endDate,
+      additionalInfo,
+      media,
+      tasChecked
+    }
+    console.log(formDetails)
+  }
+
   useEffect(() => {
     const cityField = document.querySelector("#city-group");
     if (locationCountry !== "Virtual" && locationCountry !== "") {
@@ -38,6 +77,14 @@ function TournamentCreate() {
   }, [locationCountry])
 
   useEffect(() => {
+/*     if (endDate < startDate) {
+      console.log(errorMessageArr);
+    } else {
+      console.log(errorMessageArr);
+    } */
+  }, [endDate])
+
+  useEffect(() => {
     // Fill Hobby List
     const hobbyArr = [];
     for (let i = 0; i < hobbies.length; i++) {
@@ -45,43 +92,58 @@ function TournamentCreate() {
     } 
     hobbyArr.sort((a, b) => a.localeCompare(b));
     setHobbyList(hobbyArr);
-
+    
     // Fill Country List
     getCountries();
+    // Set errorMessageArr
+    setErrorMessageArr(
+      {
+        eName: "", 
+        eType: "", 
+        eChallenge: "", 
+        eDescription: "", 
+        eLocationCountry: "", 
+        eStartDate: "", 
+        eEndDate: "", 
+        eDateMatch: "", 
+        eTasChecked: ""
+      }
+    )
+    console.log(errorMessageArr)
   }, [])
 
   return (
     <div className="tournament-create-frm-ctn">
       <h1>Create a Tournament</h1>
-      <form className="tournament-create-frm">
+      <form className="tournament-create-frm" onSubmit={handleFormSubmit} >
         <div className="tournament-create-form-field-ctn">
             <label>Tournament Name:</label>
-            <input type="text"/>
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
         </div>
         <div className="tournament-create-form-subgroup-ctn">
             <div className="tournament-create-form-subgroup">
               <label>Challenge type:</label>
-              <select><option>Joint Effort</option><option>Competition</option></select>
+              <select value={type} onChange={(e) => setType(e.target.value)}><option>Cooperative</option><option>Competition</option></select>
             </div>
             <div className="tournament-create-form-subgroup">
               <label>Challenge in:</label>
-              <input type="text" list="hobbies"/>
-              <datalist id="hobbies">
+              <input type="text" list="hobbies" value={challenge} onChange={(e) => setChallenge(e.target.value)}/>
+              <datalist id="hobbies" >
                 {hobbyList.map((hobby, index) => <option key={index}>{hobby}</option>)}
               </datalist>
             </div>
         </div>
         <div className="tournament-create-form-field-ctn">
             <label>Organizer:</label>
-            <input type="text"/>
+            <input type="text" value={user.username} readOnly />
         </div>
         <div className="tournament-create-form-field-ctn">
             <label>Description:</label>
-            <textarea cols="30" rows="20"></textarea>
+            <textarea value={description} onChange={(e) => setDescription(e.target.value)} cols="30" rows="20"></textarea>
         </div>
         <div className="tournament-create-form-field-ctn">
             <label>Reward (optional):</label>
-            <input type="text"/>
+            <input type="text" value={reward} onChange={(e) => setReward(e.target.value)} />
         </div>
         <div className="tournament-create-form-subgroup-ctn">
             <div className="tournament-create-form-subgroup">
@@ -99,26 +161,27 @@ function TournamentCreate() {
               </datalist>
             </div>
         </div>
+        {/* {(errorMessageArr.eDateMatch !== "" && errorMessageArr.eDateMatch === "End date") ? <span className="form-error-message">{errorMessageArr.eDateMatch}</span> : <></>} */}
         <div className="tournament-create-form-subgroup-ctn">
             <div className="tournament-create-form-subgroup">
               <label>Start Date / Time:</label>
-              <input type="datetime-local" />
+              <input type="datetime-local" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
             </div>
             <div className="tournament-create-form-subgroup">
               <label>End Date / Time:</label>
-              <input type="datetime-local" />
+              <input type="datetime-local" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
             </div>
         </div>
         <div className="tournament-create-form-field-ctn">
             <label>Additional Information:</label>
-            <textarea cols="30" rows="3"></textarea>
+            <textarea cols="30" rows="3" value={additionalInfo} onChange={(e) => setAdditionalInfo(e.target.value)} ></textarea>
         </div>
         <div className="tournament-create-form-field-ctn">
             <label>Photos / Videos:</label>
-            <input type="file" multiple="multiple" onChange={(e) => console.log(e.target.value)}/>
+            <input type="file" multiple="multiple" value={media} onChange={(e) => setMedia(e.target.value)} />
         </div>
         <div>
-          <input type="checkbox" /><span className="small-print">By checking this box I confirm that I have read and agree to the <Link>Terms and Conditions</Link> stated therein and that the tournament conditions as provided in the above form comply with the <Link>Code of Conduct</Link> as outlined.</span>
+          <input type="checkbox" value={tasChecked} onChange={(e) => setTasChecked(e.target.checked)} /><span className="small-print">By checking this box I confirm that I have read and agree to the <Link>Terms and Conditions</Link> stated therein and that the tournament conditions as provided in the above form comply with the <Link>Code of Conduct</Link> as outlined.</span>
         </div>
         <div className="tournament-create-form-field-ctn">
           <button type="submit">Create Tournament</button>
