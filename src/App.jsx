@@ -11,10 +11,12 @@ import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import TournamentCreate from './pages/tournament/TournamentCreate'
 import TournamentPage from './pages/tournament/TournamentPage'
+import ProfileSettings from './pages/ProfileSettings'
 
 function App() {
   return (
     <div className="App">
+
      <Routes>
       <Route path="/" element={<><NavBar /><Footer /></>}>
         <Route path="/" element={  <IsPublic> <LandingPage/> </IsPublic>} />
@@ -22,6 +24,7 @@ function App() {
         <Route path="/profile" element={ <IsPrivate> <Profile /> </IsPrivate>} />
         <Route path="/tournaments/create" element={<IsPrivate><TournamentCreate /></IsPrivate> } />
         <Route path="/tournaments/:id" element={<IsPrivate><TournamentPage /></IsPrivate> } />
+        <Route path="/profile/settings" element={ <IsPrivate> <ProfileSettings /> </IsPrivate>} />
       </Route>
       <Route path="/signup" element={  <IsPublic> <Signup /> </IsPublic>} />
       <Route path="/login" element={<IsPublic> <Login /> </IsPublic>} />
