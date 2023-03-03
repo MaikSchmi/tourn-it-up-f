@@ -24,7 +24,7 @@ function Home() {
           <section>
             <h2>Create a Tournament</h2>
             <div>
-              <Link to="/tournament/create">Go to Tournament Creation</Link>
+              <Link to="/tournaments/create">Go to Tournament Creation</Link>
             </div>
           </section>
         </div>

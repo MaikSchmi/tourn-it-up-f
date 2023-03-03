@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../contexts/Auth.context';
 import hobbies from "../../hobbies.json";
 
@@ -20,10 +20,22 @@ function TournamentCreate() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [additionalInfo, setAdditionalInfo] = useState(``);
-  const [media, setMedia] = useState(undefined);
-  const [tasChecked, setTasChecked] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [errorMessageArr, setErrorMessageArr] = useState()
+  const [mapUrl, setMapUrl] = useState(``);
+  const [updatePlatformUrl, setupdatePlatformUrl] = useState(``);
+  const [media, setMedia] = useState("");
+  const [tosChecked, setTosChecked] = useState(false);
+
+  const [submitError, setSubmitError] = useState("");
+  const [errName, setErrName] = useState("");
+  const [errChallenge, setErrChallenge] = useState("");
+  const [errDescription, setErrDescription] = useState("");
+  const [errLocation, setErrLocation] = useState("");
+  const [errStartDate, setErrStartDate] = useState("");
+  const [errEndDate, setErrEndDate] = useState("");
+  const [errDateMatch, setErrDateMatch] = useState("");
+  const [errTosChecked, setErrTosChecked] = useState("");
+
+  const navigate = useNavigate();
 
   const getCountries = async () => {
     // Fill Country List
@@ -41,30 +53,59 @@ function TournamentCreate() {
     setCities(cityList);
   }
 
-  const handleFormSubmit = async (e) => {+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-/*     if (endDate < startDate) {
-      console.log(errorMessageArr.eType);
-    } */
 
+    // Error Message Handling
+    endDate < startDate ? setErrDateMatch("The end date needs to be before the start date.") : setErrDateMatch("");
+    name === "" ? setErrName("Please indicate a name for the Tournament.") : setErrName("");
+    challenge === "" ? setErrChallenge("Please indicate a challenge.") : setErrChallenge("")
+    description === "" ? setErrDescription("Please enter a description.") : setErrDescription("")
+    locationCountry === "" ? setErrLocation(`Please provide a location (choose "Virtually" if it's online).`) : setErrLocation("")  
+    startDate === "" ? setErrStartDate("Please select a start date.") : setErrStartDate("")
+    endDate === "" ? setErrEndDate("Please select an end date.") : setErrEndDate("")
+    !tosChecked ? setErrTosChecked("Please review and accept the Terms of Service and Code of Conduct.") : setErrTosChecked("")
 
     const formDetails = {
-      name,
-      type,
-      challenge,
-      organizer: user.username,
-      description,
-      reward,
-      locationCountry,
-      locationCity,
-      startDate,
-      endDate,
-      additionalInfo,
-      media,
-      tasChecked
-    }
-    console.log(formDetails)
+        name,
+        type,
+        challenge,
+        organizer: user.username,
+        description,
+        reward,
+        locationCountry,
+        locationCity,
+        startDate,
+        endDate,
+        additionalInfo,
+        media,
+        mapUrl,
+        updatePlatformUrl,
+        tosChecked: tosChecked
+      }
+    
+      try {
+        const newTournament = await axios.post("http://localhost:5005/tournaments/create", {formDetails})
+        const newTournamentId = await newTournament.data;
+        navigate(`/tournaments/${newTournamentId}`);
+      } catch (error) {
+        console.log("CAUGHT ERROR: ", error);
+        if (error.response.status === 400) {
+          setSubmitError(error.response.data);
+        }
+      }
   }
+
+  // Error Handling
+  useEffect(() => {
+    name === "" && errName !== "" ? setErrName("Please indicate a name for the Tournament.") : setErrName("");
+    challenge === "" && errChallenge !== "" ? setErrChallenge("Please indicate a challenge.") : setErrChallenge("")
+    description === "" && errDescription !== "" ? setErrDescription("Please enter a description.") : setErrDescription("")
+    locationCountry === "" && errLocation !== "" ? setErrLocation(`Please provide a location (choose "Virtually" if it's online).`) : setErrLocation("")  
+    startDate === "" && errStartDate !== "" ? setErrStartDate("Please select a start date.") : setErrStartDate("")
+    endDate === "" && errEndDate !== "" ? setErrEndDate("Please select an end date.") : setErrEndDate("")
+    !tosChecked && errTosChecked !== "" ? setErrTosChecked("Please review and accept the Terms of Service and Code of Conduct.") : setErrTosChecked("")
+  }, [name, challenge, description, locationCountry, startDate, endDate, tosChecked])
 
   useEffect(() => {
     const cityField = document.querySelector("#city-group");
@@ -77,14 +118,6 @@ function TournamentCreate() {
   }, [locationCountry])
 
   useEffect(() => {
-/*     if (endDate < startDate) {
-      console.log(errorMessageArr);
-    } else {
-      console.log(errorMessageArr);
-    } */
-  }, [endDate])
-
-  useEffect(() => {
     // Fill Hobby List
     const hobbyArr = [];
     for (let i = 0; i < hobbies.length; i++) {
@@ -95,35 +128,23 @@ function TournamentCreate() {
     
     // Fill Country List
     getCountries();
-    // Set errorMessageArr
-    setErrorMessageArr(
-      {
-        eName: "", 
-        eType: "", 
-        eChallenge: "", 
-        eDescription: "", 
-        eLocationCountry: "", 
-        eStartDate: "", 
-        eEndDate: "", 
-        eDateMatch: "", 
-        eTasChecked: ""
-      }
-    )
-    console.log(errorMessageArr)
+
   }, [])
 
   return (
     <div className="tournament-create-frm-ctn">
       <h1>Create a Tournament</h1>
+      {submitError !== "" && <span className="form-error-message">{submitError}</span>}
       <form className="tournament-create-frm" onSubmit={handleFormSubmit} >
         <div className="tournament-create-form-field-ctn">
             <label>Tournament Name:</label>
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+            {errName !== "" && <span className="form-error-message">{errName}</span>}
         </div>
         <div className="tournament-create-form-subgroup-ctn">
             <div className="tournament-create-form-subgroup">
               <label>Challenge type:</label>
-              <select value={type} onChange={(e) => setType(e.target.value)}><option>Cooperative</option><option>Competition</option></select>
+              <select className="tournament-create-form-select" value={type} onChange={(e) => setType(e.target.value)}><option>Cooperative</option><option>Competition</option></select>
             </div>
             <div className="tournament-create-form-subgroup">
               <label>Challenge in:</label>
@@ -131,6 +152,7 @@ function TournamentCreate() {
               <datalist id="hobbies" >
                 {hobbyList.map((hobby, index) => <option key={index}>{hobby}</option>)}
               </datalist>
+              {errChallenge !== "" && <span className="form-error-message">{errChallenge}</span>}
             </div>
         </div>
         <div className="tournament-create-form-field-ctn">
@@ -140,6 +162,7 @@ function TournamentCreate() {
         <div className="tournament-create-form-field-ctn">
             <label>Description:</label>
             <textarea value={description} onChange={(e) => setDescription(e.target.value)} cols="30" rows="20"></textarea>
+            {errDescription !== "" && <span className="form-error-message">{errDescription}</span>}
         </div>
         <div className="tournament-create-form-field-ctn">
             <label>Reward (optional):</label>
@@ -152,6 +175,7 @@ function TournamentCreate() {
               <datalist id="country">
                 {countries.map((country, index) => <option key={index}>{country}</option>)}
               </datalist>
+              {errLocation !== "" && <span className="form-error-message">{errLocation}</span>}
             </div>
             <div className="tournament-create-form-subgroup form-hidden" id="city-group">
               <label>City:</label>
@@ -161,16 +185,30 @@ function TournamentCreate() {
               </datalist>
             </div>
         </div>
-        {/* {(errorMessageArr.eDateMatch !== "" && errorMessageArr.eDateMatch === "End date") ? <span className="form-error-message">{errorMessageArr.eDateMatch}</span> : <></>} */}
+
+        <div className="tournament-create-form-subgroup-ctn">
+            <div className="tournament-create-form-subgroup">
+              <label>Maps Link:</label>
+              <input type="text" value={mapUrl} onChange={(e) => setMapUrl(e.target.value)} />
+            </div>
+            <div className="tournament-create-form-subgroup">
+              <label>Link to Update Platform:</label>
+              <input type="text" value={updatePlatformUrl} onChange={(e) => setupdatePlatformUrl(e.target.value)} />
+          </div>
+        </div>
+        
         <div className="tournament-create-form-subgroup-ctn">
             <div className="tournament-create-form-subgroup">
               <label>Start Date / Time:</label>
               <input type="datetime-local" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
             </div>
+            {errStartDate !== "" && <span className="form-error-message">{errStartDate}</span>}
             <div className="tournament-create-form-subgroup">
               <label>End Date / Time:</label>
               <input type="datetime-local" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
             </div>
+            {errEndDate !== "" && <span className="form-error-message">{errEndDate}</span>}
+            {errDateMatch !== "" && <span className="form-error-message">{errDateMatch}</span>}
         </div>
         <div className="tournament-create-form-field-ctn">
             <label>Additional Information:</label>
@@ -181,7 +219,8 @@ function TournamentCreate() {
             <input type="file" multiple="multiple" value={media} onChange={(e) => setMedia(e.target.value)} />
         </div>
         <div>
-          <input type="checkbox" value={tasChecked} onChange={(e) => setTasChecked(e.target.checked)} /><span className="small-print">By checking this box I confirm that I have read and agree to the <Link>Terms and Conditions</Link> stated therein and that the tournament conditions as provided in the above form comply with the <Link>Code of Conduct</Link> as outlined.</span>
+          <input type="checkbox" value={tosChecked} onChange={(e) => setTosChecked(e.target.checked)} /><span className="small-print">By checking this box I confirm that I have read and agree to the <Link>Terms and Conditions</Link> stated therein and that the tournament conditions as provided in the above form comply with the <Link>Code of Conduct</Link> as outlined.</span>
+            {errTosChecked !== "" && <span className="form-error-message">{errTosChecked}</span>}
         </div>
         <div className="tournament-create-form-field-ctn">
           <button type="submit">Create Tournament</button>

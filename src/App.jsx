@@ -10,6 +10,7 @@ import IsPublic from './components/auth/IsPublic'
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import TournamentCreate from './pages/tournament/TournamentCreate'
+import TournamentPage from './pages/tournament/TournamentPage'
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
         <Route path="/" element={  <IsPublic> <LandingPage/> </IsPublic>} />
         <Route path="/home" element={ <IsPrivate> <Home /> </IsPrivate>} />
         <Route path="/profile" element={ <IsPrivate> <Profile /> </IsPrivate>} />
-        <Route path="/tournament/create" element={<IsPrivate><TournamentCreate /></IsPrivate> } />
+        <Route path="/tournaments/create" element={<IsPrivate><TournamentCreate /></IsPrivate> } />
+        <Route path="/tournaments/:id" element={<IsPrivate><TournamentPage /></IsPrivate> } />
       </Route>
       <Route path="/signup" element={  <IsPublic> <Signup /> </IsPublic>} />
       <Route path="/login" element={<IsPublic> <Login /> </IsPublic>} />
