@@ -10,7 +10,7 @@ import IsPublic from './components/auth/IsPublic'
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import TournamentCreate from './pages/tournament/TournamentCreate'
-
+import ProfileSettings from './pages/ProfileSettings'
 function App() {
   return (
     <div className="App">
