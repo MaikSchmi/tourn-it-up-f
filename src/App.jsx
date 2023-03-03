@@ -14,11 +14,13 @@ import TournamentCreate from './pages/tournament/TournamentCreate'
 function App() {
   return (
     <div className="App">
+
      <Routes>
       <Route path="/" element={<><NavBar /><Footer /></>}>
         <Route path="/" element={  <IsPublic> <LandingPage/> </IsPublic>} />
         <Route path="/home" element={ <IsPrivate> <Home /> </IsPrivate>} />
         <Route path="/profile" element={ <IsPrivate> <Profile /> </IsPrivate>} />
+        <Route path="/profile/settings" element={ <IsPrivate> <ProfileSettings /> </IsPrivate>} />
         <Route path="/tournament/create" element={<IsPrivate><TournamentCreate /></IsPrivate> } />
       </Route>
       <Route path="/signup" element={  <IsPublic> <Signup /> </IsPublic>} />
