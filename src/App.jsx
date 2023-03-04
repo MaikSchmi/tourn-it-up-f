@@ -12,6 +12,7 @@ import Footer from './components/Footer'
 import TournamentCreate from './pages/tournament/TournamentCreate'
 import TournamentPage from './pages/tournament/TournamentPage'
 import ProfileSettings from './pages/ProfileSettings'
+import TournamentUpdate from './pages/tournament/TournamentUpdate'
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
         <Route path="/profile" element={ <IsPrivate> <Profile /> </IsPrivate>} />
         <Route path="/profile/settings" element={ <IsPrivate> <ProfileSettings /> </IsPrivate>} />
         <Route path="/tournaments/create" element={<IsPrivate><TournamentCreate /></IsPrivate> } />
-        <Route path="/tournaments/:id/update" element={<IsPrivate><TournamentCreate /></IsPrivate> } />
+        <Route path="/tournaments/:id/update" element={<IsPrivate><TournamentUpdate /></IsPrivate> } />
         <Route path="/tournaments/:id" element={<IsPrivate><TournamentPage /></IsPrivate> } />
       </Route>
       <Route path="/signup" element={  <IsPublic> <Signup /> </IsPublic>} />

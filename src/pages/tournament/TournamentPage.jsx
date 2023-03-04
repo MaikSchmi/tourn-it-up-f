@@ -43,7 +43,7 @@ function TournamentPage() {
   }
 
   const handleEditClick = () => {
-    	
+    	navigate(`/tournaments/${id}/update`)
   }
   
   const deleteConfirmed = async () => {
@@ -77,8 +77,8 @@ function TournamentPage() {
     <div className="tournament-card"> 
       <div className="tournament-card-section">
         <h3>Participants</h3>
-        <span>Slots filled: {tournament.participants.length + 1} / {tournament.maxParticipants}</span>
-        <span>Minimum needed: {tournament.minParticipants}</span>
+        <span>Slots filled: {tournament.participants.length + 1} {tournament.maxParticipants && <span>/ {tournament.maxParticipants}</span>}</span>
+        {tournament.minParticipants && <span>Minimum needed: {tournament.minParticipants}</span>}
         <ul className="tournament-card-participant-list">
           {participants.map((participant, index) => <li key={participant.id}><Link to={`/profile/${participant.id}`}>{participant.username}</Link>{index === 0 && <span>👑</span>}</li>)}
           {(user.username !== participants[0].username && !alreadyParticipating && tournament.participants.length + 1 < tournament.maxParticipants) && <button type="button" onClick={addParticipant}>Participate!</button>}

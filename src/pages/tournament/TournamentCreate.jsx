@@ -62,7 +62,13 @@ function TournamentCreate() {
     e.preventDefault();
 
     // Error Message Handling
-    endDate < startDate ? setErrDateMatch("The end date needs to be before the start date.") : setErrDateMatch("");
+    let today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const yyyy = today.getFullYear();
+    today = yyyy + "-" + mm + "-" + dd;
+
+    endDate < startDate ? setErrDateMatch("The start date needs to be before the end date.") : startDate <= today ? setErrDateMatch("The start date needs to be in the future") : setErrDateMatch("");
     name === "" ? setErrName("Please indicate a name for the Tournament.") : setErrName("");
     challenge === "" ? setErrChallenge("Please indicate a challenge.") : setErrChallenge("")
     description === "" ? setErrDescription("Please enter a description.") : setErrDescription("")
@@ -110,10 +116,6 @@ function TournamentCreate() {
   const removeProfessionInputs = () => {
     setProfessions([]);
   }
-
-  useEffect(() => {
-    console.log(professions)
-  }, [professions])
 
   // Error Handling
   useEffect(() => {
