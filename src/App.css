@@ -245,12 +245,15 @@ body {
     background-color: rgb(229, 227, 227);
     padding: 50px 0;
 }
-
 .tournament-create-frm {
     display: flex;
     flex-direction: column;
     gap: 20px;
     width: 800px;
+}
+.tournament-create-form-box {
+    border: black solid 1px;
+    padding: 5px;
 }
 .tournament-create-form-field-ctn {
     display: flex;
@@ -280,10 +283,35 @@ body {
     background-color: ivory;
     color: black;
 }
+.tournament-create-form-professions-ctn {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.tournament-create-form-professions-ctn input {
+    font-family: "Audiowide", "Tahoma", "Serif";
+    background-color: ivory;
+    color: black;
+    width: 300px;
+}
+.add-profession-button {
+    font-family: "Audiowide", "Tahoma", "Serif";
+    background-color: rgb(177, 247, 170);
+    color: black;
+    width: 25px;
+}
+.remove-profession-button {
+    font-family: "Audiowide", "Tahoma", "Serif";
+    background-color: rgb(255, 160, 160);
+    color: black;
+    width: 100px;
+    height: 25px;
+}
 .tournament-create-form-select {
     font-family: "Audiowide", "Tahoma", "Serif";
     background-color: ivory;
     color: black;
+    border: 2px solid black
 }
 .tournament-create-form-field-ctn ::placeholder {
     color: rgb(188, 188, 188);
@@ -302,6 +330,9 @@ body {
 .form-hidden {
     visibility: hidden;
 }
+.form-not-loaded {
+    display: none;
+}
 .form-error-message {
     color: red;
     text-align: center;
@@ -313,6 +344,40 @@ body {
 }
 
 /* DISPLAY TOURNAMENT */
+.tournament-card-btn-ctn {
+    display: flex;
+    justify-content: center;
+}
+.tournament-card-edit {
+    font-family: "Audiowide", "Tahoma", "Serif";
+    background-color: rgb(54, 38, 96);
+    color: white;
+    border: 2px white solid;
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 15px
+}
+.tournament-card-edit:hover {    
+    background-color: rgb(243, 225, 92);
+    color: rgb(128, 105, 0);
+    font-weight: bold;
+    cursor: pointer;
+}
+.tournament-card-delete {
+    font-family: "Audiowide", "Tahoma", "Serif";
+    background-color: rgb(54, 38, 96);
+    color: white;
+    border: 2px white solid;
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 15px
+}
+.tournament-card-delete:hover {    
+    background-color: rgb(218, 28, 28);
+    color: purple;
+    font-weight: bold;
+    cursor: pointer;
+}
 .tournament-card-title {
     text-align: center;
 }
@@ -350,6 +415,29 @@ body {
     padding: 10px 30px;
     width: 200px;
     text-align: center;
+}
+
+.popup-ctn {
+    position: fixed;
+    background-color: rgba(255, 0, 0, 0.849);
+    margin-left: auto;
+    margin-right: auto;
+    top: 20vh;
+    height: 40vh;
+    left: 10vw;
+    right: 10vw;
+    text-align: center;
+    border: black double 3px;
+}
+.popup-shade-bg {
+    position: absolute;
+    background-color: rgba(65, 65, 65, 0.632);
+    width: 100vw;
+    height: 100vh;
+}
+.popup-btn-ctn {
+    display: flex;
+    justify-content: space-evenly;
 }
 
 /* FOOTER */

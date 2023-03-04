@@ -22,9 +22,10 @@ function App() {
         <Route path="/" element={  <IsPublic> <LandingPage/> </IsPublic>} />
         <Route path="/home" element={ <IsPrivate> <Home /> </IsPrivate>} />
         <Route path="/profile" element={ <IsPrivate> <Profile /> </IsPrivate>} />
-        <Route path="/tournaments/create" element={<IsPrivate><TournamentCreate /></IsPrivate> } />
-        <Route path="/tournaments/:id" element={<IsPrivate><TournamentPage /></IsPrivate> } />
         <Route path="/profile/settings" element={ <IsPrivate> <ProfileSettings /> </IsPrivate>} />
+        <Route path="/tournaments/create" element={<IsPrivate><TournamentCreate /></IsPrivate> } />
+        <Route path="/tournaments/:id/update" element={<IsPrivate><TournamentCreate /></IsPrivate> } />
+        <Route path="/tournaments/:id" element={<IsPrivate><TournamentPage /></IsPrivate> } />
       </Route>
       <Route path="/signup" element={  <IsPublic> <Signup /> </IsPublic>} />
       <Route path="/login" element={<IsPublic> <Login /> </IsPublic>} />
