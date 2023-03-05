@@ -260,6 +260,7 @@ body {
     /* background-color: rgb(229, 227, 227); */
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     padding: 100px;
     gap: 10px;
@@ -273,14 +274,34 @@ body {
     flex-direction: column;
     gap: 10px;
     padding: 0 50px;
-    align-self: flex-start;
-
+    width: 90%;
+}
+.home-search-ctn input {
+    height: 40px;
+    width: 60%;
 }
 .home-bottom-ctn {
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    align-items: flex-start;
     width: 75vw;
+    height: 50vh;
+}
+.home-create-tournament-btn {
+    font-family: "Audiowide", "Tahoma", "Serif";
+    background-color: rgb(54, 38, 96);
+    color: white;
+    border: 2px rgb(0, 0, 0) solid;
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 15px;
+    text-decoration: none;
+}
+.home-create-tournament-btn:hover {    
+    background-color: rgb(139, 255, 137);
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    cursor: pointer;
 }
 
 
