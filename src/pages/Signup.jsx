@@ -20,7 +20,7 @@ function Signup() {
         repeatPassword: repeatPassword,
         email: email
       })
-      loginUser(email, password);
+      loginUser(email, password, {justSignedUp: true});
     }
     catch (error) {
       console.log(error)

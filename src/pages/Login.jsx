@@ -10,11 +10,10 @@ function Login() {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    loginUser(email, password)
+    loginUser(email, password, {justSignedUp: false})
   } 
 
   return (
-
     <div className="form-page-top-level">
       <div className="form-ctn">
         <h1>Login</h1>

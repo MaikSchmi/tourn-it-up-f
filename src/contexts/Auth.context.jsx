@@ -10,7 +10,7 @@ const [user, setUser] = useState(null)
 const [errorMessage, setErrorMessage] = useState("");
 const navigate = useNavigate();
 
-const loginUser = async (email, password) => {
+const loginUser = async (email, password, {justSignedUp}) => {
     try {
       const token = await axios.post('http://localhost:5005/auth/login', {
         email: email ,
@@ -19,7 +19,15 @@ const loginUser = async (email, password) => {
       const receivedToken = await token.data.token 
       storeToken(receivedToken)
       authenticateUser();
-      navigate("/home");
+      console.log("TOKEN: ", token)
+      console.log(justSignedUp);
+      if (!justSignedUp) {
+        console.log("Navigating to HOME")
+        navigate("/home");
+      } else if (justSignedUp) {
+        console.log("Navigating to POST SIGNUP")
+        navigate("/post-signup")
+      }
     } catch (error) {
       console.log(error);
       setErrorMessage(error.response.data.message)
@@ -42,7 +50,8 @@ const authenticateUser = async () => {
             const userData = await response.data
             setIsAuthenticated(true)
             setIsLoading(false)
-            setUser({username: userData.username, email: userData.email, status: userData.status, tournaments: userData.tournaments})
+            console.log("INTEREST: ", userData)
+            setUser({username: userData.username, email: userData.email, status: userData.status, tournaments: userData.tournaments, interest: userData.interest})
         } catch(err) {
             console.log(err)
             setIsAuthenticated(false)

@@ -67,8 +67,6 @@ function TournamentPage() {
     if (participants.find(participant => participant.username === user.username)) {
       setAlreadyParticipating(true);
     } else {
-      
-      //user.tournaments.splice()
       setAlreadyParticipating(false);
     }
   }

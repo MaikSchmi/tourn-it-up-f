@@ -786,7 +786,9 @@ body {
     flex-direction: column;
     gap: 10px;
     padding: 20px;
+    margin: 20px;
     background-color: rgb(80, 53, 142);
+    box-shadow: 5px 3px;
 }
 .form-auth button {
     font-family: "Audiowide", "Tahoma", "Serif";
@@ -810,4 +812,28 @@ body {
 }
 .form-field-ctn ::placeholder {
     color: rgb(188, 188, 188);
+}
+.post-signup-ctn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+}
+.post-signup-inputs {
+    font-family: "Audiowide", "Tahoma", "Serif";
+}
+.post-signup-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+    text-align: center;
+    padding: 20px 0;   
+}
+.post-signup-skip {
+    color: rgb(24, 163, 255);
+    text-align: center;
+    font-size: 12px;
 }
