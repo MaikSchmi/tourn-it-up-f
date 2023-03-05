@@ -13,7 +13,7 @@ function Footer() {
           <h2>Sign up for free and join your first Tournament today!</h2>
           <div className="footer-buttons">
             <Link to="/signup">Sign Up</Link>
-            <Link to="/">See Membership Options</Link>
+            <Link to="/membership-options">See Membership Options</Link>
           </div>
         </div>
         }

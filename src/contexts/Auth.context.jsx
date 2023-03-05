@@ -48,7 +48,6 @@ const authenticateUser = async () => {
             setUser(null)
         }
     } else {
-        console.log("USER RESET")
         setIsAuthenticated(false)
         setIsLoading(false)
         setUser(null) 

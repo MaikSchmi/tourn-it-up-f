@@ -13,6 +13,7 @@ import TournamentCreate from './pages/tournament/TournamentCreate'
 import TournamentPage from './pages/tournament/TournamentPage'
 import ProfileSettings from './pages/ProfileSettings'
 import TournamentUpdate from './pages/tournament/TournamentUpdate'
+import MembershipOptions from './pages/MembershipOptions'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route path="/" element={<><NavBar /><Footer /></>}>
         <Route path="/" element={  <IsPublic> <LandingPage/> </IsPublic>} />
         <Route path="/home" element={ <IsPrivate> <Home /> </IsPrivate>} />
+        <Route path="/membership-options" element={ < MembershipOptions /> } />
         <Route path="/profile" element={ <IsPrivate> <Profile /> </IsPrivate>} />
         <Route path="/profile/settings" element={ <IsPrivate> <ProfileSettings /> </IsPrivate>} />
         <Route path="/tournaments/create" element={<IsPrivate><TournamentCreate /></IsPrivate> } />
