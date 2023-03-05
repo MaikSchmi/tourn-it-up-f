@@ -25,7 +25,6 @@ function Home() {
   const searchTournament = async (e) => {
     try {
       const foundTournament = await axios.get(`http://localhost:5005/tournaments/name/${search}`);
-      console.log(foundTournament)
       navigate(`/tournaments/${foundTournament.data.tournament._id}`)
     } catch (error) {
       if (error.response.status === 404) navigate(`/tournaments/search?q=${search}`);
@@ -37,7 +36,7 @@ function Home() {
   }, [])
 
   useEffect(() => {
-    setSearchResult([...tournaments].filter((tournament) => tournament.name.includes(search)));
+    setSearchResult([...tournaments].filter((tournament) => tournament.name.toLowerCase().includes(search.toLowerCase())));
   }, [search])
 
   useEffect(() => {

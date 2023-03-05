@@ -304,6 +304,47 @@ body {
     cursor: pointer;
 }
 
+/* SEARCH SITE */
+.tournament-search-main-ctn {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 30px;
+}
+.tournament-search-ctn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.tournament-search-bar-ctn input {
+    width: 80vw;
+    height: 50px;
+    font-size: 20px;
+}
+.tournament-search-result-ctn {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    border: 1px black solid;
+    margin: 20px;
+    padding: 20px;
+    width: 90vw;
+}
+.tournament-search-result-ctn ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    list-style-type: none;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding-left: 0;
+    padding: 20px;
+    background-color: rgb(80, 53, 142);;
+}
+.tournament-search-result-link {
+    text-decoration: none;
+    color: white;
+}
 
 /* TOURNAMENTS */
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 function TournamentSearch() {
 const [tournaments, setTournaments] = useState([]);
@@ -9,6 +9,7 @@ const [search, setSearch] = useState("");
 const [searchResults, setSearchResults] = useState([]);
 
 const [searchParams] = useSearchParams();
+const navigate = useNavigate()
 
 const getTournaments = async () => {
   const allTournaments = await axios.get(`http://localhost:5005/tournaments/all`);
@@ -16,29 +17,28 @@ const getTournaments = async () => {
   setIsLoading(false);
 }
 
-const searchTournament = async () => {
-
-}
-
 useEffect(() => {
-  setSearchResults([...tournaments].filter((tournament => tournament.name.includes(search))))
+  setSearchResults([...tournaments].filter((tournament => tournament.name.includes(search) || tournament.challenge.includes(search))))
 }, [tournaments])
 
 useEffect(() => {
   getTournaments();
+  searchParams.append("q", search);
+  navigate(`/tournaments/search?q=${search}`);
 }, [search])
 
 useEffect(() => {
   setSearch(searchParams.get("q"))
+  console.log(searchParams.get("q"));
 }, [])
 
 
   return (
-    <div className="tournament-search-main-ctn">
+    <div className="tournament-search-main-ctn landing-font">
       <div className="tournament-search-ctn">
       {isLoading ? <div>Loading details...</div> : 
-        <div className="home-search-ctn">
-          <input list="tournament-list" type="text" value={search} onChange={(e) => setSearch(e.target.value)} /><button className="home-create-tournament-btn" type="button" onClick={searchTournament}>Search</button>
+        <div className="tournament-search-bar-ctn">
+          <input list="tournament-list" className="landing-font" placeholder="Tournament name / challenge" type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
           <datalist id="tournament-list">
             {tournaments.map((result) => {
               return (
@@ -46,15 +46,24 @@ useEffect(() => {
               )
             })}
           </datalist>
+          <h3>Results</h3>
+          <p>Displaying {searchResults.length} results out of {tournaments.length} Tournaments</p>
         </div>}
         {(!isLoading && searchResults.length) ? 
-        <ul>
+        <div className="tournament-search-result-ctn">
         {searchResults.map((result) => {
           return (
-            <li>{result.name}</li>
+            <Link to={`/tournaments/${result._id}`} className="tournament-search-result-link"><ul key={result._id}>
+              <li style={{paddingBottom: "15px", textAlign: "center"}}>{result.name}</li>
+              <li className={result.status === "Ended" ? "status-ended" : result.status === "Closed" ? "status-closed" : result.status === "Open" ? "status-open" : ""}>{result.status}</li>
+              <li>Challenge: {result.challenge}</li>
+              {(result.maxParticipants > 0 && result.minParticipants > 0) ? <li>Free slots: {result.minParticipants} / {result.maxParticipants}</li> : <li>No participant limit!</li>}
+              <li>From: {result.startDate.slice(0, 10)}</li>
+              <li>To: {result.endDate.slice(0, 10)}</li>
+            </ul></Link>
           )
           })}
-        </ul> : <div>No results for your search: {search}</div>}
+        </div> : <div>No results for your search: {search}</div>}
       </div>
     </div>
   )
