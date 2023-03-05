@@ -33,6 +33,7 @@ function Home() {
 
   useEffect(() => {
     getTournaments();
+    console.log(user);
   }, [])
 
   useEffect(() => {
@@ -57,20 +58,22 @@ function Home() {
           <h2>Your upcoming Tournaments</h2>
           <section>
             {isLoading ? <div>Loading details...</div> : 
-            <div>
-              <ul>
-              {tournaments.filter((tournament) => (tournament.organizer.username === user.username && tournament.status !== "Ended")).length ? tournaments.filter((tournament) => (tournament.organizer.username === user.username && tournament.status !== "Ended")).map((tournament) => {
+            <div className="home-search-result-ctn">
+              { tournaments.filter(tournament => user.tournaments.includes(tournament._id) && tournament.status !== "Ended").map((tournament) => {
                 return (
-                  <li key={tournament._id}><Link to={`/tournaments/${tournament._id}`}>{tournament.name} 👑</Link> <br/> {tournament.challenge} - <span className={tournament.status === "Open" ? "status-open" : tournament.status === "Closed" ? "status-closed" : tournament.status === "Ended" ? "status-ended" : ""}>{tournament.status}</span></li>
+                  <Link to={`/tournaments/${tournament._id}`} key={tournament._id} className="home-search-result-link">
+                    <ul>
+                      <li>{tournament.name} 👑 <br/> {tournament.challenge} - <span className={tournament.status === "Open" ? "status-open" : tournament.status === "Closed" ? "status-closed" : ""}>{tournament.status}</span></li>
+                    </ul>
+                  </Link>
                 )
-                }) : <div>No upcoming Tournaments, sign up for some!</div>}
-              </ul>
+                })}
             </div>}
           </section>
           <h2>Search for Tournaments</h2>
           <section>
             {isLoading ? <div>Loading details...</div> : 
-            <div className="home-search-ctn">
+            <div className="home-search-ctn ">
               <input list="tournament-list" type="text" value={search} onChange={(e) => setSearch(e.target.value)} /><button className="home-create-tournament-btn" type="button" onClick={searchTournament}>Search</button>
               <datalist id="tournament-list">
                 {searchResult.map((result) => {
@@ -84,7 +87,7 @@ function Home() {
           <h2>Create a Tournament</h2>
           <section>
             <div>
-              <Link className="home-create-tournament-btn" to="/tournaments/create">Go to Tournament Creation</Link>
+              {(user.status === "Paid Member" || user.status === "Premium Member") ? <Link className="home-create-tournament-btn" to="/tournaments/create">Go to Tournament Creation</Link> : <Link className="home-create-tournament-btn" to="/membership-options">See Membership Options</Link>}
             </div>
           </section>
         </div>
@@ -92,28 +95,32 @@ function Home() {
           <div>
             <h3>Past Tournaments</h3>
             <section>
+              <div className="home-search-result-ctn">
               {isLoading ? <div>Loading details...</div> : 
-              <ul>
-                {tournaments.filter((tournament) => tournament.status === "Ended").map((tournament) => {
+                tournaments.filter((tournament) => tournament.status === "Ended").map((tournament) => {
                   return (
-                    <li key={tournament._id}><Link to={`/tournaments/${tournament._id}`}>{tournament.name} {tournament.organizer.username === user.username && <>👑</>}</Link> <br/> {tournament.challenge}</li>
-                  )
-                  })}
-              </ul>}
+                    <Link to={`/tournaments/${tournament._id}`} key={tournament._id} className="home-search-result-link">
+                      <ul>
+                        <li>{tournament.name} {tournament.organizer.username === user.username && <>👑</>} <br/> {tournament.challenge}</li>
+                      </ul>
+                    </Link>
+                  )})}
+              </div>
             </section>
           </div>
           <div>
             <h3>Tournaments that might interest you</h3>
-            <section>
+            <section className="home-last-section">
               {isLoading ? <div>Loading details...</div> : 
-              <div>
-                <ul>
+              <div className="home-search-result-ctn">
                 {tournaments.map((tournament) => {
                   return (
-                    <li key={tournament._id}><Link to={`/tournaments/${tournament._id}`}>{tournament.name} {tournament.organizer.username === user.username && <>👑</>} </Link> <br/> {tournament.challenge} - <span className={tournament.status === "Open" ? "status-open" : tournament.status === "Closed" ? "status-closed" : tournament.status === "Ended" ? "status-ended" : ""}>{tournament.status}</span></li>
-                  )
-                  })}
-                </ul>
+                    <Link to={`/tournaments/${tournament._id}`} key={tournament._id} className="home-search-result-link">
+                      <ul>
+                        <li>{tournament.name} {tournament.organizer.username === user.username && <>👑</>} <br/> {tournament.challenge} - <span className={tournament.status === "Open" ? "status-open" : tournament.status === "Closed" ? "status-closed" : tournament.status === "Ended" ? "status-ended" : ""}>{tournament.status}</span></li>
+                      </ul>
+                    </Link>
+                  )})}
               </div>}
             </section>
           </div>

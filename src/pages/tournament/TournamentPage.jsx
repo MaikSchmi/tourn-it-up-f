@@ -39,7 +39,8 @@ function TournamentPage() {
 
   const addParticipant = async () => {
     try {
-      await axios.post(`http://localhost:5005/tournaments/updateparticipants/${id}`, {user: user, signup: true})
+      const addedTournament = await axios.post(`http://localhost:5005/tournaments/updateparticipants/${id}`, {user: user, signup: true})
+      user.tournaments = addedTournament.data.user.tournaments;
       getTournamentInfo();
     } catch(error) {
       console.log("Error adding participant: ", error);
@@ -51,7 +52,8 @@ function TournamentPage() {
 
   const removeParticipant = async () => {
     try {
-      await axios.post(`http://localhost:5005/tournaments/updateparticipants/${id}`, {user: user, resign: true})
+      const resignedTournament = await axios.post(`http://localhost:5005/tournaments/updateparticipants/${id}`, {user: user, resign: true})
+      user.tournaments = resignedTournament.data.user.tournaments;
       getTournamentInfo();
     } catch (error) {
       console.log("Error removing participant: ", error);
@@ -65,6 +67,8 @@ function TournamentPage() {
     if (participants.find(participant => participant.username === user.username)) {
       setAlreadyParticipating(true);
     } else {
+      
+      //user.tournaments.splice()
       setAlreadyParticipating(false);
     }
   }

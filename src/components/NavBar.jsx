@@ -3,7 +3,7 @@ import { Link, Outlet } from 'react-router-dom'
 import { AuthContext } from '../contexts/Auth.context';
 
 function NavBar() {
-  const { logoutUser, isAuthenticated } = useContext(AuthContext);
+  const { logoutUser, isAuthenticated, user } = useContext(AuthContext);
   return (
     <>
     <div className="nav-ctn">
@@ -15,8 +15,8 @@ function NavBar() {
       <nav className="nav-two">
         <ul>
           <li><Link to="/" className="nav-two-item">Forums</Link></li>
-          <li><Link to="/" className="nav-two-item">Participate</Link></li>
-          <li><Link to="/login" className="nav-two-item">Organize</Link></li>
+          <li><Link to={isAuthenticated ? "/home" : "/tournaments/search?"} className="nav-two-item">Participate</Link></li>
+          <li><Link to={isAuthenticated && user.status !== "Member" ? "/tournaments/create" : "/membership-options" } className="nav-two-item">Organize</Link></li>
           {isAuthenticated ? 
           <>
           <li><Link to="/profile" className="nav-two-item">Profile</Link></li>

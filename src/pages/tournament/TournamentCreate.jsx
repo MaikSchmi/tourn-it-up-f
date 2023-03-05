@@ -76,7 +76,7 @@ function TournamentCreate() {
     locationCountry === "" ? setErrLocation(`Please provide a location (choose "Virtually" if it's online).`) : setErrLocation("");
     startDate === "" ? setErrStartDate("Please select a start date.") : setErrStartDate("");
     endDate === "" ? setErrEndDate("Please select an end date.") : setErrEndDate("");
-    (maxParticipants > 0 && minParticipants > 0 && maxParticipants < minParticipants) ? setErrMaxMin("Please correct the participant amount.") : setErrMaxMin("");
+    ((maxParticipants > 0 && minParticipants > 0) && maxParticipants < minParticipants) ? setErrMaxMin("Please correct the participant amount.") : setErrMaxMin("");
     !tosChecked ? setErrTosChecked("Please review and accept the Terms of Service and Code of Conduct.") : setErrTosChecked("");
 
 

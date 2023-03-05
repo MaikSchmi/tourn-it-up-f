@@ -13,7 +13,7 @@ function DeleteConfirmPopup({value}) {
     }, [value.aboutToDelete])
 
   return (
-    <div id="popup0" className="popup-shade-bg form-not-loaded">
+      <div id="popup0" className="popup-shade-bg form-not-loaded">
         <div id="popup1" className="popup-ctn form-not-loaded">
             <h3>Are you sure you want to delete this tournament?</h3>
             <p>This action cannot be undone.</p>

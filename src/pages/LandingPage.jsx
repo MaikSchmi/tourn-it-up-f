@@ -17,7 +17,7 @@ function LandingPage() {
         <div>
           <h2>What Do You Like?</h2>
           <p>Push yourself to your limits in challenges that match your skillset, or try out something new. Our vast community hosts tournaments that cover all areas of expertise!</p>
-          <Link to="/">Check out some tournaments</Link>
+          <Link to="/tournaments/search?">Check out some tournaments</Link>
         </div>
         <div>
           <img src="/images/interests.png" alt="amazingImage"/>
@@ -27,7 +27,7 @@ function LandingPage() {
         <div>
           <h2>Interested In Hosting Your Own Tournaments?</h2>
           <p>Are you a business owner and would like to promote your product, or simply have a passion for competition?<br/>Become a paid member today for a small contribution fee and host your own challenges: Find worthy opponents or have fun watching challengers give their all. Your tournament, your rules!</p>
-          <Link to="/">See pricing plans</Link>
+          <Link to="/membership-options">See pricing plans</Link>
         </div>
         <div>
           <img src="/images/host.png" alt="amazingImage"/>
@@ -37,7 +37,7 @@ function LandingPage() {
         <div>
           <h2>Tournaments Everywhere</h2>
           <p>Participate in tournaments close to you, at a place you are going to visit or virtually over the internet. It's a great way to make new connections, meet new people and have fun where ever you are and want to be!</p>
-          <Link to="/">Find tournaments by location</Link>
+          <Link to="/tournaments/search?">Find tournaments by location</Link>
         </div>
         <div>
           <img src="/images/map.png" alt="amazingImage"/>

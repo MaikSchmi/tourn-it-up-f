@@ -211,6 +211,7 @@ body {
     font-family: "Audiowide", "Tahoma", "Serif";
     padding: 20px;
     padding-bottom: 50px;
+    background-color: ivory;
 }
 .membership-option-card-ctn {
     display: flex;
@@ -240,6 +241,7 @@ body {
     width: 300px;
     height: 600px;
     padding: 20px;
+    box-shadow: 5px 10px;
 }
 .membership-option-card button {
     font-family: "Audiowide", "Tahoma", "Serif";
@@ -254,6 +256,28 @@ body {
     background-color: rgb(112, 255, 124);
     color: white;
 }
+.free-plan {
+    background-color: rgb(213, 210, 210);
+}
+.free-plan-inner {
+    background-color: rgb(235, 233, 233);
+    box-shadow: 3px 3px;
+}
+.paid-plan {
+    background-color: rgb(99, 153, 255);
+}
+.paid-plan-inner {
+    background-color: rgb(167, 195, 245);
+    box-shadow: 3px 3px;
+}
+.premium-plan {
+    background-color: darkmagenta;
+}
+.premium-plan-inner {
+    background-color: rgb(197, 71, 255);
+    box-shadow: 3px 3px;
+}
+
 
 /* HOME */
 .home-ctn {
@@ -276,8 +300,35 @@ body {
     padding: 0 50px;
     width: 90%;
 }
+.home-search-result-ctn {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    height: auto;
+    max-height: 300px;
+    overflow-y: scroll;
+    gap: 5px;
+}
+.home-search-result-ctn ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    list-style-type: none;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding-left: 0;
+    padding: 20px;
+    background-color: rgb(80, 53, 142);;
+}
+.home-search-result-link {
+    text-decoration: none;
+    color: white;
+}
 .home-search-ctn input {
-    height: 40px;
+    font-family: "Audiowide", "Tahoma", "Serif";
+    height: 50px;
+    font-size: 20px;
     width: 60%;
 }
 .home-bottom-ctn {
@@ -610,6 +661,27 @@ body {
 .popup-ctn {
     position: fixed;
     background-color: rgba(255, 0, 0, 0.849);
+    top: 20vh;
+    height: 40vh;
+    left: 10vw;
+    right: 10vw;
+    text-align: center;
+    border: black double 3px;
+}
+.popup-shade-bg {
+    position: fixed;
+    margin-top: -100px;
+    background-color: rgba(65, 65, 65, 0.632);
+    width: 100vw;
+    height: 100vh;
+}
+.popup-btn-ctn {
+    display: flex;
+    justify-content: space-evenly;
+}
+.popup-membership-ctn {
+    position: fixed;
+    background-color: rgba(58, 244, 48, 0.849);
     margin-left: auto;
     margin-right: auto;
     top: 20vh;
@@ -619,13 +691,14 @@ body {
     text-align: center;
     border: black double 3px;
 }
-.popup-shade-bg {
-    position: absolute;
+.popup-membership-shade-bg {
+    position: fixed;
+    margin-top: -100px;
     background-color: rgba(65, 65, 65, 0.632);
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 148vh;
 }
-.popup-btn-ctn {
+.popup-membership-btn-ctn {
     display: flex;
     justify-content: space-evenly;
 }
@@ -676,6 +749,7 @@ body {
 }
 
 .footer-bottom-ctn {
+    margin-top: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;

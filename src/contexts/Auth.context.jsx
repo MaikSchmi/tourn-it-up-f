@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom'
 const AuthContext= React.createContext()
 
 function AuthContextWrapper(props) {
-const [isAuthenticated , setIsAuthenticated] = useState(false)
-const [isLoading , setIsLoading] = useState(true)
-const [user , setUser] = useState(null)
+const [isAuthenticated, setIsAuthenticated] = useState(false)
+const [isLoading, setIsLoading] = useState(true)
+const [user, setUser] = useState(null)
 const navigate = useNavigate();
 
 const loginUser = async (email, password) => {
@@ -40,7 +40,7 @@ const authenticateUser = async () => {
             const userData = await response.data
             setIsAuthenticated(true)
             setIsLoading(false)
-            setUser({username: userData.username, email: userData.email})
+            setUser({username: userData.username, email: userData.email, status: userData.status, tournaments: userData.tournaments})
         } catch(err) {
             console.log(err)
             setIsAuthenticated(false)
