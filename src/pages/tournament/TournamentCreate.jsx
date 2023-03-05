@@ -252,11 +252,11 @@ function TournamentCreate() {
         <div className="tournament-create-form-subgroup-ctn">
             <div className="tournament-create-form-subgroup">
               <label htmlFor="maps-link">Maps Link:</label>
-              <input id="maps-link" type="text" value={mapUrl} onChange={(e) => setMapUrl(e.target.value)} />
+              <input id="maps-link" type="url" value={mapUrl} onChange={(e) => setMapUrl(e.target.value)} />
             </div>
             <div className="tournament-create-form-subgroup">
               <label htmlFor="update-platform-link">Link to Update Platform:</label>
-              <input id="update-platform-link" type="text" value={updatePlatformUrl} onChange={(e) => setupdatePlatformUrl(e.target.value)} />
+              <input id="update-platform-link" type="url" value={updatePlatformUrl} onChange={(e) => setupdatePlatformUrl(e.target.value)} />
           </div>
         </div>
         
