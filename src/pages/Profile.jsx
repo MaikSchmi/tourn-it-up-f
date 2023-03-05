@@ -7,6 +7,7 @@ function Profile() {
   return (
     <div>
       Hallo  {user.username} {user.email}
+      
       <Link to = '/profile/settings'>Settings</Link>
       <Link to="/membership-options">Update Membership Options</Link>
     </div>
