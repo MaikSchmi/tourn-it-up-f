@@ -164,7 +164,7 @@ function TournamentCreate() {
   }, [])
 
   return (
-    <div className="tournament-create-frm-ctn">
+    <div className="tournament-create-frm-ctn bg-image">
       <h1>Create a Tournament</h1>
       {submitError !== "" && <span className="form-error-message">{submitError}</span>}
       <form className="tournament-create-frm" onSubmit={handleFormSubmit} >

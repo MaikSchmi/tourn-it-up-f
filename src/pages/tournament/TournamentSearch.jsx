@@ -34,7 +34,7 @@ useEffect(() => {
 
 
   return (
-    <div className="tournament-search-main-ctn landing-font">
+    <div className="tournament-search-main-ctn landing-font bg-image">
       <div className="tournament-search-ctn">
       <h1>Search</h1>
       {isLoading ? <div>Loading details...</div> : 

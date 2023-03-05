@@ -5,6 +5,10 @@ body {
     padding: 0;
 }
 
+button {
+    transition-duration: 0.15s;
+}
+
 /* GENERAL FEATURES */
 
 /* SCROLL BAR */
@@ -294,6 +298,12 @@ body {
 
 
 /* HOME */
+.bg-image {
+    background-image: url("../images/tournament_bg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
 .home-ctn {
     /* background-color: rgb(229, 227, 227); */
     display: flex;
@@ -301,12 +311,13 @@ body {
     justify-content: center;
     align-items: center;
     gap: 10px;
-    padding-bottom: 500px;
-    background-color: rgba(255, 149, 0, 0.047);
+    padding-bottom: 150px;
+    color: white;
 }
 .home-ctn section {
     padding: 50px;
     border: 1px black solid;
+    background-color: rgba(0, 0, 0, 0.587);
 }
 .home-top-ctn {
     display: flex;
@@ -341,6 +352,9 @@ body {
     text-decoration: none;
     color: white;
 }
+.home-search-result-link:hover {
+    color: rgb(247, 194, 18);
+}
 .home-search-ctn input {
     font-family: "Audiowide", "Tahoma", "Serif";
     height: 50px;
@@ -366,6 +380,12 @@ body {
     font-size: 15px;
     text-decoration: none;
 }
+.home-create-tournament-btn:hover {    
+    background-color: rgb(103, 164, 102);
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    cursor: pointer;
+}
 .home-bottom-sections {
     display: flex;
     align-items: center;
@@ -373,18 +393,14 @@ body {
     width: 25vw;
     height: 40vh;
 }
-.home-create-tournament-btn:hover {    
-    background-color: rgb(139, 255, 137);
-    color: rgb(0, 0, 0);
-    font-weight: bold;
-    cursor: pointer;
-}
 
 /* SEARCH SITE */
 .tournament-search-main-ctn {
     display: flex;
     justify-content: space-evenly;
     padding: 30px;
+    color: white;
+    min-height: 100vh;
 }
 .tournament-search-ctn {
     display: flex;
@@ -405,6 +421,7 @@ body {
     margin: 20px;
     padding: 20px;
     width: 90vw;
+    background-color: rgba(0, 0, 0, 0.444);
 }
 .tournament-search-result-ctn ul {
     display: flex;
@@ -415,11 +432,25 @@ body {
     border-radius: 20px;
     padding-left: 0;
     padding: 20px;
-    background-color: rgb(80, 53, 142);;
+    background-color: rgb(80, 53, 142);
+}
+.tournament-search-result-ctn ul:hover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    list-style-type: none;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding-left: 0;
+    padding: 20px;
+    background-color: rgb(107, 73, 188);
 }
 .tournament-search-result-link {
     text-decoration: none;
     color: white;
+}
+.search-ul {
+    background-color: red;
 }
 
 /* TOURNAMENTS */
@@ -430,7 +461,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgb(229, 227, 227);
+    color: white;
     padding: 50px 0;
 }
 .tournament-create-frm {
@@ -438,6 +469,9 @@ body {
     flex-direction: column;
     gap: 20px;
     width: 800px;
+}
+.tournament-create-frm label {
+    color: white;
 }
 .tournament-create-form-box {
     border: black solid 1px;
@@ -536,6 +570,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: rgb(228, 228, 227);
+    color: white;
 }
 .tournament-card-btn-ctn {
     display: flex;
@@ -602,6 +637,7 @@ body {
     padding: 50px;
     border: 1px black solid;
     border-radius: 16px;
+    background-color: rgba(0, 0, 0, 0.493);
 }
 .tournament-card-section textarea {
     font-family: "Audiowide", "Tahoma", "Serif";
@@ -629,6 +665,11 @@ body {
     padding: 10px 30px;
     width: 150px;
     text-align: center;
+    background-color: rgba(33, 16, 222, 0.679);
+}
+.tournament-card-participant-link {
+    color: rgb(255, 214, 214);
+    text-decoration: none;
 }
 .tournament-card-comment-main-ctn {
     display: flex;
@@ -658,7 +699,8 @@ body {
     border: 2px white solid;
     border-radius: 20px;
     padding: 5px 8px;
-    font-size: 10px
+    font-size: 10px;
+    margin-bottom: 10px;
 }
 .tournament-card-delete-comment:hover {    
     background-color: rgb(218, 28, 28);

@@ -52,8 +52,8 @@ function Home() {
 
   return (
     <>
-      <div className="home-ctn landing-font">
-        <h1 style={{textDecoration: "underline"}}>~ TournItUp - Tournaments ~</h1>
+      <div className="home-ctn landing-font bg-image">
+        <h1 style={{textDecoration: "underline"}}>TournItUp - Tournaments</h1>
         <div className="home-top-ctn">
           <h2>Your upcoming Tournaments</h2>
           <section>
@@ -62,9 +62,9 @@ function Home() {
               { tournaments.filter(tournament => user.tournaments.includes(tournament._id) && tournament.status !== "Ended").map((tournament) => {
                 return (
                   <Link to={`/tournaments/${tournament._id}`} key={tournament._id} className="home-search-result-link">
-                    <ul>
-                      <li>"{tournament.name}" {tournament.organizer.username === user.username && <>👑</>} <br/> {tournament.challenge}-challenge - <span className={tournament.status === "Open" ? "status-open" : tournament.status === "Closed" ? "status-closed" : ""}>{tournament.status}</span></li>
-                    </ul>
+                      <ul>
+                        <li>"{tournament.name}" {tournament.organizer.username === user.username && <>👑</>} <br/> {tournament.challenge}-challenge - <span className={tournament.status === "Open" ? "status-open" : tournament.status === "Closed" ? "status-closed" : ""}>{tournament.status}</span></li>
+                      </ul>
                   </Link>
                 )
                 })}

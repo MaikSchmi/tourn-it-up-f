@@ -116,7 +116,7 @@ function TournamentPage() {
   }, [])
 
   return loadingDetails ? <div>Loading ...</div> : (
-    <div className="landing-font tournament-card-main-ctn">
+    <div className="landing-font tournament-card-main-ctn bg-image">
       <DeleteConfirmPopup value={{deleteConfirmed, aboutToDelete, setAboutToDelete}}/>
       {(user.username === participants[0].username && tournament.status === "Open") &&
       <div className="tournament-card-btn-ctn">
@@ -132,7 +132,7 @@ function TournamentPage() {
           <span>Slots filled: {tournament.participants.length + 1} {tournament.maxParticipants > 0 && <span>/ {tournament.maxParticipants}</span>}</span>
           {tournament.minParticipants > 0 && <span>Minimum needed: {tournament.minParticipants}</span>}
           <ul className="tournament-card-participant-list">
-            {participants.map((participant, index) => <li key={participant.id}><Link to={`/profile/${participant.id}`}>{participant.username}</Link>{index === 0 && <span>👑</span>}</li>)}
+            {participants.map((participant, index) => <Link className="tournament-card-participant-link" to={`/profile/${participant.id}`}><li key={participant.id}>{participant.username}{index === 0 && <span>👑</span>}</li></Link>)}
             {(user.username !== tournament.organizer.username && !alreadyParticipating && tournament.participants.length + 1 < tournament.maxParticipants && tournament.status === "Open") && <button type="button" className="tournament-card-participate" onClick={addParticipant}>Participate!</button>}
             {(user.username !== tournament.organizer.username && alreadyParticipating && tournament.status === "Open") && <button type="button" className="tournament-card-delete" onClick={removeParticipant}>Resign</button>}
           </ul>
