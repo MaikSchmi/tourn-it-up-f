@@ -15,7 +15,7 @@ function NavBar() {
       <nav className="nav-two">
         <ul>
           <li><Link to="/" className="nav-two-item">Forums</Link></li>
-          <li><Link to={isAuthenticated ? "/home" : "/tournaments/search?"} className="nav-two-item">Participate</Link></li>
+          <li><Link to="/tournaments/search?" className="nav-two-item">Participate</Link></li>
           <li><Link to={isAuthenticated && user.status !== "Member" ? "/tournaments/create" : "/membership-options" } className="nav-two-item">Organize</Link></li>
           {isAuthenticated ? 
           <>

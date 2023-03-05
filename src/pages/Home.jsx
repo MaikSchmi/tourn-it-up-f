@@ -94,7 +94,7 @@ function Home() {
         <div className="home-bottom-ctn">
           <div>
             <h3>Past Tournaments</h3>
-            <section>
+            <section className="home-bottom-sections">
               <div className="home-search-result-ctn">
               {isLoading ? <div>Loading details...</div> : 
                 tournaments.filter((tournament) => tournament.status === "Ended").map((tournament) => {
@@ -109,8 +109,8 @@ function Home() {
             </section>
           </div>
           <div>
-            <h3>Tournaments that might interest you</h3>
-            <section className="home-last-section">
+            <h3>Interesting for you</h3>
+            <section className="home-bottom-sections">
               {isLoading ? <div>Loading details...</div> : 
               <div className="home-search-result-ctn">
                 {tournaments.map((tournament) => {

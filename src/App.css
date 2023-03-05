@@ -89,6 +89,15 @@ body {
 .landing-font {
     font-family: "Audiowide", "Tahoma", "Serif";
 }
+.landing-width {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.landing-center {
+    top: 1000px;
+}
 .landing-main-ctn {
     display: flex;
     align-items: center;
@@ -153,6 +162,7 @@ body {
 .landing-section-two-ctn img {
     width: auto;
     height: 100%;
+    max-width: 500px;
 }
 
 .landing-section-three-ctn {
@@ -170,6 +180,7 @@ body {
 .landing-section-three-ctn img {
     width: 100%;
     height: auto;
+    max-width: 500px;
 }
 
 .landing-section-four-ctn { 
@@ -187,6 +198,7 @@ body {
 .landing-section-four-ctn img {
     width: auto;
     height: 100%;
+    max-width: 500px;
 }
 
 .landing-section-five-ctn { 
@@ -204,14 +216,16 @@ body {
 .landing-section-five-ctn img {
     width: 100%;
     height: auto;
+    max-width: 500px;
 }
 
 /* MEMBERSHIP OPTIONS */
 .membership-options-main-ctn {
     font-family: "Audiowide", "Tahoma", "Serif";
-    padding: 20px;
     padding-bottom: 50px;
     background-color: ivory;
+    margin-top: -22px;
+    padding-bottom: 100px;
 }
 .membership-option-card-ctn {
     display: flex;
@@ -286,8 +300,9 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 100px;
     gap: 10px;
+    padding-bottom: 500px;
+    background-color: rgba(255, 149, 0, 0.047);
 }
 .home-ctn section {
     padding: 50px;
@@ -331,13 +346,15 @@ body {
     height: 50px;
     font-size: 20px;
     width: 60%;
+    box-shadow: 2px 2px;
+    margin-right: 10px;
 }
 .home-bottom-ctn {
     display: flex;
     justify-content: space-around;
-    align-items: flex-start;
+    align-items: center;
     width: 75vw;
-    height: 50vh;
+    gap: 20px;
 }
 .home-create-tournament-btn {
     font-family: "Audiowide", "Tahoma", "Serif";
@@ -348,6 +365,13 @@ body {
     padding: 10px 15px;
     font-size: 15px;
     text-decoration: none;
+}
+.home-bottom-sections {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25vw;
+    height: 40vh;
 }
 .home-create-tournament-btn:hover {    
     background-color: rgb(139, 255, 137);
@@ -750,7 +774,6 @@ body {
 }
 
 .footer-bottom-ctn {
-    margin-top: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;

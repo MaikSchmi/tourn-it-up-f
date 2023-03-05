@@ -36,6 +36,7 @@ useEffect(() => {
   return (
     <div className="tournament-search-main-ctn landing-font">
       <div className="tournament-search-ctn">
+      <h1>Search</h1>
       {isLoading ? <div>Loading details...</div> : 
         <div className="tournament-search-bar-ctn">
           <input list="tournament-list" className="landing-font" placeholder="Tournament name / challenge" type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
