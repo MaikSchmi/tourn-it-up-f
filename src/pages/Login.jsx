@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState , useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../contexts/Auth.context'
@@ -6,12 +6,16 @@ import { AuthContext } from '../contexts/Auth.context'
 function Login() {
   const [email, setEmail ] = useState ('');
   const [password, setPassword ] = useState ('');
-  const { loginUser, errorMessage } = useContext(AuthContext);
+  const { loginUser, errorMessage, setErrorMessage } = useContext(AuthContext);
 
   const handleLogin = async (event) => {
     event.preventDefault()
     loginUser(email, password, {justSignedUp: false})
   } 
+
+  useEffect(() => {
+    if (errorMessage !== "") setErrorMessage("");
+  }, [])
 
   return (
     <div className="form-page-top-level">

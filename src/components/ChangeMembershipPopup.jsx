@@ -18,7 +18,7 @@ function ChangeMembershipPopup({value}) {
     }, [value.aboutToUpdate])
 
   return (
-    <div id="popup0" className="popup-membership-shade-bg form-not-loaded">
+    <div id="popup0" className="landing-font popup-membership-shade-bg form-not-loaded">
         <div id="popup1" className="popup-membership-ctn form-not-loaded">
             <h3>You are about to update your Membership.</h3>
             <p>Please confirm that you would like to update your membership to the chosen plan.<br/>Note: You will be signed out for the changes to take effect and they will reflect as soon as you sign in again.</p>

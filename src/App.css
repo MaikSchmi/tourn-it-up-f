@@ -317,9 +317,10 @@ body {
     list-style-type: none;
     border: 1px solid black;
     border-radius: 10px;
+    box-shadow: 5px 5px;
     padding-left: 0;
     padding: 20px;
-    background-color: rgb(80, 53, 142);;
+    background-color: rgb(80, 53, 142);
 }
 .home-search-result-link {
     text-decoration: none;

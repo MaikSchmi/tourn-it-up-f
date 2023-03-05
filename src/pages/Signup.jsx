@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import { AuthContext } from '../contexts/Auth.context'
@@ -27,6 +27,10 @@ function Signup() {
       setErrorMessage(error.response.data.message)
     }
   }
+  
+  useEffect(() => {
+    if (errorMessage !== "") setErrorMessage("");
+  }, [])
 
   return (
     <div className="form-page-top-level">

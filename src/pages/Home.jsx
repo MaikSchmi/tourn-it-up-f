@@ -53,7 +53,7 @@ function Home() {
   return (
     <>
       <div className="home-ctn landing-font">
-        <h1>TournItUp - Tournaments</h1>
+        <h1 style={{textDecoration: "underline"}}>~ TournItUp - Tournaments ~</h1>
         <div className="home-top-ctn">
           <h2>Your upcoming Tournaments</h2>
           <section>
@@ -63,7 +63,7 @@ function Home() {
                 return (
                   <Link to={`/tournaments/${tournament._id}`} key={tournament._id} className="home-search-result-link">
                     <ul>
-                      <li>{tournament.name} 👑 <br/> {tournament.challenge} - <span className={tournament.status === "Open" ? "status-open" : tournament.status === "Closed" ? "status-closed" : ""}>{tournament.status}</span></li>
+                      <li>"{tournament.name}" {tournament.organizer.username === user.username && <>👑</>} <br/> {tournament.challenge}-challenge - <span className={tournament.status === "Open" ? "status-open" : tournament.status === "Closed" ? "status-closed" : ""}>{tournament.status}</span></li>
                     </ul>
                   </Link>
                 )
@@ -101,7 +101,7 @@ function Home() {
                   return (
                     <Link to={`/tournaments/${tournament._id}`} key={tournament._id} className="home-search-result-link">
                       <ul>
-                        <li>{tournament.name} {tournament.organizer.username === user.username && <>👑</>} <br/> {tournament.challenge}</li>
+                        <li>"{tournament.name}" {tournament.organizer.username === user.username && <>👑</>} <br/> {tournament.challenge}-challenge</li>
                       </ul>
                     </Link>
                   )})}
@@ -117,7 +117,7 @@ function Home() {
                   return (
                     <Link to={`/tournaments/${tournament._id}`} key={tournament._id} className="home-search-result-link">
                       <ul>
-                        <li>{tournament.name} {tournament.organizer.username === user.username && <>👑</>} <br/> {tournament.challenge} - <span className={tournament.status === "Open" ? "status-open" : tournament.status === "Closed" ? "status-closed" : tournament.status === "Ended" ? "status-ended" : ""}>{tournament.status}</span></li>
+                        <li>"{tournament.name}" {tournament.organizer.username === user.username && <>👑</>} <br/> {tournament.challenge}-challenge - <span className={tournament.status === "Open" ? "status-open" : tournament.status === "Closed" ? "status-closed" : tournament.status === "Ended" ? "status-ended" : ""}>{tournament.status}</span></li>
                       </ul>
                     </Link>
                   )})}
