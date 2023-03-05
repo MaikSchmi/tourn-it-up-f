@@ -1,12 +1,12 @@
 import React from 'react'
-import {useState , useContext} from 'react'
-import {Link, useNavigate} from 'react-router-dom'
+import { useState , useContext } from 'react'
+import { Link } from 'react-router-dom'
 import { AuthContext } from '../contexts/Auth.context'
 
 function Login() {
-  const [email , setEmail ] = useState ('')
-  const [password , setPassword ] = useState ('')
-  const {loginUser} = useContext(AuthContext)
+  const [email, setEmail ] = useState ('');
+  const [password, setPassword ] = useState ('');
+  const { loginUser, errorMessage } = useContext(AuthContext);
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -32,6 +32,7 @@ function Login() {
         <div>
           <Link to="/signup"><p>Don't have an account yet?</p></Link>
         </div>
+        {errorMessage !== "" && <div style={{textAlign: "center", width: "200px"}} className="form-error-message">{errorMessage}</div>}
       </div>
     </div>
   )

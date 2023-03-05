@@ -4,29 +4,30 @@ import {Link} from 'react-router-dom'
 import { AuthContext } from '../contexts/Auth.context'
 
 function Signup() {
-  const [username , setUsername ] = useState ('')
-  const [password , setPassword ] = useState ('')
-  const [email , setEmail ] = useState ('')
-  const [repeatPassword , setRepeatPassword ] = useState ('')
-  const {loginUser} = useContext(AuthContext)
+  const [username , setUsername ] = useState ('');
+  const [password , setPassword ] = useState ('');
+  const [email , setEmail ] = useState ('');
+  const [repeatPassword , setRepeatPassword ] = useState ('');
+  const [errorMessage, setErrorMessage] = useState("");
+  const { loginUser } = useContext(AuthContext);
  
   const handleUserCreate = async (event) => {
-      event.preventDefault()
-      if (password === repeatPassword){
-      try { 
-        await axios.post('http://localhost:5005/auth/signup', {
-          username: username,
-          password: password,
-          email: email
-        })
-        loginUser(email, password);
+    event.preventDefault()
+    try { 
+      await axios.post('http://localhost:5005/auth/signup', {
+        username: username,
+        password: password,
+        repeatPassword: repeatPassword,
+        email: email
+      })
+      loginUser(email, password);
     }
     catch (error) {
       console.log(error)
+      setErrorMessage(error.response.data.message)
     }
   }
-    else {console.log("passwords don't match")}
-} 
+
   return (
     <div className="form-page-top-level">
       <div className="form-ctn">
@@ -53,6 +54,7 @@ function Signup() {
         <div>
           <Link to="/login"><p>Already have an account?</p></Link>
         </div>
+        {errorMessage !== "" && <div style={{textAlign: "center", width: "200px"}} className="form-error-message">{errorMessage}</div>}
       </div>
     </div>
   )

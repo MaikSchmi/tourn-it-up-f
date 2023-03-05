@@ -7,6 +7,7 @@ function AuthContextWrapper(props) {
 const [isAuthenticated, setIsAuthenticated] = useState(false)
 const [isLoading, setIsLoading] = useState(true)
 const [user, setUser] = useState(null)
+const [errorMessage, setErrorMessage] = useState("");
 const navigate = useNavigate();
 
 const loginUser = async (email, password) => {
@@ -21,6 +22,7 @@ const loginUser = async (email, password) => {
       navigate("/home");
     } catch (error) {
       console.log(error);
+      setErrorMessage(error.response.data.message)
     }
 }
 
@@ -69,7 +71,7 @@ useEffect(()=> {
 }, [])
 
  return( 
-    <AuthContext.Provider  value={{isAuthenticated , isLoading , user , storeToken , authenticateUser, loginUser, logoutUser}}>
+    <AuthContext.Provider  value={{isAuthenticated , isLoading , user , storeToken , authenticateUser, loginUser, logoutUser, errorMessage}}>
     {props.children}
     </AuthContext.Provider>
 )}
