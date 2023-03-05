@@ -1,11 +1,13 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../contexts/Auth.context';
 
 
 function Home() {
   const [tournaments, setTournaments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const {user} = useContext(AuthContext);
 
   const getTournaments = async () => {
     try {
@@ -22,7 +24,13 @@ function Home() {
   }, [])
 
   useEffect(() => {
-    console.log(tournaments)
+    if (tournaments.status === "Open") {
+      setStatusState("status-format status-open");
+    } else if (tournaments.status === "Closed") {
+      setStatusState("status-format status-closed");
+    } else if (tournaments.status === "Ended") {
+      setStatusState("status-format status-ended");
+    }
   }, [tournaments])
 
   return (
@@ -34,8 +42,13 @@ function Home() {
             <h2>Your upcoming Tournaments</h2>
             {isLoading ? <div>Loading details...</div> : 
             <div>
-              Content
-              Content
+              <ul>
+              {tournaments.filter((tournament) => (tournament.organizer.username === user.username && tournament.status !== "Ended")).length ? tournaments.filter((tournament) => (tournament.organizer.username === user.username && tournament.status !== "Ended")).map((tournament) => {
+                return (
+                  <li key={tournament._id}><Link to={`/tournaments/${tournament._id}`}>{tournament.name} 👑</Link> <br/> {tournament.challenge} - <span className={tournament.status === "Open" ? "status-open" : tournament.status === "Closed" ? "status-closed" : tournament.status === "Ended" ? "status-ended" : ""}>{tournament.status}</span></li>
+                )
+                }) : <div>No upcoming Tournaments, sign up for some!</div>}
+              </ul>
             </div>}
           </section>
           <section>
@@ -57,10 +70,13 @@ function Home() {
           <section>
             <h3>Past Tournaments</h3>
             {isLoading ? <div>Loading details...</div> : 
-            <div>
-              Content
-              Content
-            </div>}
+            <ul>
+              {tournaments.filter((tournament) => tournament.status === "Ended").map((tournament) => {
+                return (
+                  <li key={tournament._id}><Link to={`/tournaments/${tournament._id}`}>{tournament.name} 👑</Link> <br/> {tournament.challenge}</li>
+                )
+                })}
+            </ul>}
           </section>
           <section>
             <h3>Tournaments that might interest you</h3>
@@ -69,7 +85,7 @@ function Home() {
               <ul>
               {tournaments.map((tournament) => {
                 return (
-                  <li key={tournament._id}><Link to={`/tournaments/${tournament._id}`}>{tournament.name}</Link> <br/> {tournament.challenge}</li>
+                  <li key={tournament._id}><Link to={`/tournaments/${tournament._id}`}>{tournament.name} {tournament.organizer.username === user.username && <>👑</>} </Link> <br/> {tournament.challenge} - <span className={tournament.status === "Open" ? "status-open" : tournament.status === "Closed" ? "status-closed" : tournament.status === "Ended" ? "status-ended" : ""}>{tournament.status}</span></li>
                 )
                 })}
               </ul>

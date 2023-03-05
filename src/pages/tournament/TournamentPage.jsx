@@ -12,6 +12,7 @@ function TournamentPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [alreadyParticipating, setAlreadyParticipating] = useState(false);
   const [aboutToDelete, setAboutToDelete] = useState(false);
+  const [statusState, setStatusState] = useState("");
 
   const navigate = useNavigate();
   const {user} = useContext(AuthContext);
@@ -21,7 +22,25 @@ function TournamentPage() {
     setTournament(await tournamentInfo.data.tournament);
     setParticipants(await tournamentInfo.data.participants); 
     checkParticipation();
+    const statusField = document.getElementById("tournament-status");
+    // Status
+    let today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const yyyy = today.getFullYear();
+    today = yyyy + "-" + mm + "-" + dd;
+    
     setLoadingDetails(false);
+  }
+
+  const updateTournamentStatus = () => {
+    if (tournament.status === "Open") {
+      setStatusState("status-format status-open");
+    } else if (tournament.status === "Closed") {
+      setStatusState("status-format status-closed");
+    } else if (tournament.status === "Ended") {
+      setStatusState("status-format status-ended");
+    }
   }
 
   const addParticipant = async () => {
@@ -56,6 +75,10 @@ function TournamentPage() {
   }
 
   useEffect(() => {
+    updateTournamentStatus();
+  }, [tournament])
+
+  useEffect(() => {
     checkParticipation();
   }, [participants])
 
@@ -66,7 +89,7 @@ function TournamentPage() {
   return loadingDetails ? <div>Loading ...</div> : (
     <div className="landing-font">
     <DeleteConfirmPopup value={{deleteConfirmed, aboutToDelete, setAboutToDelete}}/>
-    {user.username === participants[0].username && 
+    {(user.username === participants[0].username && tournament.status === "Open") &&
     <div className="tournament-card-btn-ctn">
       <button className="tournament-card-edit" type="button" onClick={handleEditClick}>Edit Tournament</button> 
       <button className="tournament-card-delete" type="button" onClick={() => setAboutToDelete(true)}>Delete Tournament</button>
@@ -77,8 +100,8 @@ function TournamentPage() {
     <div className="tournament-card"> 
       <div className="tournament-card-section">
         <h3>Participants</h3>
-        <span>Slots filled: {tournament.participants.length + 1} {tournament.maxParticipants && <span>/ {tournament.maxParticipants}</span>}</span>
-        {tournament.minParticipants && <span>Minimum needed: {tournament.minParticipants}</span>}
+        <span>Slots filled: {tournament.participants.length + 1} {tournament.maxParticipants > 0 && <span>/ {tournament.maxParticipants}</span>}</span>
+        {tournament.minParticipants > 0 && <span>Minimum needed: {tournament.minParticipants}</span>}
         <ul className="tournament-card-participant-list">
           {participants.map((participant, index) => <li key={participant.id}><Link to={`/profile/${participant.id}`}>{participant.username}</Link>{index === 0 && <span>👑</span>}</li>)}
           {(user.username !== participants[0].username && !alreadyParticipating && tournament.participants.length + 1 < tournament.maxParticipants) && <button type="button" onClick={addParticipant}>Participate!</button>}
@@ -97,6 +120,7 @@ function TournamentPage() {
       <div className="tournament-card-section">
         <h3>The Tournament</h3>
         <div>
+          <span id="tournament-status" className={statusState}>Status: {tournament.status}</span>
           <ul>
             <li>Challenge about: {tournament.challenge}</li>
             <li>Type: {tournament.type}</li>
@@ -104,6 +128,8 @@ function TournamentPage() {
             {tournament.reward && <li>Reward: <span>{tournament.reward}</span></li>}
             {tournament.mapUrl && <li>Map:<br/><Link to={tournament.mapUrl}>{tournament.mapUrl}</Link></li>}
             {tournament.updatePlatformUrl && <li>Connect:<br/><Link to={tournament.updatePlatformUrl}>{tournament.updatePlatformUrl}</Link></li>}
+            <li>Starts: {tournament.startDate.replace("T", ", at: ")}</li>
+            <li>Ends: {tournament.endDate.replace("T", ", at: ")}</li>
           </ul>
         </div>
       </div>

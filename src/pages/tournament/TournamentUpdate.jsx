@@ -40,6 +40,7 @@ function TournamentUpdate() {
     const [errEndDate, setErrEndDate] = useState("");
     const [errDateMatch, setErrDateMatch] = useState("");
     const [errTosChecked, setErrTosChecked] = useState("");
+    const [errMaxMin, setErrMaxMin] = useState("");
   
     const {id} = useParams("id");
     const navigate = useNavigate();
@@ -94,12 +95,13 @@ function TournamentUpdate() {
 
       endDate < startDate ? setErrDateMatch("The start date needs to be before the end date.") : startDate <= today ? setErrDateMatch("The start date needs to be in the future") : setErrDateMatch("");
       name === "" ? setErrName("Please indicate a name for the Tournament.") : setErrName("");
-      challenge === "" ? setErrChallenge("Please indicate a challenge.") : setErrChallenge("")
-      description === "" ? setErrDescription("Please enter a description.") : setErrDescription("")
-      locationCountry === "" ? setErrLocation(`Please provide a location (choose "Virtually" if it's online).`) : setErrLocation("")  
-      startDate === "" ? setErrStartDate("Please select a start date.") : setErrStartDate("")
-      endDate === "" ? setErrEndDate("Please select an end date.") : setErrEndDate("")
-      !tosChecked ? setErrTosChecked("Please review and accept the Terms of Service and Code of Conduct.") : setErrTosChecked("")
+      challenge === "" ? setErrChallenge("Please indicate a challenge.") : setErrChallenge("");
+      description === "" ? setErrDescription("Please enter a description.") : setErrDescription("");
+      locationCountry === "" ? setErrLocation(`Please provide a location (choose "Virtually" if it's online).`) : setErrLocation("");
+      startDate === "" ? setErrStartDate("Please select a start date.") : setErrStartDate("");
+      endDate === "" ? setErrEndDate("Please select an end date.") : setErrEndDate("");
+      (maxParticipants > 0 && minParticipants > 0 && maxParticipants < minParticipants) ? setErrMaxMin("Please correct the participant amount.") : setErrMaxMin("");
+      !tosChecked ? setErrTosChecked("Please review and accept the Terms of Service and Code of Conduct.") : setErrTosChecked("");
   
       const formDetails = {
           name,
@@ -220,6 +222,7 @@ function TournamentUpdate() {
                   <label htmlFor="max-amount">Max amount:</label>
                   <input type="number" id="max-amount" value={maxParticipants > 0 && maxParticipants} onChange={(e) => setMaxParticipants(e.target.value)} />
                 </div>
+            {errMaxMin !== "" && <span className="form-error-message">{errMaxMin}</span>}
             </div>
             <div>
               <input type="checkbox" value={professionsRequired} onChange={(e) => setProfessionsRequired(e.target.checked)} /><span>Professions required</span>

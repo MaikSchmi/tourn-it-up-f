@@ -416,6 +416,21 @@ body {
     width: 200px;
     text-align: center;
 }
+.status-format {
+    padding: 5px 15px;
+}
+.status-open {
+    background-color: rgb(198, 255, 112);
+    color: green;
+}
+.status-closed {
+    background-color: lightcoral;
+    color: red; 
+}
+.status-ended {
+    background-color: rgb(69, 67, 156);
+    color: white
+}
 
 .popup-ctn {
     position: fixed;
