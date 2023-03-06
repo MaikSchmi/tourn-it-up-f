@@ -29,7 +29,6 @@ useEffect(() => {
 
 useEffect(() => {
   setSearch(searchParams.get("q"))
-  console.log(searchParams.get("q"));
 }, [])
 
 
@@ -54,14 +53,16 @@ useEffect(() => {
         <div className="tournament-search-result-ctn">
         {searchResults.map((result) => {
           return (
-            <Link to={`/tournaments/${result._id}`} className="tournament-search-result-link"><ul key={result._id}>
-              <li style={{paddingBottom: "15px", textAlign: "center"}}>{result.name}</li>
-              <li className={result.status === "Ended" ? "status-ended" : result.status === "Closed" ? "status-closed" : result.status === "Open" ? "status-open" : ""}>{result.status}</li>
-              <li>Challenge: {result.challenge}</li>
-              {(result.maxParticipants > 0 && result.minParticipants > 0) ? <li>Free slots: {result.minParticipants} / {result.maxParticipants}</li> : <li>No participant limit!</li>}
-              <li>From: {result.startDate.slice(0, 10)}</li>
-              <li>To: {result.endDate.slice(0, 10)}</li>
-            </ul></Link>
+            <Link to={`/tournaments/${result._id}`} className="tournament-search-result-link" key={result._id}>
+              <ul>
+                <li style={{paddingBottom: "15px", textAlign: "center"}}>{result.name}</li>
+                <li className={result.status === "Ended" ? "status-ended" : result.status === "Closed" ? "status-closed" : result.status === "Open" ? "status-open" : ""}>{result.status}</li>
+                <li>Challenge: {result.challenge}</li>
+                {(result.maxParticipants > 0 && result.minParticipants > 0) ? <li>Free slots: {result.minParticipants} / {result.maxParticipants}</li> : <li>No participant limit!</li>}
+                <li>From: {result.startDate.slice(0, 10)}</li>
+                <li>To: {result.endDate.slice(0, 10)}</li>
+              </ul>
+            </Link>
           )
           })}
         </div> : <div>No results for your search: {search}</div>}

@@ -10,18 +10,15 @@ function MembershipOptions() {
   const [planChosen, setPlanChosen] = useState("")
   const navigate = useNavigate();
 
-  const setMembership = async (plan) => {
-    if (!user) navigate("/signup")
+  const setMembership = async () => {
+    console.log("triggered");
     try {
-      await axios.post("http://localhost:5005/user/update-membership-plan", {user: user.username, plan: plan})
-      logoutUser({justUpdatedDetails : false});
+      await axios.post("http://localhost:5005/auth/update-membership-plan", {user: user.username, plan: planChosen})
+      logoutUser();
+      navigate("/")
     } catch (error) {
       console.log("Error with your purchase: ", error);
     }
-  }
-
-  const changeConfirmed = async (plan) => {
-    setMembership(planChosen);
   }
 
   useEffect(() => {
@@ -30,7 +27,7 @@ function MembershipOptions() {
 
   return (
     <>
-    <ChangeMembershipPopup value={{changeConfirmed, aboutToUpdate, setAboutToUpdate, setPlanChosen}}/>
+    {user ? <ChangeMembershipPopup value={{setMembership, aboutToUpdate, setAboutToUpdate, setPlanChosen}}/> : navigate("/signup")}
     <div className="membership-options-main-ctn">
       <div>
         <h1 style={{textAlign: "center", padding: "25px"}}>Choose Your Membership Plan</h1>    

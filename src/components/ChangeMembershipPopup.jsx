@@ -23,7 +23,7 @@ function ChangeMembershipPopup({value}) {
             <h3>You are about to update your Membership.</h3>
             <p>Please confirm that you would like to update your membership to the chosen plan.<br/>Note: You will be signed out for the changes to take effect and they will reflect as soon as you sign in again.</p>
             <div className="popup-membership-btn-ctn">
-                <button type="button" className="tournament-card-edit" onClick={() => value.changeConfirmed()}>Update</button>
+                <button type="button" className="tournament-card-edit" onClick={() => value.setMembership()}>Update</button>
                 <button type="button" className="tournament-card-delete" onClick={handleCancelClick}>Cancel</button>
             </div>
         </div>

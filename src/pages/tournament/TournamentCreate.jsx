@@ -101,7 +101,7 @@ function TournamentCreate() {
     
       try {
         const newTournament = await axios.post("http://localhost:5005/tournaments/create", {formDetails})
-        const newTournamentId = await newTournament.data;
+        const newTournamentId = await newTournament.data.tournamentId;
         navigate(`/tournaments/${newTournamentId}`);
       } catch (error) {
         console.log("CAUGHT ERROR: ", error);

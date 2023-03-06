@@ -574,6 +574,7 @@ button {
     color: white;
 }
 .tournament-card-btn-ctn {
+    margin-top: 10px;
     display: flex;
     justify-content: center;
 }
@@ -634,7 +635,9 @@ button {
 .tournament-card-section {
     display: flex;
     flex-direction: column;
-    width: 500px;
+    min-width: 200px;
+    width: 400px;
+    max-width: 600px;
     height: auto;
     padding: 50px;
     border: 1px black solid;
@@ -691,6 +694,59 @@ button {
 .tournament-card-add-file-input-btn:hover {
     cursor: pointer;
 }
+
+.customize-btn-ctn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.customize-btn {
+    font-family: "Audiowide", "Tahoma", "Serif";
+    border: black solid 1px;
+    border-radius: 16px;
+    width: 80%;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.493);
+}
+.customize-btn:hover {
+    cursor: pointer;
+}
+.tournament-card-customize-main-ctn {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+.tournament-card-customize-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: black solid 1px;
+    border-radius: 16px;
+    width: 80%;
+    background-color: rgba(0, 0, 0, 0.493);
+}
+.tournament-card-customize-options-ctn {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 100px;
+}
+.tournament-card-customize-option {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+input[type="color"] {
+	border: none;
+	width: 132px;
+	height: 32px;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+	border: none;
+}
 .tournament-card-comment-main-ctn {
     display: flex;
     justify-content: center;
@@ -704,7 +760,10 @@ button {
     border: black solid 1px;
     border-radius: 16px;
     width: 80%;
-    background-color: rgba(0, 0, 0, 0.493);;
+    background-color: rgba(0, 0, 0, 0.493);
+}
+.tournament-card-comment-ctn {
+    list-style-type: none;
 }
 .tournament-card-comment-section textarea {
     font-family: "Audiowide", "Tahoma", "Serif";
@@ -926,14 +985,14 @@ button {
 }
 
 .profile-settings-form {
-   margin-top: -10px;
-   padding : 50px ; 
-display: flex;
-flex-direction: column;
-justify-content: center;
- color : white;
-align-items: center;
- padding-left : 20px;
- gap: 10px;
- font-family: "Audiowide", "Tahoma", "Serif";
+    margin-top: -10px;
+    padding : 50px ; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color : white;
+    align-items: center;
+    padding-left : 20px;
+    gap: 10px;
+    font-family: "Audiowide", "Tahoma", "Serif";
 }
