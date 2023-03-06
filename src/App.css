@@ -924,3 +924,16 @@ button {
     text-align: center;
     font-size: 12px;
 }
+
+.profile-settings-form {
+   margin-top: -10px;
+   padding : 50px ; 
+display: flex;
+flex-direction: column;
+justify-content: center;
+ color : white;
+align-items: center;
+ padding-left : 20px;
+ gap: 10px;
+ font-family: "Audiowide", "Tahoma", "Serif";
+}

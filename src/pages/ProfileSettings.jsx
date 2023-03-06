@@ -3,7 +3,6 @@ import { AuthContext } from '../contexts/Auth.context'
 import { useContext  , useState } from 'react'
 import axios from 'axios'
 
-
 function ProfileSettings() {
   const { user, loginUser , logoutUser } = useContext(AuthContext)
   const [updatedUserName, setUpdatedUserName]  = useState (user.username)
@@ -16,24 +15,23 @@ function ProfileSettings() {
     event.preventDefault()
     try {
       const updatedUser = await axios.post('http://localhost:5005/auth/profile/settings', {
-        currentUser: user,  
+        currentUser : user ,  
         username: updatedUserName,
         password: currentPassword,
-        email: updatedEmail,
-        repeatUpdatedPassword: repeatUpdatedPassword,
-        updatedPassword: updatedPassword,
+        email: updatedEmail ,
+        repeatUpdatedPassword : repeatUpdatedPassword ,
+        updatedPassword : updatedPassword ,
       })
       logoutUser({justUpdatedDetails : true})
       loginUser(updatedUser.data.email , updatedUser.data.password , {justSignedUp : false} )
     } catch(err) {
       console.log(err)
-    } 
+    }
   }
-    
-  return (
-  <div >
-    <form onSubmit={handleUserUpdate}>
-      <label> UserName:  
+  return (  
+  <div style = {{padding : "50px"}} className = "form-page-top-level landing-font" >
+    <form onSubmit={handleUserUpdate} className= "profile-settings-form form-auth">
+      <label > UserName:  
         <input type= 'text' value={updatedUserName}  onChange = {(event)=> { setUpdatedUserName(event.target.value)}} /> 
       </label>
       <label> Email:  
@@ -45,12 +43,12 @@ function ProfileSettings() {
       <label> New Password:   
         <input type='password' value = {updatedPassword} onChange = {(event)=> { setUpdatedPassword(event.target.value)}} /> 
       </label>
-      <label> Repeat New Password:   
+      <label> Repeat New Password:
         <input type='password' value= {repeatUpdatedPassword} onChange = {(event)=> { setRepeatUpdatedPassword(event.target.value)}} /> 
       </label>
       <button type= 'submit' > Update </button>
-     </form> 
-    </div>
+    </form> 
+  </div>
 )}
 
 export default ProfileSettings
