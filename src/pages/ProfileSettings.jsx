@@ -2,14 +2,17 @@ import React from 'react'
 import { AuthContext } from '../contexts/Auth.context'
 import { useContext  , useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 function ProfileSettings() {
-  const { user, loginUser , logoutUser } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
   const [updatedUserName, setUpdatedUserName]  = useState (user.username)
   const [updatedEmail, setUpdatedEmail]  = useState (user.email)
   const [currentPassword, setCurrentPassword]  = useState ('')
   const [updatedPassword , setUpdatedPassword] = useState ('')
   const [repeatUpdatedPassword , setRepeatUpdatedPassword]  = useState ('')
+
+  const navigate = useNavigate();
 
   const handleUserUpdate = async (event)=> {
     event.preventDefault()
@@ -22,8 +25,9 @@ function ProfileSettings() {
         repeatUpdatedPassword : repeatUpdatedPassword ,
         updatedPassword : updatedPassword ,
       })
-      logoutUser({justUpdatedDetails : true})
-      loginUser(updatedUser.data.email , updatedUser.data.password , {justSignedUp : false} )
+      user.username = updatedUserName;
+      user.email = updatedEmail;
+      navigate("/profile")
     } catch(err) {
       console.log(err)
     }

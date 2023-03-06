@@ -23,17 +23,19 @@ function Home() {
   }
 
   const searchTournament = async (e) => {
+    e.preventDefault();
+
     try {
-      const foundTournament = await axios.get(`http://localhost:5005/tournaments/name/${search}`);
+      const foundTournament = await axios.get(`http://localhost:5005/tournaments/search/find-name/${search}`);
       navigate(`/tournaments/${foundTournament.data.tournament._id}`)
     } catch (error) {
+      console.log(error);
       if (error.response.status === 404) navigate(`/tournaments/search?q=${search}`);
     }
   }
 
   useEffect(() => {
     getTournaments();
-    console.log(user);
   }, [])
 
   useEffect(() => {
@@ -59,9 +61,10 @@ function Home() {
           <section>
             {isLoading ? <div>Loading details...</div> : 
             <div className="home-search-result-ctn">
-              { tournaments.filter(tournament => user.tournaments.includes(tournament._id) && tournament.status !== "Ended").map((tournament) => {
+              { tournaments.filter(tournament => user.tournaments.includes(tournament._id) && tournament.status !== "Ended").sort((a, b) => new Date(a.startDate) - new Date(b.startDate)).map((tournament) => {
                 return (
                   <Link to={`/tournaments/${tournament._id}`} key={tournament._id} className="home-search-result-link">
+                      <p>Begins: {tournament.startDate}</p>
                       <ul>
                         <li>"{tournament.name}" {tournament.organizer.username === user.username && <>👑</>} <br/> {tournament.challenge}-challenge - <span className={tournament.status === "Open" ? "status-open" : tournament.status === "Closed" ? "status-closed" : ""}>{tournament.status}</span></li>
                       </ul>
@@ -74,7 +77,9 @@ function Home() {
           <section>
             {isLoading ? <div>Loading details...</div> : 
             <div className="home-search-ctn ">
-              <input list="tournament-list" type="text" value={search} onChange={(e) => setSearch(e.target.value)} /><button className="home-create-tournament-btn" type="button" onClick={searchTournament}>Search</button>
+              <form onSubmit={searchTournament}>
+                <input list="tournament-list" type="text" value={search} onChange={(e) => setSearch(e.target.value)} /><button className="home-create-tournament-btn" type="submit">Search</button>
+              </form>
               <datalist id="tournament-list">
                 {searchResult.map((result) => {
                   return (

@@ -335,7 +335,7 @@ button {
     height: auto;
     max-height: 300px;
     overflow-y: scroll;
-    gap: 5px;
+    gap: 30px;
 }
 .home-search-result-ctn ul {
     display: flex;
