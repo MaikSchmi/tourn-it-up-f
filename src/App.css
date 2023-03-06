@@ -926,12 +926,14 @@ button {
 }
 
 .profile-settings-form {
+   margin-top: -10px;
+   padding : 50px ; 
 display: flex;
 flex-direction: column;
-justify-content: left;
+justify-content: center;
+ color : white;
 align-items: center;
- width: 100%;
- margin-top: 20px;
- margin-bottom: 20px;
-
+ padding-left : 20px;
+ gap: 10px;
+ font-family: "Audiowide", "Tahoma", "Serif";
 }

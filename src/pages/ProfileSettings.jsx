@@ -33,11 +33,11 @@ function ProfileSettings() {
         
     }
     return (
-    <div   >
+    <div style = {{padding : "50px"}} className = "form-page-top-level landing-font" >
     
       
-        <form onSubmit={handleUserUpdate} className= "profile-settings-form">
-        <label> UserName:  
+        <form onSubmit={handleUserUpdate} className= "profile-settings-form form-auth">
+        <label > UserName:  
        <input type= 'text' value={updatedUserName}  onChange = {(event)=> { setUpdatedUserName(event.target.value)}} /> 
         </label>
         <label> Email:  
