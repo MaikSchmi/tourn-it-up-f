@@ -5,8 +5,8 @@ import axios from 'axios'
 
 
 function ProfileSettings() {
-    const {user} = useContext(AuthContext)
-    
+    const {user, loginUser , logoutUser } = useContext(AuthContext)
+   
         
          const [ updatedUserName, setUpdatedUserName]  = useState (user.username)
          const [updatedEmail, setUpdatedEmail]  = useState (user.email)
@@ -16,15 +16,22 @@ function ProfileSettings() {
 
          const handleUserUpdate = async (event)=> {
                 event.preventDefault()
-            const updatedUser = await axios.post('http://localhost:5005/auth/profile/settings', {
+            try {
+                const updatedUser = await axios.post('http://localhost:5005/auth/profile/settings', {
              
              currentUser : user ,  
              username: updatedUserName,
-             password: updatedPassword,
+             password: currentPassword,
              email: updatedEmail ,
              repeatUpdatedPassword : repeatUpdatedPassword ,
-             updatedPassword :updatedPassword ,
+             updatedPassword : updatedPassword ,
               })
+              console.log(updatedUser)
+          logoutUser({justUpdatedDetails : true})
+          loginUser(updatedUser.data.email , updatedUser.data.password , {justSignedUp : false} )
+          
+            }
+              catch(err){console.log(err)}
         
     }
     return (

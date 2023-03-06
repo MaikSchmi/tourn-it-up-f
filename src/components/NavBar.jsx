@@ -2,8 +2,15 @@ import React, { useContext } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import { AuthContext } from '../contexts/Auth.context';
 
+
+
 function NavBar() {
   const { logoutUser, isAuthenticated, user } = useContext(AuthContext);
+   const handleUserLogout = () => {
+logoutUser ({justUpdatedDetails : false})
+
+   }
+
   return (
     <>
     <div className="nav-ctn">
@@ -20,7 +27,7 @@ function NavBar() {
           {isAuthenticated ? 
           <>
           <li><Link to="/profile" className="nav-two-item">Profile</Link></li>
-          <li><button type="submit" className="nav-logout" onClick={logoutUser}>Logout</button></li>
+          <li><button type="submit" className="nav-logout" onClick={handleUserLogout}>Logout</button></li>
           </> : 
           <li><Link to="/login" className="nav-login">Login</Link></li>}
         </ul>

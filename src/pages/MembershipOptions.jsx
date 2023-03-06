@@ -14,8 +14,7 @@ function MembershipOptions() {
     if (!user) navigate("/signup")
     try {
       await axios.post("http://localhost:5005/user/update-membership-plan", {user: user.username, plan: plan})
-      logoutUser();
-      navigate("/")
+      logoutUser({justUpdatedDetails : false});
     } catch (error) {
       console.log("Error with your purchase: ", error);
     }

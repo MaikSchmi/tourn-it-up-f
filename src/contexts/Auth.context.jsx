@@ -69,11 +69,12 @@ const removeToken = () => {
     localStorage.removeItem("token");
 }
 
-const logoutUser = () => {
+const logoutUser = (justUpdatedDetails) => {
     removeToken();
     authenticateUser();
+    if (!justUpdatedDetails){
     navigate("/");
-}
+}}
 
 useEffect(()=> {
     authenticateUser() 
