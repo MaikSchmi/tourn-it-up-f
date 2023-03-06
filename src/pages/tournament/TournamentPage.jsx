@@ -124,7 +124,7 @@ function TournamentPage() {
     let formData = new FormData();
     formData.append("imageUrl", fileToUpload);
     try {
-      const uploadedFile = await axios.post(`http://localhost:5005/tournament/upload/${tournament._id}`, formData, {withCredentials: true});
+      const uploadedFile = await axios.post(`http://localhost:5005/tournaments/upload/${tournament._id}`, formData, {withCredentials: true});
       setBackground(uploadedFile.data.fileUrl);
     } catch (error) {
       console.log("Error uploading background image: ", error);
@@ -197,49 +197,10 @@ function TournamentPage() {
         <button className="tournament-card-delete" type="button" onClick={() => setAboutToDelete(true)}>Delete Tournament</button>
       </div>}
       <h1 className="tournament-card-title">{tournament.name}</h1>
-      {errorMessage !== "" && <div className="form-error-message">{errorMessage}</div>}
-      <div className="tournament-card"> 
-        <div className="tournament-card-section background-modify">
-          <h3>Participants</h3>
-          <span>Slots filled: {tournament.participants.length + 1} {tournament.maxParticipants > 0 && <span>/ {tournament.maxParticipants}</span>}</span>
-          {tournament.minParticipants > 0 && <span>Minimum needed: {tournament.minParticipants}</span>}
-          <ul className="tournament-card-participant-list">
-            {participants.map((participant, index) => <Link key={participant.id} className="tournament-card-participant-link" to={`/profile/${participant.id}`}><li>{participant.username}{index === 0 && <span>👑</span>}</li></Link>)}
-            {(user.username !== tournament.organizer.username && !alreadyParticipating && tournament.participants.length + 1 < tournament.maxParticipants && tournament.status === "Open") && <button type="button" className="tournament-card-participate" onClick={addParticipant}>Participate!</button>}
-            {(user.username !== tournament.organizer.username && alreadyParticipating && tournament.status === "Open") && <button type="button" className="tournament-card-delete" onClick={removeParticipant}>Resign</button>}
-          </ul>
-        </div>
-        <div className="tournament-card-section background-modify">
-          <div>
-            <h3>Details:</h3>
-            <textarea type="text" cols="30" rows="20" value={tournament.description} readOnly />
-          </div>
-          <div>
-            <h3>Additional Information:</h3>
-            <textarea type="text" cols="30" rows="3" value={tournament.additionalInfo} readOnly />
-          </div>
-        </div>
-        <div className="tournament-card-section background-modify">
-          <h3>The Tournament</h3>
-          <div>
-            <span id="tournament-status" className={statusState}>Status: {tournament.status}</span>
-            <ul key={v4()}>
-              <li>Challenge about: {tournament.challenge}</li>
-              <li>Type: {tournament.type}</li>
-              <li>Where: {tournament.locationCity ? <span>{tournament.locationCity}, </span> : <></>}{tournament.locationCountry}</li>
-              {tournament.reward && <li>Reward: <span>{tournament.reward}</span></li>}
-              {tournament.mapUrl && <li>Map:<br/><Link to={tournament.mapUrl}>See on Map</Link></li>}
-              {tournament.updatePlatformUrl && <li>Connect:<br/><Link to={tournament.updatePlatformUrl}>Connect with the participants!</Link></li>}
-              <li>Starts: {tournament.startDate.replace("T", ", at: ")}</li>
-              <li>Ends: {tournament.endDate.replace("T", ", at: ")}</li>
-            </ul>
-          </div>
-        </div>
-      </div>
       {tournament.organizer.username === user.username &&
       <>
       <div className="customize-btn-ctn">
-        <button type="button" onClick={expandCollapseCustomize} className="customize-btn">
+        <button type="button" onClick={expandCollapseCustomize} className="customize-btn background-modify">
           <h3>Customize</h3>
         </button>
       </div>
@@ -287,6 +248,45 @@ function TournamentPage() {
       </div>
       </>
       }
+      {errorMessage !== "" && <div className="form-error-message">{errorMessage}</div>}
+      <div className="tournament-card"> 
+        <div className="tournament-card-section background-modify">
+          <h3>Participants</h3>
+          <span>Slots filled: {tournament.participants.length + 1} {tournament.maxParticipants > 0 && <span>/ {tournament.maxParticipants}</span>}</span>
+          {tournament.minParticipants > 0 && <span>Minimum needed: {tournament.minParticipants}</span>}
+          <ul className="tournament-card-participant-list">
+            {participants.map((participant, index) => <Link key={participant.id} className="tournament-card-participant-link" to={`/profile/${participant.id}`}><li>{participant.username}{index === 0 && <span>👑</span>}</li></Link>)}
+            {(user.username !== tournament.organizer.username && !alreadyParticipating && tournament.participants.length + 1 < tournament.maxParticipants && tournament.status === "Open") && <button type="button" className="tournament-card-participate" onClick={addParticipant}>Participate!</button>}
+            {(user.username !== tournament.organizer.username && alreadyParticipating && tournament.status === "Open") && <button type="button" className="tournament-card-delete" onClick={removeParticipant}>Resign</button>}
+          </ul>
+        </div>
+        <div className="tournament-card-section background-modify">
+          <div>
+            <h3>Details:</h3>
+            <textarea type="text" cols="30" rows="20" value={tournament.description} readOnly />
+          </div>
+          <div>
+            <h3>Additional Information:</h3>
+            <textarea type="text" cols="30" rows="3" value={tournament.additionalInfo} readOnly />
+          </div>
+        </div>
+        <div className="tournament-card-section background-modify">
+          <h3>The Tournament</h3>
+          <div>
+            <span id="tournament-status" className={statusState}>Status: {tournament.status}</span>
+            <ul key={v4()}>
+              <li>Challenge about: {tournament.challenge}</li>
+              <li>Type: {tournament.type}</li>
+              <li>Where: {tournament.locationCity ? <span>{tournament.locationCity}, </span> : <></>}{tournament.locationCountry}</li>
+              {tournament.reward && <li>Reward: <span>{tournament.reward}</span></li>}
+              {tournament.mapUrl && <li>Map:<br/><Link to={tournament.mapUrl}>See on Map</Link></li>}
+              {tournament.updatePlatformUrl && <li>Connect:<br/><Link to={tournament.updatePlatformUrl}>Connect with the participants!</Link></li>}
+              <li>Starts: {tournament.startDate.replace("T", ", at: ")}</li>
+              <li>Ends: {tournament.endDate.replace("T", ", at: ")}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
       <div className="tournament-card-comment-main-ctn">
         <div className="tournament-card-comment-section background-modify">
           <h3>Comments</h3>

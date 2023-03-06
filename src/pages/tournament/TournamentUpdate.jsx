@@ -183,7 +183,7 @@ function TournamentUpdate() {
   
     return (
       loadingDetails ? <div>Loading...</div> : 
-      <div className="tournament-create-frm-ctn">
+      <div className="tournament-create-frm-ctn bg-image">
         <h1>Update Tournament</h1>
         {submitError !== "" && <span className="form-error-message">{submitError}</span>}
         <form className="tournament-create-frm" onSubmit={handleFormSubmit} >
