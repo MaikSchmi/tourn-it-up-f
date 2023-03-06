@@ -50,7 +50,6 @@ const authenticateUser = async () => {
             const userData = await response.data
             setIsAuthenticated(true)
             setIsLoading(false)
-            console.log("INTEREST: ", userData)
             setUser({username: userData.username, email: userData.email, status: userData.status, tournaments: userData.tournaments, interest: userData.interest})
         } catch(err) {
             console.log(err)

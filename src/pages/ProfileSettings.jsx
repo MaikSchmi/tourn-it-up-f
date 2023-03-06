@@ -5,24 +5,23 @@ import axios from 'axios'
 
 
 function ProfileSettings() {
-  const {user, loginUser , logoutUser } = useContext(AuthContext)
-  const [ updatedUserName, setUpdatedUserName]  = useState (user.username)
+  const { user, loginUser , logoutUser } = useContext(AuthContext)
+  const [updatedUserName, setUpdatedUserName]  = useState (user.username)
   const [updatedEmail, setUpdatedEmail]  = useState (user.email)
   const [currentPassword, setCurrentPassword]  = useState ('')
-  const [ updatedPassword , setUpdatedPassword ] = useState ('')
-  const [ repeatUpdatedPassword , setRepeatUpdatedPassword]  = useState ('')
+  const [updatedPassword , setUpdatedPassword] = useState ('')
+  const [repeatUpdatedPassword , setRepeatUpdatedPassword]  = useState ('')
 
   const handleUserUpdate = async (event)=> {
-        event.preventDefault()
+    event.preventDefault()
     try {
       const updatedUser = await axios.post('http://localhost:5005/auth/profile/settings', {
-      
-      currentUser : user ,  
-      username: updatedUserName,
-      password: currentPassword,
-      email: updatedEmail ,
-      repeatUpdatedPassword : repeatUpdatedPassword ,
-      updatedPassword : updatedPassword ,
+        currentUser: user,  
+        username: updatedUserName,
+        password: currentPassword,
+        email: updatedEmail,
+        repeatUpdatedPassword: repeatUpdatedPassword,
+        updatedPassword: updatedPassword,
       })
       logoutUser({justUpdatedDetails : true})
       loginUser(updatedUser.data.email , updatedUser.data.password , {justSignedUp : false} )
@@ -32,8 +31,8 @@ function ProfileSettings() {
   }
     
   return (
-  <div>
-    <form onSubmit={handleUserUpdate} >
+  <div >
+    <form onSubmit={handleUserUpdate}>
       <label> UserName:  
         <input type= 'text' value={updatedUserName}  onChange = {(event)=> { setUpdatedUserName(event.target.value)}} /> 
       </label>
