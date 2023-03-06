@@ -16,15 +16,20 @@ function ProfileSettings() {
 
          const handleUserUpdate = async (event)=> {
                 event.preventDefault()
-            const updatedUser = await axios.post('http://localhost:5005/auth/update', {
-             
-             currentUser : user ,  
-             username: updatedUserName,
-             password: updatedPassword,
-             email: updatedEmail ,
-             repeatUpdatedPassword : repeatUpdatedPassword ,
-             updatedPassword :updatedPassword
-              })
+                try {
+                  const updatedUser = await axios.post('http://localhost:5005/auth/profile/settings', {
+                   
+                   currentUser : user ,  
+                   username: updatedUserName,
+                   password: updatedPassword,
+                   email: updatedEmail ,
+                   repeatUpdatedPassword : repeatUpdatedPassword ,
+                   updatedPassword :updatedPassword
+                    })
+                    console.log(updatedUser);
+                } catch (error) {
+                  console.log(error);
+                }
         
     }
     return (

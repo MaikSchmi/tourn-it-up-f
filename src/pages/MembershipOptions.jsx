@@ -13,7 +13,7 @@ function MembershipOptions() {
   const setMembership = async (plan) => {
     if (!user) navigate("/signup")
     try {
-      await axios.post("http://localhost:5005/user/update-membership-plan", {user: user.username, plan: plan})
+      await axios.post("http://localhost:5005/auth/update-membership-plan", {user: user.username, plan: plan})
       logoutUser();
       navigate("/")
     } catch (error) {

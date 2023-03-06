@@ -13,6 +13,7 @@ function TournamentPage() {
   const [alreadyParticipating, setAlreadyParticipating] = useState(false);
   const [aboutToDelete, setAboutToDelete] = useState(false);
   const [statusState, setStatusState] = useState("");
+  const [background, setBackground] = useState("");
 
   const [comment, setComment] = useState("");
 
@@ -102,6 +103,10 @@ function TournamentPage() {
       console.log("Error deleting comment", error);
     }
   }
+
+  const handleBgImageUpload = (e) => {
+    e.preventDefault();
+  }
   
   useEffect(() => {
     updateTournamentStatus();
@@ -161,6 +166,21 @@ function TournamentPage() {
               <li>Starts: {tournament.startDate.replace("T", ", at: ")}</li>
               <li>Ends: {tournament.endDate.replace("T", ", at: ")}</li>
             </ul>
+            {tournament.organizer.username === user.username &&
+              <ul>
+                <h3>Manage</h3>
+                <li>Set Background Image<br/>
+                  <form onSubmit={handleBgImageUpload}>
+                    <label className="tournament-card-add-file-input-btn tournament-card-add-file landing-font" >
+                      Click to choose file
+                      <input type="file" id="file-chosen" className="landing-font" style={{display: "none"}}  />
+                    </label>
+                    <p>{document.getElementById("file-chosen") ? document.getElementById("file-chosen").value : <>No file chosen</>}</p>
+                    <button type="submit" className="tournament-card-add-file">Confirm</button>
+                  </form>
+                </li>
+              </ul>
+            }
           </div>
         </div>
       </div>
@@ -174,14 +194,14 @@ function TournamentPage() {
           </>
           }
           <ul style={{listStyleType: "none"}}>
-          {!tournament.comments.length ? <div>No comments yet.</div> : [...tournament.comments].reverse().map((comment) => {
-            return (
-              <li key={comment._id}>
-                <span style={{fontWeight: "bold"}}>{comment.username}</span>: {comment.createdAt.replace("T", " - at: ").replace("Z", "")}
-                <textarea value={comment.comment} readOnly style={{resize: "none"}} />
-                {comment.username === user.username && <button type="button" onClick={() => deleteComment(comment._id)} className="tournament-card-delete-comment">Delete Comment</button>}
-              </li>
-            )
+            {!tournament.comments.length ? <div>No comments yet.</div> : [...tournament.comments].reverse().map((comment) => {
+              return (
+                <li key={comment._id}>
+                  <span style={{fontWeight: "bold"}}>{comment.username}</span>: {comment.createdAt.replace("T", " - at: ").replace("Z", "")}
+                  <textarea value={comment.comment} readOnly style={{resize: "none"}} />
+                  {comment.username === user.username && <button type="button" onClick={() => deleteComment(comment._id)} className="tournament-card-delete-comment">Delete Comment</button>}
+                </li>
+              )
             })}
           </ul>
         </div>

@@ -231,6 +231,7 @@ button {
     margin-top: -22px;
     padding-bottom: 100px;
 }
+
 .membership-option-card-ctn {
     display: flex;
     justify-content: space-evenly;
@@ -626,8 +627,9 @@ button {
 }
 .tournament-card {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     padding: 50px;
+    gap: 10px;
 }
 .tournament-card-section {
     display: flex;
@@ -671,6 +673,24 @@ button {
     color: rgb(255, 214, 214);
     text-decoration: none;
 }
+.tournament-card-add-file {
+    font-family: "Audiowide", "Tahoma", "Serif";
+    background-color: rgb(54, 38, 96);
+    color: white;
+    border: 2px white solid;
+    border-radius: 20px;
+    padding: 5px 8px;
+    font-size: 10px;
+    margin-bottom: 10px;
+}
+.tournament-card-add-file:hover {    
+    background-color: rgb(79, 218, 28);
+    font-weight: bold;
+    cursor: pointer;
+}
+.tournament-card-add-file-input-btn:hover {
+    cursor: pointer;
+}
 .tournament-card-comment-main-ctn {
     display: flex;
     justify-content: center;
@@ -684,6 +704,7 @@ button {
     border: black solid 1px;
     border-radius: 16px;
     width: 80%;
+    background-color: rgba(0, 0, 0, 0.493);;
 }
 .tournament-card-comment-section textarea {
     font-family: "Audiowide", "Tahoma", "Serif";
