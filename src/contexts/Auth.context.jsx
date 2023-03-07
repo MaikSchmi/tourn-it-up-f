@@ -11,74 +11,89 @@ function AuthContextWrapper(props) {
   const navigate = useNavigate();
 
   const loginUser = async (email, password, {justSignedUp}) => {
-      try {
+    try {
       const token = await axios.post('http://localhost:5005/auth/login', {
-          email: email ,
-          password: password,
+        email: email ,
+        password: password,
       })
       const receivedToken = await token.data.token;
       storeToken(receivedToken);
       authenticateUser();
       if (!justSignedUp) {
-          navigate("/home");
+      navigate("/home");
       } else if (justSignedUp) {
-          navigate("/post-signup");
+      navigate("/post-signup");
       }
-      } catch (error) {
+    } catch (error) {
       console.log(error);
       setErrorMessage(error.response.data.message)
-      }
+    }
   }
 
   const storeToken = (token) => {
-      localStorage.setItem ("token", token);
+    localStorage.setItem ("token", token);
+  }
+
+  
+  const renewToken = async () => {
+    try {
+      const token = await axios.post("http://localhost:5005/auth/update-token", {
+        email: user.email
+      })
+      const newToken = token.data.token;
+      removeToken();
+      storeToken(newToken);
+      authenticateUser();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const authenticateUser = async () => {
-      const storedToken = localStorage.getItem('token');
-      if (storedToken) {
-          try {
-              const response = await axios.get('http://localhost:5005/auth/verify', {
-                  headers : {
-                      Authorization : `Bearer ${storedToken}`
-                  }
-              })
-              const userData = await response.data;
-              setIsAuthenticated(true);
-              setIsLoading(false);
-              setUser({username: userData.username, email: userData.email, status: userData.status, tournaments: userData.tournaments, interest: userData.interest});
-          } catch(err) {
-              console.log(err);
-              setIsAuthenticated(false);
-              setIsLoading(false);
-              setUser(null);
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      try {
+        const response = await axios.get('http://localhost:5005/auth/verify', {
+          headers : {
+            Authorization : `Bearer ${storedToken}`
           }
-      } else {
-          setIsAuthenticated(false);
-          setIsLoading(false);
-          setUser(null);
+        })
+        const userData = await response.data;
+        setIsAuthenticated(true);
+        setIsLoading(false);
+        setUser({username: userData.username, email: userData.email, status: userData.status, tournaments: userData.tournaments, interest: userData.interest});
+      } catch(err) {
+        console.log(err);
+        setIsAuthenticated(false);
+        setIsLoading(false);
+        setUser(null);
       }
+    } else {
+      setIsAuthenticated(false);
+      setIsLoading(false);
+      setUser(null);
+    }
   }
 
   const removeToken = () => {
-      localStorage.removeItem("token");
+    localStorage.removeItem("token");
   }
 
   const logoutUser = (justUpdatedDetails) => {
-      removeToken();
-      authenticateUser();
-      if (!justUpdatedDetails){
-      navigate("/");
+    removeToken();
+    authenticateUser();
+    if (!justUpdatedDetails){
+    navigate("/");
   }}
 
   useEffect(()=> {
-      authenticateUser() 
+    authenticateUser() 
   }, [])
 
   return( 
-      <AuthContext.Provider  value={{isAuthenticated , isLoading , user, storeToken , authenticateUser, loginUser, logoutUser, errorMessage, setErrorMessage}}>
-      {props.children}
-      </AuthContext.Provider>
+    <AuthContext.Provider  value={{isAuthenticated , isLoading , renewToken, user, storeToken , authenticateUser, loginUser, logoutUser, errorMessage, setErrorMessage}}>
+    {props.children}
+    </AuthContext.Provider>
 )}
 
 export { AuthContextWrapper , AuthContext}

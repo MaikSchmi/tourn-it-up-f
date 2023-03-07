@@ -10,7 +10,8 @@ function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState("");
-  const {user} = useContext(AuthContext);
+
+  const { user, renewToken } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const getTournaments = async () => {
@@ -37,7 +38,7 @@ function Home() {
 
   useEffect(() => {
     getTournaments();
-    console.log(user);
+    renewToken();
   }, [])
 
   useEffect(() => {
@@ -78,7 +79,7 @@ function Home() {
           <h2>Search for Tournaments</h2>
           <section>
             {isLoading ? <div>Loading details...</div> : 
-            <div className="home-search-ctn ">
+            <div className="home-search-ctn">
               <form onSubmit={searchTournament}>
                 <input list="tournament-list" type="text" value={search} onChange={(e) => setSearch(e.target.value)} /><button className="home-create-tournament-btn" type="submit">Search</button>
               </form>
@@ -106,7 +107,7 @@ function Home() {
               {isLoading ? <div>Loading details...</div> : 
                 tournaments.filter((tournament) => tournament.status === "Ended").map((tournament) => {
                   return (
-                    <Link to={`/tournaments/${tournament._id}`} key={tournament._id} className="home-search-result-link">
+                    <Link to={`/tournaments/${tournament._id}`} key={tournament._id} className="home-search-result-link home-search-result-fill">
                       <ul>
                         <li>"{tournament.name}" {tournament.organizer.username === user.username && <>👑</>} <br/> {tournament.challenge}-challenge</li>
                       </ul>
@@ -119,10 +120,10 @@ function Home() {
             <h3>Interesting for you</h3>
             <section className="home-bottom-sections">
               {isLoading ? <div>Loading details...</div> : 
-              <div className="home-search-result-ctn">
+              <div className="home-search-result-ctn ">
                 {tournaments.map((tournament) => {
                   return (
-                    <Link to={`/tournaments/${tournament._id}`} key={tournament._id} className="home-search-result-link">
+                    <Link to={`/tournaments/${tournament._id}`} key={tournament._id} className="home-search-result-link home-search-result-fill">
                       <ul>
                         <li>"{tournament.name}" {tournament.organizer.username === user.username && <>👑</>} <br/> {tournament.challenge}-challenge - <span className={tournament.status === "Open" ? "status-open" : tournament.status === "Closed" ? "status-closed" : tournament.status === "Ended" ? "status-ended" : ""}>{tournament.status}</span></li>
                       </ul>

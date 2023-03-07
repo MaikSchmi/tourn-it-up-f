@@ -306,7 +306,6 @@ button {
     background-attachment: fixed;
 }
 .home-ctn {
-    /* background-color: rgb(229, 227, 227); */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -330,11 +329,9 @@ button {
 .home-search-result-ctn {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     padding: 20px;
-    height: auto;
-    max-height: 300px;
-    overflow-y: scroll;
+    max-height: 40vh;
+    overflow-y: auto;
     gap: 30px;
 }
 .home-search-result-ctn ul {
@@ -348,6 +345,9 @@ button {
     padding-left: 0;
     padding: 20px;
     background-color: rgb(80, 53, 142);
+}
+.home-search-result-fill {
+    width: 100%;
 }
 .home-search-result-link {
     text-decoration: none;
