@@ -11,10 +11,9 @@ function MembershipOptions() {
   const navigate = useNavigate();
 
   const setMembership = async () => {
-    console.log("triggered");
     try {
-      await axios.post("http://localhost:5005/auth/update-membership-plan", {user: user.username, plan: planChosen})
-      logoutUser();
+      const updatedUser = await axios.post("http://localhost:5005/auth/update-membership-plan", {user: user.username, plan: planChosen})
+      user.status = updatedUser.data.newStatus;
       navigate("/")
     } catch (error) {
       console.log("Error with your purchase: ", error);

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import Dates from '../../components/Dates';
 
 function TournamentSearch() {
 const [tournaments, setTournaments] = useState([]);
@@ -59,8 +60,9 @@ useEffect(() => {
                 <li className={result.status === "Ended" ? "status-ended" : result.status === "Closed" ? "status-closed" : result.status === "Open" ? "status-open" : ""}>{result.status}</li>
                 <li>Challenge: {result.challenge}</li>
                 {(result.maxParticipants > 0 && result.minParticipants > 0) ? <li>Free slots: {result.minParticipants} / {result.maxParticipants}</li> : <li>No participant limit!</li>}
-                <li>From: {result.startDate.slice(0, 10)}</li>
-                <li>To: {result.endDate.slice(0, 10)}</li>
+                <li>-</li>
+                <li>From: <Dates>{result.startDate}</Dates></li>
+                <li>To: <Dates>{result.endDate}</Dates></li>
               </ul>
             </Link>
           )

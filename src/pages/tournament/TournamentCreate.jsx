@@ -10,7 +10,7 @@ function TournamentCreate() {
   const [hobbyList, setHobbyList] = useState([]);
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   
   const [name, setName] = useState("");
   const [type, setType] = useState("Cooperative");
@@ -102,7 +102,7 @@ function TournamentCreate() {
       try {
         const newTournament = await axios.post("http://localhost:5005/tournaments/create", {formDetails})
         const newTournamentId = await newTournament.data.tournamentId;
-        user.tournaments = [...user.tournaments, newTournamentId];
+        setUser({tournaments: [...user.tournaments, newTournamentId]});
         navigate(`/tournaments/${newTournamentId}`);
       } catch (error) {
         console.log("CAUGHT ERROR: ", error);

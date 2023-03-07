@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import DeleteConfirmPopup from '../../components/DeleteConfirmPopup';
 import { AuthContext } from '../../contexts/Auth.context';
 import { v4 } from "uuid";
+import Dates from '../../components/Dates';
 
 function TournamentPage() {
   const {id} = useParams("id");
@@ -275,14 +276,15 @@ function TournamentPage() {
           <div>
             <span id="tournament-status" className={statusState}>Status: {tournament.status}</span>
             <ul key={v4()}>
-              <li>Challenge about: {tournament.challenge}</li>
-              <li>Type: {tournament.type}</li>
-              <li>Where: {tournament.locationCity ? <span>{tournament.locationCity}, </span> : <></>}{tournament.locationCountry}</li>
+              Challenge about:<li>{tournament.challenge}</li>
+              Type:<li>{tournament.type}</li>
               {tournament.reward && <li>Reward: <span>{tournament.reward}</span></li>}
               {tournament.mapUrl && <li>Map:<br/><Link to={tournament.mapUrl}>See on Map</Link></li>}
               {tournament.updatePlatformUrl && <li>Connect:<br/><Link to={tournament.updatePlatformUrl}>Connect with the participants!</Link></li>}
-              <li>Starts: {tournament.startDate.replace("T", ", at: ")}</li>
-              <li>Ends: {tournament.endDate.replace("T", ", at: ")}</li>
+              <li>-</li>
+              <li>Where:{tournament.locationCity ? <span>{tournament.locationCity}, </span> : <></>}{tournament.locationCountry}</li>
+              <li>Starts: <Dates>{tournament.startDate}</Dates></li>
+              <li>Ends: <Dates>{tournament.endDate}</Dates></li>
             </ul>
           </div>
         </div>

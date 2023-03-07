@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import Dates from '../components/Dates';
 import { AuthContext } from '../contexts/Auth.context';
 
 
@@ -36,6 +37,7 @@ function Home() {
 
   useEffect(() => {
     getTournaments();
+    console.log(user);
   }, [])
 
   useEffect(() => {
@@ -64,13 +66,13 @@ function Home() {
               { tournaments.filter(tournament => user.tournaments.includes(tournament._id) && tournament.status !== "Ended").sort((a, b) => new Date(a.startDate) - new Date(b.startDate)).map((tournament) => {
                 return (
                   <Link to={`/tournaments/${tournament._id}`} key={tournament._id} className="home-search-result-link">
-                      <p>Begins: {tournament.startDate}</p>
+                      <p>Begins: <Dates>{tournament.startDate}</Dates></p>
                       <ul>
                         <li>"{tournament.name}" {tournament.organizer.username === user.username && <>👑</>} <br/> {tournament.challenge}-challenge - <span className={tournament.status === "Open" ? "status-open" : tournament.status === "Closed" ? "status-closed" : ""}>{tournament.status}</span></li>
                       </ul>
                   </Link>
                 )
-                })}
+            })}
             </div>}
           </section>
           <h2>Search for Tournaments</h2>
@@ -85,7 +87,7 @@ function Home() {
                   return (
                     <option key={result._id}>{result.name}</option>
                   )
-                })}
+              })}
               </datalist>
             </div>}
           </section>
