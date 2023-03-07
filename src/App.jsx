@@ -32,8 +32,7 @@ function App() {
         <Route path="/tournaments/:id/update" element={<IsPrivate><TournamentUpdate /></IsPrivate> } />
         <Route path="/tournaments/:id" element={<IsPrivate><TournamentPage /></IsPrivate> } />
         <Route path="/tournaments/search?" element={<TournamentSearch/> } />
-    
-      </Route>
+ </Route>
       <Route path="/signup" element={<IsPublic><Signup /></IsPublic>} />
       <Route path="/post-signup" element={<PostSignup /> } />
       <Route path="/login" element={<IsPublic><Login /></IsPublic>} />

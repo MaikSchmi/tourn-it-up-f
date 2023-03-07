@@ -11,6 +11,7 @@ function ProfileSettings() {
   const [currentPassword, setCurrentPassword]  = useState ('')
   const [updatedPassword , setUpdatedPassword] = useState ('')
   const [repeatUpdatedPassword , setRepeatUpdatedPassword]  = useState ('')
+  
 
   const navigate = useNavigate();
 
@@ -30,9 +31,21 @@ function ProfileSettings() {
       navigate("/profile")
     } catch(err) {
       console.log(err)
-    }
-  }
-  return (  
+    }}
+
+const handleDeleteUser = async (event) =>{
+event.preventDefault()
+try {
+  const deleteUser = await axios.post('http://localhost:5005/auth/profile/delete', {
+    currentUser : user 
+  })
+  navigate("/")
+} catch(err) {
+  console.log(err)
+}}
+ 
+  return (
+    <div>
   <div style = {{padding : "50px"}} className = "form-page-top-level landing-font">
     <form onSubmit={handleUserUpdate} className= "profile-settings-form form-auth">
       <label>UserName:  
@@ -50,9 +63,15 @@ function ProfileSettings() {
       <label>Repeat New Password:
         <input type='password' value= {repeatUpdatedPassword} onChange = {(event) => {setRepeatUpdatedPassword(event.target.value)}} /> 
       </label>
-      <button type='submit' > Update </button>
-    </form> 
-  </div>
+      <button type='submit' > Update </button> 
+    </form>
+      </div>
+    <div>
+    <form onSubmit={handleDeleteUser} className= "profile-settings-form form-auth">
+    <button type='submit' > Delete Account </button> 
+     </form>  
+        </div>
+ </div>  
 )}
 
 export default ProfileSettings
