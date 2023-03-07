@@ -8,6 +8,8 @@ const [tournaments, setTournaments] = useState([]);
 const [isLoading, setIsLoading] = useState(true);
 const [search, setSearch] = useState("");
 const [searchResults, setSearchResults] = useState([]);
+const [showFilter, setShowFilter] = useState(false);
+const [currentFilter, setCurrentFilter] = useState({});
 
 const [searchParams] = useSearchParams();
 const navigate = useNavigate()
@@ -16,6 +18,11 @@ const getTournaments = async () => {
   const allTournaments = await axios.get(`http://localhost:5005/tournaments/all`);
   setTournaments(allTournaments.data);
   setIsLoading(false);
+}
+
+const toggleFilter = () => {
+  !showFilter ? setShowFilter(true) : setShowFilter(false);
+  console.log(showFilter)
 }
 
 useEffect(() => {
@@ -40,6 +47,16 @@ useEffect(() => {
       {isLoading ? <div>Loading details...</div> : 
         <div className="tournament-search-bar-ctn">
           <input list="tournament-list" className="landing-font" placeholder="Tournament name / challenge" type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
+          <button type="button" onClick={toggleFilter} className="tournament-card-add-file">Filter v</button>
+          {showFilter && 
+            <div className="tournament-card-customize-main">
+              <div className="tournament-search-filter-ctn">
+                <div className="tournament-search-filter">
+                  
+                </div>
+              </div>
+            </div>
+          }
           <datalist id="tournament-list">
             {tournaments.map((result) => {
               return (

@@ -409,9 +409,23 @@ button {
     align-items: center;
 }
 .tournament-search-bar-ctn input {
+    display: flex;
     width: 80vw;
     height: 50px;
     font-size: 20px;
+}
+.tournament-search-filter-ctn {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    border: 1px black solid;
+    background-color: rgba(0, 0, 0, 0.587);
+    align-items: center;
+}
+.tournament-search-filter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .tournament-search-result-ctn {
     display: flex;
