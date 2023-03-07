@@ -36,8 +36,8 @@ function MembershipOptions() {
             <p>As a Member you are free to join and participate in one tournament a month!</p>
             <h5>Benefits</h5>
             <ul className="free-plan-inner">
-              <li>-- 1 Tournament / month</li>
-              <li>-- Access to our forums</li>
+              <li>1 Tournament / month</li>
+              <li>Access to our forums</li>
             </ul>
             <button type="button" style={{boxShadow: "3px 3px"}} onClick={() => setPlanChosen("free")}>Free</button>
           </section>
@@ -46,9 +46,9 @@ function MembershipOptions() {
             <p>For a small fee, you can create one tournament a month and participate in as many tournaments as you like!</p>
             <h5>Benefits</h5>
             <ul className="paid-plan-inner">
-              <li>-- Create 1 Tournament / month</li>
-              <li>-- Participate in 5 Tournaments / month</li>
-              <li>-- Access to our forums</li>
+              <li>Create 1 Tournament / month</li>
+              <li>Participate in 5 Tournaments / month</li>
+              <li>Access to our forums</li>
             </ul>
             <button type="button" style={{boxShadow: "3px 3px"}} onClick={() => setPlanChosen("paid")}>2,99€<br/>/ Month</button>
           </section>
@@ -57,10 +57,11 @@ function MembershipOptions() {
             <p>Join us today as a premium member and gain access to all the feature TournItUp has to offer!</p>
             <h5>Benefits</h5>
             <ul className="premium-plan-inner">
-              <li>-- Create unlimited Tournaments</li>
-              <li>-- Participate in unlimited Tournaments</li>
-              <li>-- Access to our forums</li>
-              <li>-- Special status in our forums</li>
+              <li>Create unlimited Tournaments</li>
+              <li>Participate in unlimited Tournaments</li>
+              <li>Customize your tournament pages and make them your own</li>
+              <li>Access to our forums</li>
+              <li>Special status in our forums</li>
             </ul>
             <button type="button" style={{boxShadow: "3px 3px"}} onClick={() => setPlanChosen("premium")}>9,99€<br/>/ Month</button>
           </section>

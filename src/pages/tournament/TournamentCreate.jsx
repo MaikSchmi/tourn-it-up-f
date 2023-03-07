@@ -102,7 +102,6 @@ function TournamentCreate() {
       try {
         const newTournament = await axios.post("http://localhost:5005/tournaments/create", {formDetails})
         const newTournamentId = await newTournament.data.tournamentId;
-        setUser({tournaments: [...user.tournaments, newTournamentId]});
         navigate(`/tournaments/${newTournamentId}`);
       } catch (error) {
         console.log("CAUGHT ERROR: ", error);
@@ -113,8 +112,9 @@ function TournamentCreate() {
   }
 
   const addProfessionInput = () => {
-    const inputElement = <InputField/>
+    const inputElement = <li key={v4()}><input type="text" /></li>;
     setProfessions(prevProfessions => ([...prevProfessions, inputElement]));
+    console.log(professions);
   }
 
   const removeProfessionInputs = () => {
@@ -214,9 +214,9 @@ function TournamentCreate() {
             <button className="add-profession-button" type="button" onClick={addProfessionInput}>+</button>
               {professions.map((profession) => {
                 return (
-                  <li key={v4()}>
+                  <>
                     {profession}
-                  </li>
+                  </>
                 )
               })}
               {professions.length ? <button type="button" className="remove-profession-button" onClick={() => removeProfessionInputs()}>Reset</button> : <></>}
