@@ -69,7 +69,7 @@ function Home() {
                 return (
                   <Link to={`/tournaments/${tournament._id}`} key={tournament._id} className="home-search-result-link">
                       <p>Begins: <Dates>{tournament.startDate}</Dates></p>
-                      <ul>
+                      <ul style={{backgroundImage: tournament.backgroundImage ? `url(${tournament.backgroundImage})` : "", backgroundSize: "415px", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundColor: tournament.backgroundColor !== "#00000000" && tournament.backgroundColor.slice(0, 7)+"FF"}}>
                         <li>"{tournament.name}" {tournament.organizer.username === user.username && <>👑</>} <br/> {tournament.challenge}-challenge - <span className={tournament.status === "Open" ? "status-open" : tournament.status === "Closed" ? "status-closed" : ""}>{tournament.status}</span></li>
                       </ul>
                   </Link>
@@ -110,7 +110,7 @@ function Home() {
                 tournaments.filter((tournament) => tournament.status === "Ended").map((tournament) => {
                   return (
                     <Link to={`/tournaments/${tournament._id}`} key={tournament._id} className="home-search-result-link home-search-result-fill">
-                      <ul>
+                      <ul style={{backgroundImage: tournament.backgroundImage ? `url(${tournament.backgroundImage})` : "", backgroundSize: "415px", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundColor: tournament.backgroundColor !== "#00000000" && tournament.backgroundColor.slice(0, 7)+"FF"}}>
                         <li>"{tournament.name}" {tournament.organizer.username === user.username && <>👑</>} <br/> {tournament.challenge}-challenge</li>
                       </ul>
                     </Link>
@@ -127,7 +127,7 @@ function Home() {
                 tournaments.filter((tournament) => tournament.challenge.includes(user.interest)).map((tournament) => {
                   return (
                     <Link to={`/tournaments/${tournament._id}`} key={tournament._id} className="home-search-result-link home-search-result-fill">
-                      <ul>
+                      <ul style={{backgroundImage: tournament.backgroundImage ? `url(${tournament.backgroundImage})` : "", backgroundSize: "415px", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundColor: tournament.backgroundColor !== "#00000000" && tournament.backgroundColor.slice(0, 7)+"FF"}}>
                         <li>"{tournament.name}" {tournament.organizer.username === user.username && <>👑</>} <br/> {tournament.challenge}-challenge - <span className={tournament.status === "Open" ? "status-open" : tournament.status === "Closed" ? "status-closed" : tournament.status === "Ended" ? "status-ended" : ""}>{tournament.status}</span></li> 
                       </ul>
                     </Link>

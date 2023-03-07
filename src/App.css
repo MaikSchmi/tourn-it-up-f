@@ -3,10 +3,14 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: rgb(54, 38, 96);
 }
 
 button {
     transition-duration: 0.15s;
+}
+textarea {
+    resize: none;
 }
 
 /* GENERAL FEATURES */
@@ -420,12 +424,14 @@ button {
     padding: 20px;
     border: 1px black solid;
     background-color: rgba(0, 0, 0, 0.587);
+    border-radius: 100px;
     align-items: center;
 }
 .tournament-search-filter {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 30px;
 }
 .tournament-search-result-ctn {
     display: flex;
@@ -438,6 +444,47 @@ button {
     width: 90vw;
     background-color: rgba(0, 0, 0, 0.444);
 }
+.search-result-header {
+    align-self: flex-start;
+    padding-left: 30px;
+}
+.tournament-search-filter-option-ctn {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid white;
+    border-radius: 16px;
+    padding: 0 10px 10px 10px;
+    width: 250px;
+}
+.tournament-search-filter-option-w-sub-ctn {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    border: 1px solid white;
+    border-radius: 100px;
+    padding: 0 10px 10px 50px;
+    height: 150px;
+}
+.tournament-search-filter-option-ctn-sub {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+.tournament-search-filter-btn {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.493);
+    border: 1px solid white;
+    border-radius: 16px;
+    width: 150px;
+}
+.tournament-search-filter-btn:hover {
+    color: white;
+    background-color: rgba(107, 107, 107, 0.493);
+    border: 1px solid white;
+    border-radius: 16px;
+    width: 150px;
+    cursor: pointer;
+}
 .tournament-search-result-ctn ul {
     display: flex;
     flex-direction: column;
@@ -448,7 +495,9 @@ button {
     padding-left: 0;
     padding: 20px;
     background-color: rgb(80, 53, 142);
+    height: 200px;
 }
+
 .tournament-search-result-ctn ul:hover {
     display: flex;
     flex-direction: column;
@@ -639,6 +688,7 @@ button {
 }
 .tournament-card-title {
     text-align: center;
+    background-color:rgba(0, 0, 0, 0);
 }
 .tournament-card {
     display: flex;
@@ -708,7 +758,11 @@ button {
 .tournament-card-add-file-input-btn:hover {
     cursor: pointer;
 }
-
+.background-modify {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
 .customize-btn-ctn{
     display: flex;
     flex-direction: column;

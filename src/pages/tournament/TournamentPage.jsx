@@ -197,7 +197,7 @@ function TournamentPage() {
         <button className="tournament-card-edit" type="button" onClick={handleEditClick}>Edit Tournament</button> 
         <button className="tournament-card-delete" type="button" onClick={() => setAboutToDelete(true)}>Delete Tournament</button>
       </div>}
-      <h1 className="tournament-card-title">{tournament.name}</h1>
+      <h1 className="tournament-card-title" style={{color: tournament.textColor}}>{tournament.name}</h1>
       {tournament.organizer.username === user.username &&
       <>
       <div className="customize-btn-ctn">
