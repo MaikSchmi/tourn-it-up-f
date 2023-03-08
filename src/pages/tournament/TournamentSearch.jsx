@@ -22,7 +22,7 @@ function TournamentSearch() {
   const [filterCheckProfessionsRequired, setFilterCheckProfessionsRequired] = useState(false);
   const [sortBy, setSortBy] = useState("")
 
-  const { user, isLoading } = useContext(AuthContext);
+  const { user, isLoading, isAuthenticated } = useContext(AuthContext);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate()
 
@@ -168,9 +168,9 @@ function TournamentSearch() {
             allFilters.statusOpen && result.status === "Open" || 
             allFilters.statusClosed && result.status === "Closed" || 
             allFilters.statusEnded && result.status === "Ended" ||
-            allFilters.isOrganizer && result.organizer.username === user.username ||
+            (isAuthenticated && allFilters.isOrganizer && result.organizer.username === user.username) ||
             allFilters.hasProfessionsRequired && result.professionsRequired ||
-            allFilters.isParticipating && result.participants.some(participant => participant.username === user.username)
+            (isAuthenticated && allFilters.isParticipating && result.participants.some(participant => participant.username === user.username))
           )
         })
         .sort((a, b) => {
@@ -187,7 +187,7 @@ function TournamentSearch() {
           return (
             <Link to={`/tournaments/${result._id}`} className="tournament-search-result-link res" key={result._id}>
               <ul style={{backgroundImage: result.backgroundImage ? `url(${result.backgroundImage})` : "", backgroundSize: "415px", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundColor: result.backgroundColor !== "#00000000" && result.backgroundColor.slice(0, 7)+"FF"}}>
-                {result.organizer.username === user.username && <li style={{alignSelf: "center"}}>👑</li>}
+                {(isAuthenticated && result.organizer.username === user.username) && <li style={{alignSelf: "center"}}>👑</li>}
                 <li style={{paddingBottom: "15px", textAlign: "center", color: result.textColor}}>{result.name}</li>
                 <li className={result.status === "Ended" ? "status-ended" : result.status === "Closed" ? "status-closed" : result.status === "Open" ? "status-open" : ""}>{result.status}</li>
                 <li>Challenge: {result.challenge}</li>
