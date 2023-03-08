@@ -33,17 +33,17 @@ function ProfileSettings() {
       console.log(err)
     }}
 
-const handleDeleteUser = async (event) =>{
-event.preventDefault()
-try {
-  await axios.post('http://localhost:5005/auth/profile/delete', {
-    currentUser : user 
-  })
-  logoutUser();
-  navigate("/")
-} catch(err) {
-  console.log(err)
-}}
+    const handleDeleteUser = async (event) =>{
+    event.preventDefault()
+    try {
+      await axios.post('http://localhost:5005/auth/profile/delete', {
+        currentUser : user 
+      })
+      logoutUser();
+      navigate("/")
+    } catch(err) {
+      console.log(err)
+    }}
  
   return (
     <div>
