@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 function ProfileSettings() {
-  const { user } = useContext(AuthContext)
+  const { user, logoutUser } = useContext(AuthContext)
   const [updatedUserName, setUpdatedUserName]  = useState (user.username)
   const [updatedEmail, setUpdatedEmail]  = useState (user.email)
   const [currentPassword, setCurrentPassword]  = useState ('')
@@ -18,7 +18,7 @@ function ProfileSettings() {
   const handleUserUpdate = async (event)=> {
     event.preventDefault()
     try {
-      const updatedUser = await axios.post('http://localhost:5005/auth/profile/settings', {
+      const updatedUser = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/profile/settings`, {
         currentUser : user ,  
         username: updatedUserName,
         password: currentPassword,
@@ -33,16 +33,17 @@ function ProfileSettings() {
       console.log(err)
     }}
 
-const handleDeleteUser = async (event) =>{
-event.preventDefault()
-try {
-  const deleteUser = await axios.post('http://localhost:5005/auth/profile/delete', {
-    currentUser : user 
-  })
-  navigate("/")
-} catch(err) {
-  console.log(err)
-}}
+    const handleDeleteUser = async (event) =>{
+    event.preventDefault()
+    try {
+      await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/profile/delete`, {
+        currentUser : user 
+      })
+      logoutUser();
+      navigate("/")
+    } catch(err) {
+      console.log(err)
+    }}
  
   return (
     

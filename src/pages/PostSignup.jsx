@@ -27,7 +27,7 @@ function PostSignup() {
     interest4 !== "" && updateInterestsInDb.push(interest4)
 
     try {
-      await axios.post(`http://localhost:5005/auth/update-interests/${user.username}`, {slogan: slogan, updateInterestsInDb})
+      await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/update-interests/${user.username}`, {slogan: slogan, updateInterestsInDb})
       user.interest = updateInterestsInDb;
       navigate("/home");
     } catch (error) {

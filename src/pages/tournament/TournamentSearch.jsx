@@ -36,7 +36,7 @@ function TournamentSearch() {
   }
 
   const getTournaments = async () => {
-    const allTournaments = await axios.get(`http://localhost:5005/tournaments/all`);
+    const allTournaments = await axios.get(`${import.meta.env.VITE_BASE_URL_API}/tournaments/all`);
     setTournaments(allTournaments.data);
     localSetIsLoading(false);
   }
@@ -69,6 +69,11 @@ function TournamentSearch() {
   useEffect(() => {
     handleCheckBoxTick();
   }, [filterCheckOpen,filterCheckClosed,filterCheckEnded,filterCheckParticipating,filterCheckOrganizer,filterCheckProfessionsRequired])
+
+  useEffect(() => {
+    const filteredResults = document.getElementsByClassName("res");
+    setSearchResultsCount(filteredResults.length);
+  }, [filters])
 
   useEffect(() => {
     setSearch(searchParams.get("q"))
@@ -153,7 +158,7 @@ function TournamentSearch() {
         }
         <div className="search-result-header">
           <h3>Results</h3>
-          <p>Displaying {searchResults.length} results out of {tournaments.length} Tournaments</p>
+          <p>Displaying {searchResultsCount} results out of {tournaments.length} Tournaments</p>
         </div>
         {(!localIsLoading && !isLoading && searchResults.length) ? 
         <div className="tournament-search-result-ctn">
@@ -180,7 +185,7 @@ function TournamentSearch() {
         })
         .map((result) => {
           return (
-            <Link to={`/tournaments/${result._id}`} className="tournament-search-result-link" key={result._id}>
+            <Link to={`/tournaments/${result._id}`} className="tournament-search-result-link res" key={result._id}>
               <ul style={{backgroundImage: result.backgroundImage ? `url(${result.backgroundImage})` : "", backgroundSize: "415px", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundColor: result.backgroundColor !== "#00000000" && result.backgroundColor.slice(0, 7)+"FF"}}>
                 {result.organizer.username === user.username && <li style={{alignSelf: "center"}}>👑</li>}
                 <li style={{paddingBottom: "15px", textAlign: "center", color: result.textColor}}>{result.name}</li>
@@ -191,7 +196,6 @@ function TournamentSearch() {
                 <li>From: <Dates>{result.startDate}</Dates></li>
                 <li>To: <Dates>{result.endDate}</Dates></li>
               </ul>
-              {}
             </Link>
           )
           })}
