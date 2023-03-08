@@ -46,7 +46,7 @@ function TournamentUpdate() {
     const navigate = useNavigate();
   
     const getTournamentInfo = async () => {
-      const tournamentInfo = await axios.get(`${import.meta.env.BASE_URL}/tournaments/${id}`);
+      const tournamentInfo = await axios.get(`${import.meta.env.BASE_URL_API}/tournaments/${id}`);
 
       setName(tournamentInfo.data.tournament.name)
       setType(tournamentInfo.data.tournament.type)
@@ -123,7 +123,7 @@ function TournamentUpdate() {
         }
       
         try {
-          const updatedTournament = await axios.post(`${import.meta.env.BASE_URL}/tournaments/update/${id}`, {formDetails})
+          const updatedTournament = await axios.post(`${import.meta.env.BASE_URL_API}/tournaments/update/${id}`, {formDetails})
           const updatedTournamentId = await updatedTournament.data;
           navigate(`/tournaments/${updatedTournamentId}`);
         } catch (error) {

@@ -16,7 +16,7 @@ function Home() {
 
   const getTournaments = async () => {
     try {
-      const allTournaments = await axios.get(`${import.meta.env.BASE_URL}/tournaments/all`);
+      const allTournaments = await axios.get(`${import.meta.env.BASE_URL_API}/tournaments/all`);
       setTournaments(allTournaments.data);
       setIsLoading(false);
     } catch (error) {
@@ -28,7 +28,7 @@ function Home() {
     e.preventDefault();
 
     try {
-      const foundTournament = await axios.get(`${import.meta.env.BASE_URL}/tournaments/search/find-name/${search}`);
+      const foundTournament = await axios.get(`${import.meta.env.BASE_URL_API}/tournaments/search/find-name/${search}`);
       navigate(`/tournaments/${foundTournament.data.tournament._id}`)
     } catch (error) {
       console.log(error);

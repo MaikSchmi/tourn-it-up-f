@@ -100,7 +100,7 @@ function TournamentCreate() {
       }
     
       try {
-        const newTournament = await axios.post(`${import.meta.env.BASE_URL}/tournaments/create`, {formDetails})
+        const newTournament = await axios.post(`${import.meta.env.BASE_URL_API}/tournaments/create`, {formDetails})
         const newTournamentId = await newTournament.data.tournamentId;
         navigate(`/tournaments/${newTournamentId}`);
       } catch (error) {
