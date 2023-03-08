@@ -45,7 +45,7 @@ try {
 }}
  
   return (
-    <div>
+    
   <div style = {{padding : "50px"}} className = "form-page-top-level landing-font">
     <form onSubmit={handleUserUpdate} className= "profile-settings-form form-auth">
       <label>UserName:  
@@ -65,12 +65,11 @@ try {
       </label>
       <button type='submit' > Update </button> 
     </form>
-      </div>
-    <div>
+      
     <form onSubmit={handleDeleteUser} className= "profile-settings-form form-auth">
     <button type='submit' > Delete Account </button> 
      </form>  
-        </div>
+       
  </div>  
 )}
 
