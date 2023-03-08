@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 function ProfileSettings() {
-  const { user } = useContext(AuthContext)
+  const { user, logoutUser } = useContext(AuthContext)
   const [updatedUserName, setUpdatedUserName]  = useState (user.username)
   const [updatedEmail, setUpdatedEmail]  = useState (user.email)
   const [currentPassword, setCurrentPassword]  = useState ('')
@@ -36,9 +36,10 @@ function ProfileSettings() {
 const handleDeleteUser = async (event) =>{
 event.preventDefault()
 try {
-  const deleteUser = await axios.post('http://localhost:5005/auth/profile/delete', {
+  await axios.post('http://localhost:5005/auth/profile/delete', {
     currentUser : user 
   })
+  logoutUser();
   navigate("/")
 } catch(err) {
   console.log(err)
