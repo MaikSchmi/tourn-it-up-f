@@ -12,9 +12,10 @@ function Signup() {
   const { loginUser } = useContext(AuthContext);
  
   const handleUserCreate = async (event) => {
+    console.log(`${import.meta.env.BASE_URL}`)
     event.preventDefault()
     try { 
-      await axios.post(`${import.meta.env.BASE_URL}/auth/signup`, {
+      await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/signup`, {
         username: username,
         password: password,
         repeatPassword: repeatPassword,
