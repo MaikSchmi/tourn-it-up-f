@@ -12,7 +12,7 @@ function AuthContextWrapper(props) {
 
   const loginUser = async (email, password, {justSignedUp}) => {
     try {
-      const token = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/login`, {
+      const token = await axios.post(`${import.meta.env.BASE_URL_API}/auth/login`, {
         email: email ,
         password: password,
       })
@@ -37,7 +37,7 @@ function AuthContextWrapper(props) {
   
   const renewToken = async () => {
     try {
-      const token = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/update-token`, {
+      const token = await axios.post(`${import.meta.env.BASE_URL_API}/auth/update-token`, {
         email: user.email
       })
       const newToken = token.data.token;
@@ -53,7 +53,7 @@ function AuthContextWrapper(props) {
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BASE_URL_API}/auth/verify`, {
+        const response = await axios.get(`${import.meta.env.BASE_URL_API}/auth/verify`, {
           headers : {
             Authorization : `Bearer ${storedToken}`
           }
