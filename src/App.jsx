@@ -16,6 +16,7 @@ import TournamentUpdate from './pages/tournament/TournamentUpdate'
 import MembershipOptions from './pages/MembershipOptions'
 import TournamentSearch from './pages/tournament/TournamentSearch'
 import PostSignup from './pages/PostSignup'
+import PageError from './pages/PageError'
 
 function App() {
   return (
@@ -26,13 +27,14 @@ function App() {
         <Route path="/" element={<IsPublic><LandingPage/></IsPublic>} />
         <Route path="/home" element={<IsPrivate><Home /></IsPrivate>} />
         <Route path="/membership-options" element={<MembershipOptions /> } />
-        <Route path="/profile" element={<IsPrivate> <Profile /> </IsPrivate>} />
+        <Route path="/profile/:username" element={<IsPrivate> <Profile /> </IsPrivate>} />
         <Route path="/profile/settings" element={ <IsPrivate> <ProfileSettings /></IsPrivate>} />
         <Route path="/tournaments/create" element={<IsPrivate><TournamentCreate /></IsPrivate> } />
         <Route path="/tournaments/:id/update" element={<IsPrivate><TournamentUpdate /></IsPrivate> } />
         <Route path="/tournaments/:id" element={<IsPrivate><TournamentPage /></IsPrivate> } />
         <Route path="/tournaments/search?" element={<TournamentSearch/> } />
- </Route>
+        <Route path="/*" element={<PageError />} />
+      </Route>
       <Route path="/signup" element={<IsPublic><Signup /></IsPublic>} />
       <Route path="/post-signup" element={<PostSignup /> } />
       <Route path="/login" element={<IsPublic><Login /></IsPublic>} />

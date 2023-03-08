@@ -25,7 +25,7 @@ function NavBar() {
           <li><Link to={isAuthenticated && user.status !== "Member" ? "/tournaments/create" : "/membership-options" } className="nav-two-item">Organize</Link></li>
           {isAuthenticated ? 
           <>
-          <li><Link to="/profile" className="nav-two-item">Profile</Link></li>
+          <li><Link to={`/profile/${user.username}`} className="nav-two-item">Profile</Link></li>
           <li><button type="submit" className="nav-logout" onClick={handleUserLogout}>Logout</button></li>
           </> : 
           <li><Link to="/login" className="nav-login">Login</Link></li>}

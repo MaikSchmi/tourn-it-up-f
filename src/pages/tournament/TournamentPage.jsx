@@ -256,7 +256,7 @@ function TournamentPage() {
           <span>Slots filled: {tournament.participants.length + 1} {tournament.maxParticipants > 0 && <span>/ {tournament.maxParticipants}</span>}</span>
           {tournament.minParticipants > 0 && <span>Minimum needed: {tournament.minParticipants}</span>}
           <ul className="tournament-card-participant-list">
-            {participants.map((participant, index) => <Link key={participant.id} className="tournament-card-participant-link" to={`/profile/${participant.id}`}><li>{participant.username}{index === 0 && <span>👑</span>}</li></Link>)}
+            {participants.map((participant, index) => <Link key={participant.id} className="tournament-card-participant-link" to={`/profile/${participant.username}`}><li>{participant.username}{index === 0 && <span>👑</span>}</li></Link>)}
             {(user.username !== tournament.organizer.username && !alreadyParticipating && tournament.participants.length + 1 < tournament.maxParticipants && tournament.status === "Open") && <button type="button" className="tournament-card-participate" onClick={addParticipant}>Participate!</button>}
             {(user.username !== tournament.organizer.username && alreadyParticipating && tournament.status === "Open") && <button type="button" className="tournament-card-delete" onClick={removeParticipant}>Resign</button>}
           </ul>

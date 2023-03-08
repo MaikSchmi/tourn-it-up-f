@@ -18,7 +18,7 @@ function ProfileSettings() {
   const handleUserUpdate = async (event)=> {
     event.preventDefault()
     try {
-      const updatedUser = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/profile/settings`, {
+      await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/profile/settings`, {
         currentUser : user ,  
         username: updatedUserName,
         password: currentPassword,
@@ -28,7 +28,7 @@ function ProfileSettings() {
       })
       user.username = updatedUserName;
       user.email = updatedEmail;
-      navigate("/profile")
+      navigate(`/profile/${user.username}`)
     } catch(err) {
       console.log(err)
     }}

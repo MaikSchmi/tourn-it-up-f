@@ -1083,6 +1083,49 @@ input[type="color"]::-webkit-color-swatch {
     border-radius: 50%;
 }
 
+.profile-friends-ul {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    padding-left: 0;
+    color: white;
+    text-decoration: none;
+    gap: 5px;
+    flex-direction: column;
+}
+.add-friend-btn {
+    font-family: "Audiowide", "Tahoma", "Serif";
+    background-color: rgb(54, 38, 96);
+    color: white;
+    border: 2px rgb(0, 0, 0) solid;
+    border-radius: 20px;
+    padding: 5px 7px;
+    font-size: 15px;
+    text-decoration: none;
+}
+.add-friend-btn:hover {
+    background-color: rgb(103, 164, 102);
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    cursor: pointer;
+}
+.remove-friend-btn {
+    font-family: "Audiowide", "Tahoma", "Serif";
+    background-color: rgb(54, 38, 96);
+    color: white;
+    border: 2px rgb(0, 0, 0) solid;
+    border-radius: 20px;
+    padding: 5px 7px;
+    font-size: 15px;
+    text-decoration: none;
+}
+.remove-friend-btn:hover {
+    background-color: rgb(180, 65, 45);
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .profile-page-detail-main {
     display: flex;
     flex-direction: column;

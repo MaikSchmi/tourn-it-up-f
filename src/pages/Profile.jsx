@@ -1,47 +1,110 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../contexts/Auth.context'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import axios from 'axios';
 
 function Profile() {
-  const {user} = useContext(AuthContext)
+  const [ownPage, setOwnPage] = useState(false);
+  const [ownFriends, setOwnFriends] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [userProfile, setUserProfile] = useState({});
+  const { user, renewToken } = useContext(AuthContext);
+  const { username } = useParams("username");
+
+  const getUserData = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL_API}/auth/profile/find-user/${username}`);
+      setUserProfile(response.data.userData);
+      setLoading(false);
+    } catch (error) {
+      console.log("Error getting user data: ", error);
+    }
+  }
+
+  const handleAddFriend = async () => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/profile/add-friend/${username}`, {currentUser: user.username});
+      const newFriendsList = response.data.newFriendsList;
+      console.log(response.data.newFriendsList);
+      setOwnFriends(newFriendsList)
+      renewToken();
+      getUserData();
+    } catch (error) {
+      console.log("Error adding friend: ", error)
+    }
+  }
+  const handleRemoveFriend = async () => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/profile/remove-friend/${username}`, {currentUser: user.username});
+      const newFriendsList = response.data.newFriendsList;
+      console.log(newFriendsList);
+      setOwnFriends(newFriendsList)
+      renewToken();
+      getUserData();
+    } catch (error) {
+      console.log("Error removing friend: ", error)
+    }
+  }
 
   useEffect(() => {
-    
+    userProfile.username === user.username ? setOwnPage(true) : setOwnPage(false);
+    console.log(ownFriends)
+  }, [userProfile])
+
+  useEffect(() => {
+    getUserData();
+  }, [username])
+
+  useEffect(() => {
+    setOwnFriends(user.friendsList);
+    getUserData();
   }, [])
 
   return (
-    <div className="profile-page-main-ctn landing-font" style={{color: user.profileTextColor, background: `url(${user.profileBackgroundImage}`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundAttachment: "fixed"}}>
+    <>
+    {loading ? <p>Loading details...</p> :
+    <div className="profile-page-main-ctn landing-font" style={{color: userProfile.profileTextColor, background: `url(${userProfile.profileBackgroundImage}`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundAttachment: "fixed"}}>
       <div className="profile-page-settings-btn-ctn">
-        <Link className="profile-page-settings-img" to='/profile/settings'><img src="../images/settings.png" /></Link>
+        {ownPage && <Link className="profile-page-settings-img" to='/profile/settings'><img src="../images/settings.png" /></Link>}
       </div>
       <div className="profile-page-top-ctn">
         <div>
           <img className="profile-page-img" src="../images/avatar-generic.png" />
         </div>
         <div className="profile-page-name-ctn">
-          <h1>{user.username}</h1>
-          {user.slogan !== "" && <i>"{user.slogan}"</i>}
+          <h1>{userProfile.username}</h1>
+          {<i>"{userProfile.slogan}"</i>}
         </div>
       </div>
+
+
+      {ownPage 
+      
+      ?
+      <>
       <hr style={{width: "90%"}}/>
       <div className="profile-page-detail-main">
         <h3>Friends</h3>
         <div>
-            {user.friendsList.length ?
-              user.friendsList.map((friend) => {
-                return (
-                  <ul style={{listStyleType: "none", paddingLeft: 0}} key={friend._id}>
-                    <li>{friend.profileImage}</li>
+          <ul>
+          {userProfile.friendsList.length ?
+            userProfile.friendsList.map((friend) => {
+              return (
+                <Link to={`/profile/${friend.username}`} className="profile-friends-ul" key={friend._id}>
+                <ul className="profile-friends-ul" key={friend._id}>
+                  <div>
+                    <li><img src={friend.profileImage} style={{width: "50px"}} /></li>
+                  </div>
+                  <div>
                     <li>{friend.username}</li>
-                    <div>
-                      <li>{friend.slogan}</li>
-                    </div>
-                    <button type="button">Send Message</button>
-                  </ul>
-                )
-              }) : <p>You have no friends yet!</p>
-            }
-          
+                    <li>"{friend.slogan}"</li>
+                  </div>
+                </ul>
+                </Link>
+              )
+            }) : <p>You have no friends yet!</p>
+          }
+          </ul>
         </div>
       </div>
       <hr style={{width: "90%"}}/>
@@ -84,12 +147,65 @@ function Profile() {
             </table>
           </div>
         </div>
+      </div> 
+      </> 
+      
+      :
+      
+      <>
+      <div style={{display: "flex", justifyContent: "center"}}>
+        {!user.friendsList.some((friend) => friend.username === userProfile.username) ?
+          <button type="button" onClick={handleAddFriend} className="add-friend-btn">Follow</button>:
+          <button type="button" onClick={handleRemoveFriend} className="remove-friend-btn">Unfollow</button>
+        }
       </div>
-      
-      
-      
-      
+      <hr style={{width: "90%"}}/>
+      <div className="profile-page-detail-main">
+        <h3>{userProfile.username[userProfile.username.length] === "s" ? `${userProfile.username}' Interests` : `${userProfile.username}'s Interests` }</h3>
+        <ul>
+          {userProfile.interest.map((int, index) => <li key={index}>{int}</li> )}
+        </ul>
+      </div>
+      <hr style={{width: "90%"}}/>
+      <div className="profile-page-detail-main">
+        <h3>{userProfile.username[userProfile.username.length] === "s" ? `${userProfile.username}' Upcoming Tournaments` : `${userProfile.username}'s Upcoming Tournaments` }</h3>
+          {userProfile.tournaments.filter((tournament) => tournament.status !== "Ended").map((tournament) => {
+            return(
+              <ul key={tournament._id}>
+                <li>{tournament.name}</li>
+              </ul>
+            )
+          })}
+      </div>
+      <hr style={{width: "90%"}}/>
+      <div className="profile-page-detail-main">
+      <h3>{`Users ${userProfile.username} follows`}</h3>
+        <div>
+        <ul>
+          {userProfile.friendsList.length ?
+            userProfile.friendsList.map((friend) => {
+              return (
+                <Link to={`/profile/${friend.username}`} className="profile-friends-ul" key={friend._id}>
+                  <ul className="profile-friends-ul" >
+                    <div>
+                      <li><img src={friend.profileImage} style={{width: "50px"}} /></li>
+                    </div>
+                    <div>
+                      <li>{friend.username}</li>
+                      <li>"{friend.slogan}"</li>
+                    </div>
+                  </ul>
+                </Link>
+              )
+            }) : <p>You have no friends yet!</p>
+          }
+          </ul>
+        </div>
+      </div>
+      </>}
     </div>
+    }
+    </>
   )
 }
 
