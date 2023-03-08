@@ -20,9 +20,9 @@ function AuthContextWrapper(props) {
       storeToken(receivedToken);
       authenticateUser();
       if (!justSignedUp) {
-      navigate("/home");
+        navigate("/home");
       } else if (justSignedUp) {
-      navigate("/post-signup");
+        navigate("/post-signup");
       }
     } catch (error) {
       console.log(error);
@@ -34,7 +34,6 @@ function AuthContextWrapper(props) {
     localStorage.setItem ("token", token);
   }
 
-  
   const renewToken = async () => {
     try {
       const token = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/update-token`, {

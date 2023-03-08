@@ -20,11 +20,11 @@ function PostSignup() {
     e.preventDefault();
     const updateInterestsInDb = [];
 
-    interest0 !== "" && updateInterestsInDb.push(interest0)
-    interest1 !== "" && updateInterestsInDb.push(interest1)
-    interest2 !== "" && updateInterestsInDb.push(interest2)
-    interest3 !== "" && updateInterestsInDb.push(interest3)
-    interest4 !== "" && updateInterestsInDb.push(interest4)
+    interest0 !== "" && updateInterestsInDb.push(interest0);
+    interest1 !== "" && updateInterestsInDb.push(interest1);
+    interest2 !== "" && updateInterestsInDb.push(interest2);
+    interest3 !== "" && updateInterestsInDb.push(interest3);
+    interest4 !== "" && updateInterestsInDb.push(interest4);
 
     try {
       await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/update-interests/${user.username}`, {slogan: slogan, updateInterestsInDb})

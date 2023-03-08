@@ -188,7 +188,7 @@ function TournamentSearch() {
             <Link to={`/tournaments/${result._id}`} className="tournament-search-result-link res" key={result._id}>
               <ul style={{backgroundImage: result.backgroundImage ? `url(${result.backgroundImage})` : "", backgroundSize: "415px", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundColor: result.backgroundColor !== "#00000000" && result.backgroundColor.slice(0, 7)+"FF"}}>
                 {(isAuthenticated && result.organizer.username === user.username) && <li style={{alignSelf: "center"}}>👑</li>}
-                <li style={{paddingBottom: "15px", textAlign: "center", color: result.textColor}}>{result.name}</li>
+                <li style={{padding: "5px", textAlign: "center", color: result.textColor, backgroundColor: result.backgroundColor.slice(0, 7) + "FF"}}>{result.name}</li>
                 <li className={result.status === "Ended" ? "status-ended" : result.status === "Closed" ? "status-closed" : result.status === "Open" ? "status-open" : ""}>{result.status}</li>
                 <li>Challenge: {result.challenge}</li>
                 {(result.maxParticipants > 0 && result.minParticipants > 0) ? <li>Free slots: {result.minParticipants} / {result.maxParticipants}</li> : <li>No participant limit!</li>}

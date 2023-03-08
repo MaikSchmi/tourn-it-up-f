@@ -135,6 +135,7 @@ textarea {
 
 
 .landing-section-one-ctn {
+    background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -174,6 +175,7 @@ textarea {
 }
 
 .landing-section-three-ctn {
+    background-color: white;
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
@@ -210,6 +212,7 @@ textarea {
 }
 
 .landing-section-five-ctn { 
+    background-color: white;
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
