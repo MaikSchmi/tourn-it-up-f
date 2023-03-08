@@ -12,7 +12,7 @@ function MembershipOptions() {
 
   const setMembership = async () => {
     try {
-      const updatedUser = await axios.post("http://localhost:5005/auth/update-membership-plan", {user: user.username, plan: planChosen})
+      const updatedUser = await axios.post(`${import.meta.env.BASE_URL}/auth/update-membership-plan`, {user: user.username, plan: planChosen})
       user.status = updatedUser.data.newStatus;
       navigate("/")
     } catch (error) {

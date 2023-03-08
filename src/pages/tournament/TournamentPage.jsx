@@ -31,7 +31,7 @@ function TournamentPage() {
   const saveReminder = `PREVIEW - click "Save changes" to apply.` 
 
   const getTournamentInfo = async () => {
-    const tournamentInfo = await axios.get(`http://localhost:5005/tournaments/${id}`);
+    const tournamentInfo = await axios.get(`${import.meta.env.BASE_URL}/tournaments/${id}`);
     setTournament(await tournamentInfo.data.tournament);
     setParticipants(await tournamentInfo.data.participants); 
     checkParticipation();    
@@ -50,7 +50,7 @@ function TournamentPage() {
 
   const addParticipant = async () => {
     try {
-      const addedTournament = await axios.post(`http://localhost:5005/tournaments/updateparticipants/${id}`, {user: user, signup: true})
+      const addedTournament = await axios.post(`${import.meta.env.BASE_URL}/tournaments/updateparticipants/${id}`, {user: user, signup: true})
       user.tournaments = addedTournament.data.user.tournaments;
       getTournamentInfo();
     } catch(error) {
@@ -63,7 +63,7 @@ function TournamentPage() {
 
   const removeParticipant = async () => {
     try {
-      const resignedTournament = await axios.post(`http://localhost:5005/tournaments/updateparticipants/${id}`, {user: user, resign: true})
+      const resignedTournament = await axios.post(`${import.meta.env.BASE_URL}/tournaments/updateparticipants/${id}`, {user: user, resign: true})
       user.tournaments = resignedTournament.data.user.tournaments;
       getTournamentInfo();
     } catch (error) {
@@ -88,7 +88,7 @@ function TournamentPage() {
   
   const deleteConfirmed = async () => {
     try {
-      await axios.post(`http://localhost:5005/tournaments/delete/${id}`, {user: user});
+      await axios.post(`${import.meta.env.BASE_URL}/tournaments/delete/${id}`, {user: user});
       navigate("/home");
     } catch(error) {
       console.log(error);
@@ -97,7 +97,7 @@ function TournamentPage() {
 
   const addComment = async () => {
     try {
-      await axios.post(`http://localhost:5005/tournaments/comments/add`, {comment: comment, username: user.username, tournamentId: tournament._id});
+      await axios.post(`${import.meta.env.BASE_URL}/tournaments/comments/add`, {comment: comment, username: user.username, tournamentId: tournament._id});
       setComment("");
       getTournamentInfo();
     } catch (error) {
@@ -107,7 +107,7 @@ function TournamentPage() {
 
   const deleteComment = async (id) => {
     try {
-      await axios.post(`http://localhost:5005/tournaments/comments/delete/${id}`, {tournamentId: tournament._id});
+      await axios.post(`${import.meta.env.BASE_URL}/tournaments/comments/delete/${id}`, {tournamentId: tournament._id});
       getTournamentInfo();
     } catch (error) {
       console.log("Error deleting comment", error);
@@ -125,7 +125,7 @@ function TournamentPage() {
     let formData = new FormData();
     formData.append("imageUrl", fileToUpload);
     try {
-      const uploadedFile = await axios.post(`http://localhost:5005/tournaments/upload/${tournament._id}`, formData, {withCredentials: true});
+      const uploadedFile = await axios.post(`${import.meta.env.BASE_URL}/tournaments/upload/${tournament._id}`, formData, {withCredentials: true});
       setBackground(uploadedFile.data.fileUrl);
     } catch (error) {
       console.log("Error uploading background image: ", error);
@@ -145,7 +145,7 @@ function TournamentPage() {
     e.preventDefault();
     const alphaValue = parseInt(backgroundOpacity).toString(16).toUpperCase();
     try {
-      await axios.post(`http://localhost:5005/tournaments/update-values/${tournament._id}`, {textColor: textColor, backgroundColor: backgroundColor + alphaValue});
+      await axios.post(`${import.meta.env.BASE_URL}/tournaments/update-values/${tournament._id}`, {textColor: textColor, backgroundColor: backgroundColor + alphaValue});
       setBackgroundColorChangedMessage("");
       setTextColorChangedMessage("");
     } catch(error) {

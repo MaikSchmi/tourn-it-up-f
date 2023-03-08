@@ -36,7 +36,7 @@ function TournamentSearch() {
   }
 
   const getTournaments = async () => {
-    const allTournaments = await axios.get(`http://localhost:5005/tournaments/all`);
+    const allTournaments = await axios.get(`${import.meta.env.BASE_URL}/tournaments/all`);
     setTournaments(allTournaments.data);
     localSetIsLoading(false);
   }
@@ -74,7 +74,7 @@ function TournamentSearch() {
     const filteredResults = document.getElementsByClassName("res");
     setSearchResultsCount(filteredResults.length);
   }, [filters])
-  
+
   useEffect(() => {
     setSearch(searchParams.get("q"))
     setAllFilters(filters);

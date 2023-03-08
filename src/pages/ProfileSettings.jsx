@@ -18,7 +18,7 @@ function ProfileSettings() {
   const handleUserUpdate = async (event)=> {
     event.preventDefault()
     try {
-      const updatedUser = await axios.post('http://localhost:5005/auth/profile/settings', {
+      const updatedUser = await axios.post(`${import.meta.env.BASE_URL}/auth/profile/settings`, {
         currentUser : user ,  
         username: updatedUserName,
         password: currentPassword,
@@ -36,7 +36,7 @@ function ProfileSettings() {
     const handleDeleteUser = async (event) =>{
     event.preventDefault()
     try {
-      await axios.post('http://localhost:5005/auth/profile/delete', {
+      await axios.post(`${import.meta.env.BASE_URL}/auth/profile/delete`, {
         currentUser : user 
       })
       logoutUser();

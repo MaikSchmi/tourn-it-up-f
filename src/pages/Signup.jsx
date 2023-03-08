@@ -14,7 +14,7 @@ function Signup() {
   const handleUserCreate = async (event) => {
     event.preventDefault()
     try { 
-      await axios.post('http://localhost:5005/auth/signup', {
+      await axios.post(`${import.meta.env.BASE_URL}/auth/signup`, {
         username: username,
         password: password,
         repeatPassword: repeatPassword,
