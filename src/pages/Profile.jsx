@@ -8,6 +8,9 @@ function Profile() {
   const [ownFriends, setOwnFriends] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userProfile, setUserProfile] = useState({});
+  const [avatar, setAvatar] = useState("");
+  const [bgImage, setBgImage] = useState("");
+
   const { user, renewToken } = useContext(AuthContext);
   const { username } = useParams("username");
 
@@ -25,7 +28,6 @@ function Profile() {
     try {
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/profile/add-friend/${username}`, {currentUser: user.username});
       const newFriendsList = response.data.newFriendsList;
-      console.log(response.data.newFriendsList);
       setOwnFriends(newFriendsList)
       renewToken();
       getUserData();
@@ -37,7 +39,6 @@ function Profile() {
     try {
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/profile/remove-friend/${username}`, {currentUser: user.username});
       const newFriendsList = response.data.newFriendsList;
-      console.log(newFriendsList);
       setOwnFriends(newFriendsList)
       renewToken();
       getUserData();
@@ -46,9 +47,36 @@ function Profile() {
     }
   }
 
+  const handleAvatarUpload = async (e) => {
+    e.preventDefault();
+    const fileToUpload = document.getElementById("a-file-chosen").files[0];
+    let formData = new FormData();
+    formData.append("imageUrl", fileToUpload);
+    console.log(fileToUpload);
+    try {
+      const uploadedFile = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/uploadavatar/${user.username}`, formData, {withCredentials: true});
+      setAvatar(uploadedFile.data.fileUrl);
+    } catch (error) {
+      console.log("Error uploading background image: ", error);
+    }
+  }
+  const handleBgUpload = async (e) => {
+    e.preventDefault();
+    const fileToUpload = document.getElementById("b-file-chosen").files[0];
+    let formData = new FormData();
+    formData.append("imageUrl", fileToUpload);
+    try {
+      const uploadedFile = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/uploadbg/${user.username}`, formData, {withCredentials: true});
+      setBgImage(uploadedFile.data.fileUrl);
+    } catch (error) {
+      console.log("Error uploading background image: ", error);
+    }
+  }
+
   useEffect(() => {
     userProfile.username === user.username ? setOwnPage(true) : setOwnPage(false);
-    console.log(ownFriends)
+    setAvatar(userProfile.profileImage);
+    setBgImage(userProfile.profileBackgroundImage);
   }, [userProfile])
 
   useEffect(() => {
@@ -69,7 +97,7 @@ function Profile() {
       </div>
       <div className="profile-page-top-ctn">
         <div>
-          <img className="profile-page-img" src="../images/avatar-generic.png" />
+        <img src={userProfile.profileImage} style={{width: "100px", borderRadius: "100px"}} />
         </div>
         <div className="profile-page-name-ctn">
           <h1>{userProfile.username}</h1>
@@ -84,25 +112,25 @@ function Profile() {
       <>
       <hr style={{width: "90%"}}/>
       <div className="profile-page-detail-main">
-        <h3>Friends</h3>
+        <h3>Following</h3>
         <div>
-          <ul>
+          <ul className="profile-friends-ul">
           {userProfile.friendsList.length ?
             userProfile.friendsList.map((friend) => {
               return (
                 <Link to={`/profile/${friend.username}`} className="profile-friends-ul" key={friend._id}>
-                <ul className="profile-friends-ul" key={friend._id}>
-                  <div>
-                    <li><img src={friend.profileImage} style={{width: "50px"}} /></li>
+                  <div style={{display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center"}}>
+                    <div>
+                      <li><img src={friend.profileImage} style={{width: "50px"}} /></li>
+                    </div>
+                    <div>
+                      <li>{friend.username}</li>
+                      <li>"{friend.slogan}"</li>
+                    </div>
                   </div>
-                  <div>
-                    <li>{friend.username}</li>
-                    <li>"{friend.slogan}"</li>
-                  </div>
-                </ul>
                 </Link>
               )
-            }) : <p>You have no friends yet!</p>
+            }) : <p>You are not following anyone.</p>
           }
           </ul>
         </div>
@@ -131,17 +159,28 @@ function Profile() {
                 <tr>
                   <th>Profile Picture</th>
                   <td><img src={user.profileImage} style={{width: "75px"}} /></td>
-                  <td>{user.status !== "Premium Member" && <Link className="profile-page-detail-table-link" to="/membership-options">Change picture</Link>}</td>
+                  <td>
+                    <form onSubmit={handleAvatarUpload}>
+                      <label className="tournament-card-add-file-input-btn tournament-card-add-file landing-font" >
+                        Choose file
+                        <input type="file" id="a-file-chosen" className="landing-font" onChange={(e) => setAvatar(e.target.value)} style={{display: "none"}} />
+                      </label>
+                      <button type="submit" className="tournament-card-add-file">Confirm</button>
+                    </form>
+                  </td>
                 </tr>
                 <tr>
                   <th>Profile Background Picture</th>
                   <td><img src={user.profileBackgroundImage} style={{width: "100px"}} /></td>
-                  <td>{user.status !== "Premium Member" && <Link className="profile-page-detail-table-link" to="/membership-options">Change picture</Link>}</td>
-                </tr>
-                <tr>
-                  <th>Profile Text Color</th>
-                  <td><input type="color" /></td>
-                  <td></td>
+                  <td>
+                    <form onSubmit={handleBgUpload}>
+                      <label className="tournament-card-add-file-input-btn tournament-card-add-file landing-font" >
+                        Choose file
+                        <input type="file" id="b-file-chosen" className="landing-font" onChange={(e) => setBgImage(e.target.value)} style={{display: "none"}} />
+                      </label>
+                      <button type="submit" className="tournament-card-add-file">Confirm</button>
+                    </form>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -171,9 +210,11 @@ function Profile() {
         <h3>{userProfile.username[userProfile.username.length] === "s" ? `${userProfile.username}' Upcoming Tournaments` : `${userProfile.username}'s Upcoming Tournaments` }</h3>
           {userProfile.tournaments.filter((tournament) => tournament.status !== "Ended").map((tournament) => {
             return(
-              <ul key={tournament._id}>
+              <Link to={`/tournaments/${tournament._id}`} key={tournament._id} style={{textDecoration: "none", color: "blue"}} >
+              <ul>
                 <li>{tournament.name}</li>
               </ul>
+              </Link>
             )
           })}
       </div>
@@ -197,7 +238,7 @@ function Profile() {
                   </ul>
                 </Link>
               )
-            }) : <p>You have no friends yet!</p>
+            }) : <p>You are not following anyone.</p>
           }
           </ul>
         </div>

@@ -1086,12 +1086,14 @@ input[type="color"]::-webkit-color-swatch {
 .profile-friends-ul {
     display: flex;
     align-items: center;
+    justify-content: center;
     list-style-type: none;
     padding-left: 0;
     color: white;
     text-decoration: none;
     gap: 5px;
-    flex-direction: column;
+    padding: 10px;
+    width: 75vw;
 }
 .add-friend-btn {
     font-family: "Audiowide", "Tahoma", "Serif";

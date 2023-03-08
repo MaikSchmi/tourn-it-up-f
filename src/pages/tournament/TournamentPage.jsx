@@ -192,11 +192,11 @@ function TournamentPage() {
   return loadingDetails ? <div>Loading ...</div> : (
     <div className="landing-font tournament-card-main-ctn bg-image" style={{backgroundImage: `url(${background})`}}>
       <DeleteConfirmPopup value={{deleteConfirmed, aboutToDelete, setAboutToDelete}}/> 
-      {(user.username === participants[0].username && tournament.status === "Open") &&
+      {(participants.length && user.username === participants[0].username && tournament.status === "Open") ?
       <div className="tournament-card-btn-ctn">
         <button className="tournament-card-edit" type="button" onClick={handleEditClick}>Edit Tournament</button> 
         <button className="tournament-card-delete" type="button" onClick={() => setAboutToDelete(true)}>Delete Tournament</button>
-      </div>}
+      </div> : <></>}
       <h1 className="tournament-card-title" style={{color: tournament.textColor}}>{tournament.name}</h1>
       {tournament.organizer.username === user.username &&
       <>
@@ -256,7 +256,21 @@ function TournamentPage() {
           <span>Slots filled: {tournament.participants.length + 1} {tournament.maxParticipants > 0 && <span>/ {tournament.maxParticipants}</span>}</span>
           {tournament.minParticipants > 0 && <span>Minimum needed: {tournament.minParticipants}</span>}
           <ul className="tournament-card-participant-list">
-            {participants.map((participant, index) => <Link key={participant.id} className="tournament-card-participant-link" to={`/profile/${participant.username}`}><li>{participant.username}{index === 0 && <span>👑</span>}</li></Link>)}
+            <Link className="tournament-card-participant-link" to={`/profile/${tournament.organizer.username}`}>
+              <li style={{display: "flex", alignItems: "center", justifyContent: "center", gap: "7px"}}>
+                <img src={tournament.organizer.profileImage} style={{width: "25px", borderRadius: "100px"}} />
+                {tournament.organizer.username}<span>👑</span>
+              </li>
+            </Link>
+            {participants.map((participant) => {
+              return(
+              <Link key={participant.id} className="tournament-card-participant-link" to={`/profile/${participant.username}`}>
+                <li style={{display: "flex", alignItems: "center", justifyContent: "center", gap: "7px"}}>
+                  <img src={participant.profileImage} style={{width: "25px", borderRadius: "100px"}}/>
+                  {participant.username}
+                </li>
+              </Link>
+              )})}
             {(user.username !== tournament.organizer.username && !alreadyParticipating && tournament.participants.length + 1 < tournament.maxParticipants && tournament.status === "Open") && <button type="button" className="tournament-card-participate" onClick={addParticipant}>Participate!</button>}
             {(user.username !== tournament.organizer.username && alreadyParticipating && tournament.status === "Open") && <button type="button" className="tournament-card-delete" onClick={removeParticipant}>Resign</button>}
           </ul>
