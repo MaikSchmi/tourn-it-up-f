@@ -10,6 +10,7 @@ function TournamentSearch() {
   const [localIsLoading, localSetIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [searchResultsCount, setSearchResultsCount] = useState(0);
   const [showFilter, setShowFilter] = useState(false);
 
   const [allFilters, setAllFilters] = useState({});
@@ -55,7 +56,8 @@ function TournamentSearch() {
   }
 
   useEffect(() => {
-    setSearchResults([...tournaments].filter((tournament => tournament.name.includes(search) || tournament.challenge.includes(search))))
+    setSearchResults([...tournaments].filter((tournament => tournament.name.includes(search) || tournament.challenge.includes(search) || tournament.locationCountry.includes(search) || tournament.locationCity.includes(search))))
+    setSearchResultsCount(searchResults.length)
   }, [tournaments])
 
   useEffect(() => {
@@ -79,7 +81,7 @@ function TournamentSearch() {
       <h1>Search</h1>
       {localIsLoading ? <div>Loading details...</div> : 
         <div className="tournament-search-bar-ctn">
-          <input list="tournament-list" className="landing-font" placeholder="Tournament name / challenge" type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
+          <input list="tournament-list" className="landing-font" placeholder="Tournament name / challenge / city / country" type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
         <div>
           <button type="button" onClick={toggleFilter} className="tournament-card-add-file">Sort & Filter</button>
         </div>
@@ -189,6 +191,7 @@ function TournamentSearch() {
                 <li>From: <Dates>{result.startDate}</Dates></li>
                 <li>To: <Dates>{result.endDate}</Dates></li>
               </ul>
+              {}
             </Link>
           )
           })}

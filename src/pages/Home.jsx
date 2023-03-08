@@ -123,8 +123,8 @@ function Home() {
             <section className="home-bottom-sections">
               {isLoading ? <div>Loading details...</div> : 
               <div className="home-search-result-ctn ">
-                {tournaments.filter((tournament) => tournament.challenge.includes(user.interest)).length ?
-                tournaments.filter((tournament) => tournament.challenge.includes(user.interest)).map((tournament) => {
+                {tournaments.filter((tournament) => user.interest.some(interest => interest === tournament.challenge)).length ?
+                tournaments.filter((tournament) => user.interest.some(interest => interest === tournament.challenge)).map((tournament) => {
                   return (
                     <Link to={`/tournaments/${tournament._id}`} key={tournament._id} className="home-search-result-link home-search-result-fill">
                       <ul style={{backgroundImage: tournament.backgroundImage ? `url(${tournament.backgroundImage})` : "", backgroundSize: "415px", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundColor: tournament.backgroundColor !== "#00000000" && tournament.backgroundColor.slice(0, 7)+"FF"}}>

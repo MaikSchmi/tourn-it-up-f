@@ -10,6 +10,7 @@ function PostSignup() {
   const [interest2, setInterest2] = useState("");
   const [interest3, setInterest3] = useState("");
   const [interest4, setInterest4] = useState("");
+  const [slogan, setSlogan] = useState("");
   const [interestsList, setInterestsList] = useState([]);
 
   const { user } = useContext(AuthContext);
@@ -26,7 +27,7 @@ function PostSignup() {
     interest4 !== "" && updateInterestsInDb.push(interest4)
 
     try {
-      await axios.post(`http://localhost:5005/auth/update-interests/${user.username}`, {updateInterestsInDb})
+      await axios.post(`http://localhost:5005/auth/update-interests/${user.username}`, {slogan: slogan, updateInterestsInDb})
       user.interest = updateInterestsInDb;
       navigate("/home");
     } catch (error) {
@@ -54,6 +55,9 @@ function PostSignup() {
             <div>To give you the best experience, please tell us a few things that you like!</div>
           </div>
           <form onSubmit={handleSubmit} className="form-auth">
+            <label>Slogan:</label>
+            <input placeholder="e.g. Tournaments Rock!" className="post-signup-inputs" type="text" value={slogan} onChange={(e) => setSlogan(e.target.value)}/>
+            
             <label>Interests:</label>
             <div>
             <input placeholder="Interest" className="post-signup-inputs" id="challenge-type" type="text" list="interests" value={interest0} onChange={(e) => setInterest0(e.target.value)}/>
@@ -89,7 +93,7 @@ function PostSignup() {
             <Link className="post-signup-skip" to="/home">Skip for now</Link>
           </form>
           <div className="post-signup-box">
-            <div>Please choose from dropdown for the best results - one per box.</div>
+            <div>Please choose interests from dropdown for the best results - one per box.</div>
           </div>
         </div>
       </div>

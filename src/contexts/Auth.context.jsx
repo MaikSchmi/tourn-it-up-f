@@ -61,7 +61,21 @@ function AuthContextWrapper(props) {
         const userData = await response.data;
         setIsAuthenticated(true);
         setIsLoading(false);
-        setUser({username: userData.username, email: userData.email, status: userData.status, tournaments: userData.tournaments, interest: userData.interest});
+        setUser({
+          username: userData.username, 
+          email: userData.email, 
+          status: userData.status, 
+          tournaments: userData.tournaments, 
+          interest: userData.interest,
+          slogan: userData.slogan,
+          profileImage: userData.profileImage,
+          profileBackgroundImage: userData.profileBackgroundImage,
+          profileBackgroundColor: userData.profileBackgroundColor,
+          profileTextColor: userData.profileTextColor,
+          commentCount: userData.commentCount,
+          messages: userData.messages,
+          friendsList: userData.friendsList
+        });
       } catch(err) {
         console.log(err);
         setIsAuthenticated(false);

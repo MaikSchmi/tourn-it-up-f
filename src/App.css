@@ -1052,6 +1052,66 @@ input[type="color"]::-webkit-color-swatch {
     font-size: 12px;
 }
 
+.profile-page-main-ctn {
+    background-color: rgb(152, 152, 152);
+}
+.profile-page-settings-btn-ctn {
+    text-align: right;
+    padding-top: 20px;
+    padding-right: 100px;
+}
+.profile-page-settings-img img {
+    width: 60px;
+}
+.profile-page-top-ctn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.profile-page-name-ctn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+.profile-page-name-ctn h1 {
+    margin: 0;
+}
+.profile-page-img {
+    width: 200px;
+    border-radius: 50%;
+}
+
+.profile-page-detail-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.profile-page-detail-ctn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+.profile-page-detail-table table {
+    background-color: rgb(44, 30, 79);
+    margin-bottom: 100px;
+}
+.profile-page-detail-table td {
+    color: rgb(182, 182, 182);
+}
+.profile-page-detail-table th,
+.profile-page-detail-table td {
+    padding: 20px;
+    border: 1px solid black;
+    box-shadow: 1px 1px;
+}
+.profile-page-detail-table-link {
+    color: rgb(182, 182, 182);
+}
+
 .profile-settings-form {
     margin-top: -10px;
     padding : 50px ; 
