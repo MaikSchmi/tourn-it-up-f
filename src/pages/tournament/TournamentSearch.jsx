@@ -36,7 +36,7 @@ function TournamentSearch() {
   }
 
   const getTournaments = async () => {
-    const allTournaments = await axios.get(`${import.meta.env.BASE_URL_API}/tournaments/all`);
+    const allTournaments = await axios.get(`${import.meta.env.VITE_BASE_URL_API}/tournaments/all`);
     setTournaments(allTournaments.data);
     localSetIsLoading(false);
   }
