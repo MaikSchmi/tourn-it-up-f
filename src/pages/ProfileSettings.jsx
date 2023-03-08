@@ -18,7 +18,7 @@ function ProfileSettings() {
   const handleUserUpdate = async (event)=> {
     event.preventDefault()
     try {
-      const updatedUser = await axios.post(`${import.meta.env.BASE_URL_API}/auth/profile/settings`, {
+      const updatedUser = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/profile/settings`, {
         currentUser : user ,  
         username: updatedUserName,
         password: currentPassword,
@@ -36,7 +36,7 @@ function ProfileSettings() {
     const handleDeleteUser = async (event) =>{
     event.preventDefault()
     try {
-      await axios.post(`${import.meta.env.BASE_URL_API}/auth/profile/delete`, {
+      await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/profile/delete`, {
         currentUser : user 
       })
       logoutUser();
