@@ -58,7 +58,7 @@ function TournamentPage() {
 
   const addParticipant = async () => {
     try {
-      const addedTournament = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/tournaments/updateparticipants/${id}`, {user: user, signup: true})
+      const addedTournament = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/tournaments/updateparticipants/${id}`, {user: user.username, signup: true})
       user.tournaments = addedTournament.data.user.tournaments;
       getTournamentInfo();
     } catch(error) {
@@ -71,7 +71,7 @@ function TournamentPage() {
 
   const removeParticipant = async () => {
     try {
-      const resignedTournament = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/tournaments/updateparticipants/${id}`, {user: user, resign: true})
+      const resignedTournament = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/tournaments/updateparticipants/${id}`, {user: user.username, resign: true})
       user.tournaments = resignedTournament.data.user.tournaments;
       getTournamentInfo();
     } catch (error) {
@@ -83,9 +83,42 @@ function TournamentPage() {
   }
 
   const handleSignupForProf = async (index) => {
-    console.log(tournament.professions[index], tournament.participantSlots[index])
-    
+    try {
+      const addedTournament = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/tournaments/updateparticipants/${id}`, {user: user.username, signup: true, slot: index})
+      user.tournaments = addedTournament.data.user.tournaments;
+      getTournamentInfo();
+    } catch(error) {
+      console.log("Error adding participant: ", error);
+      if (error.response.status === 403) {
+        setErrorMessage(error.response.data);
+      }
+    }
+  }
 
+  const handleResignFromProf = async (index) => {
+    try {
+      const resignedTournament = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/tournaments/updateparticipants/${id}`, {user: user.username, resign: true, slot: index})
+      user.tournaments = resignedTournament.data.user.tournaments;
+      getTournamentInfo();
+    } catch (error) {
+      console.log("Error removing participant: ", error);
+      if (error.response.status === 403) {
+        setErrorMessage(error.response.data);
+      }
+    }
+  }
+
+  const handleRemoveFromProf = async (index) => {
+    try {
+      const resignedTournament = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/tournaments/updateparticipants/${id}`, {user: tournament.participantSlots[index], resign: true, slot: index})
+      user.tournaments = resignedTournament.data.user.tournaments;
+      getTournamentInfo();
+    } catch (error) {
+      console.log("Error removing participant: ", error);
+      if (error.response.status === 403) {
+        setErrorMessage(error.response.data);
+      }
+    }
   }
 
   const checkParticipation = () => {
@@ -319,8 +352,15 @@ function TournamentPage() {
               {index !== 0 &&
                 <ul className="tournament-card-participant-list-w-prof">
                   <li>{profession}</li>
-                {index <= tournament.participants.length - 1
-                ? <li><img src={tournament.participants[index].profileImage} style={{width: "25px", borderRadius: "100px"}}/>{tournament.participants[index].username}</li>
+                {tournament.professions[index] !== tournament.participantSlots[index]
+                ? <><Link to={`/profile/${tournament.participantSlots[index]}`} className="tournament-card-participant-link" style={{backgroundColor: "white"}}>
+                    <li>
+                      {tournament.participantSlots[index]}
+                    </li>
+                  </Link>
+                  {user.username === tournament.participantSlots[index] && <button type="button" onClick={() => handleResignFromProf(index)} className="remove-friend-btn">Resign</button>}
+                  {user.username === organizer.username && <button type="button" onClick={() => handleRemoveFromProf(index)} className="remove-friend-btn">Remove</button>}
+                  </>
                 : !alreadyParticipating ? <button type="button" className="add-friend-btn" onClick={() => handleSignupForProf(index)} >Sign up!</button> : <></>
                 }
                 </ul>
