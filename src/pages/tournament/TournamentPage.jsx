@@ -169,6 +169,7 @@ function TournamentPage() {
   }, [tournament])
 
   useEffect(() => {
+    console.log(participants)
     checkParticipation();
   }, [participants])
 

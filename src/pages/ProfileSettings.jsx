@@ -3,6 +3,7 @@ import { AuthContext } from '../contexts/Auth.context'
 import { useContext  , useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import UpdateInterests from '../components/UpdateInterests'
 
 function ProfileSettings() {
   const { user, logoutUser } = useContext(AuthContext)
@@ -47,7 +48,11 @@ function ProfileSettings() {
  
   return (
     
-  <div style = {{padding : "50px"}} className = "form-page-top-level landing-font">
+  <div style = {{padding : "50px"}} className = "profile-settings-form-top-level landing-font">
+    <div>
+      <p style={{textAlign: "center"}}>Update your Slogan / Interests</p>
+      <UpdateInterests />
+    </div>
     <form onSubmit={handleUserUpdate} className= "profile-settings-form form-auth">
       <label>UserName:  
         <input type='text' value={updatedUserName} onChange = {(event) => {setUpdatedUserName(event.target.value)}} /> 
@@ -66,7 +71,6 @@ function ProfileSettings() {
       </label>
       <button type='submit' > Update </button> 
     </form>
-      
     <form onSubmit={handleDeleteUser} className= "profile-settings-form form-auth">
     <button type='submit' > Delete Account </button> 
      </form>  

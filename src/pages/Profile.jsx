@@ -158,7 +158,7 @@ function Profile() {
                 </tr>
                 <tr>
                   <th>Profile Picture</th>
-                  <td><img src={user.profileImage} style={{width: "75px"}} /></td>
+                  <td><img src={userProfile.profileImage} style={{width: "75px", borderRadius: "100px"}} /></td>
                   <td>
                     <form onSubmit={handleAvatarUpload}>
                       <label className="tournament-card-add-file-input-btn tournament-card-add-file landing-font" >
@@ -238,7 +238,7 @@ function Profile() {
                   </ul>
                 </Link>
               )
-            }) : <p>You are not following anyone.</p>
+            }) : <p>-</p>
           }
           </ul>
         </div>
