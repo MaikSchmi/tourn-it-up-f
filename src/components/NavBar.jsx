@@ -20,15 +20,15 @@ function NavBar() {
       </nav>
       <nav className="nav-two">
         <ul>
-          <li><Link to="/" className="nav-two-item">Forums</Link></li>
-          <li><Link to="/tournaments/search?" className="nav-two-item">Participate</Link></li>
-          <li><Link to={isAuthenticated && user.status !== "Member" ? "/tournaments/create" : "/membership-options" } className="nav-two-item">Organize</Link></li>
+        <Link to="/" className="nav-two-item"><li>Forums</li></Link>
+        <Link to="/tournaments/search?" className="nav-two-item"><li>Participate</li></Link>
+        <Link to={isAuthenticated && user.status !== "Member" ? "/tournaments/create" : "/membership-options" } className="nav-two-item"><li>Organize</li></Link>
           {isAuthenticated ? 
           <>
-          <li><Link to={`/profile/${user.username}`} className="nav-two-item">Profile</Link></li>
-          <li><button type="submit" className="nav-logout" onClick={handleUserLogout}>Logout</button></li>
+          <Link to={`/profile/${user.username}`} className="nav-two-item"><li>Profile</li></Link>
+          <button type="submit" className="nav-logout" onClick={handleUserLogout}>Logout</button>
           </> : 
-          <li><Link to="/login" className="nav-login">Login</Link></li>}
+          <Link to="/login" className="nav-login">Login</Link>}
         </ul>
       </nav>
     </div>

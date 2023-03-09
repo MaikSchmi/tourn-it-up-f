@@ -158,19 +158,19 @@ function TournamentSearch() {
         }
         <div className="search-result-header">
           <h3>Results</h3>
-          <p>Displaying {searchResultsCount} results out of {tournaments.length} Tournaments</p>
+          <p>Displaying {searchResultsCount} {searchResultsCount === 1 ? <>result</> : <>results</>} out of {tournaments.length} Tournaments</p>
         </div>
         {(!localIsLoading && !isLoading && searchResults.length) ? 
         <div className="tournament-search-result-ctn">
         {searchResults
         .filter((result) => {
           return (
-            allFilters.statusOpen && result.status === "Open" || 
-            allFilters.statusClosed && result.status === "Closed" || 
-            allFilters.statusEnded && result.status === "Ended" ||
+            (allFilters.statusOpen && result.status === "Open") || 
+            (allFilters.statusClosed && result.status === "Closed") || 
+            (allFilters.statusEnded && result.status === "Ended") ||
             (isAuthenticated && allFilters.isOrganizer && result.organizer.username === user.username) ||
-            allFilters.hasProfessionsRequired && result.professionsRequired ||
-            (isAuthenticated && allFilters.isParticipating && result.participants.some(participant => participant.username === user.username))
+            (isAuthenticated && allFilters.isParticipating && result.participants.some(participant => participant.username === user.username)) ||
+            (allFilters.hasProfessionsRequired && result.professionsRequired) 
           )
         })
         .sort((a, b) => {
@@ -185,13 +185,13 @@ function TournamentSearch() {
         })
         .map((result) => {
           return (
-            <Link to={`/tournaments/${result._id}`} className="tournament-search-result-link res" key={result._id}>
+            <Link to={`/tournaments/${result._id}`} className="tournament-search-result-link" key={result._id}>
               <ul style={{backgroundImage: result.backgroundImage ? `url(${result.backgroundImage})` : "", backgroundSize: "415px", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundColor: result.backgroundColor !== "#00000000" && result.backgroundColor.slice(0, 7)+"FF"}}>
                 {(isAuthenticated && result.organizer.username === user.username) && <li style={{alignSelf: "center"}}>👑</li>}
                 <li style={{padding: "5px", textAlign: "center", color: result.textColor, backgroundColor: result.backgroundColor.slice(0, 7) + "FF"}}>{result.name}</li>
                 <li className={result.status === "Ended" ? "status-ended" : result.status === "Closed" ? "status-closed" : result.status === "Open" ? "status-open" : ""}>{result.status}</li>
                 <li>Challenge: {result.challenge}</li>
-                {(result.maxParticipants > 0 && result.minParticipants > 0) ? <li>Free slots: {result.minParticipants} / {result.maxParticipants}</li> : <li>No participant limit!</li>}
+                {(result.maxParticipants > 0 && result.minParticipants > 0) ? <li>Free slots: {result.minParticipants} / {result.maxParticipants}</li> : !result.professionsRequired ? <li>No participant limit!</li> : <li>Skills needed!</li>}
                 <li>-</li>
                 <li>From: <Dates>{result.startDate}</Dates></li>
                 <li>To: <Dates>{result.endDate}</Dates></li>

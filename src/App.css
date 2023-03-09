@@ -60,6 +60,14 @@ textarea {
     list-style-type: none;
     gap: 20px;
 }
+.nav-two li {
+    padding: 10px 5px;
+    border: 1px solid rgba(255, 255, 255, 0)
+}
+.nav-two li:hover {
+    border: 1px solid white;
+    border-radius: 16px;
+}
 .nav-two-item {
     text-decoration: none;
     color: white;
@@ -739,8 +747,6 @@ textarea {
     text-align: center;
     background-color: rgba(33, 16, 222, 0.679);
 }
-.tournament-card-participant-list-w-prof-ctn {
-}
 .tournament-card-participant-list-w-prof {
     display: flex;
     flex-direction: column;
@@ -772,8 +778,9 @@ textarea {
     margin-bottom: 10px;
 }
 .tournament-card-invite-users {
-    color: white;
-    background-color: rgb(54, 38, 96);
+    width: 70%;
+    color: rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 0.782);
     padding: 5px 0;
 }
 .tournament-card-add-file:hover {    
@@ -1153,12 +1160,22 @@ input[type="color"]::-webkit-color-swatch {
     font-weight: bold;
     cursor: pointer;
 }
+.profile-friend-upcoming {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
 
 .profile-messages {
     height: 300px;
     overflow-y: scroll;
     margin-bottom: 30px;
     padding-right: 20px;
+}
+.profile-messages::-webkit-scrollbar {
+    display: none
 }
 .profile-messages ul {
     list-style-type: none;

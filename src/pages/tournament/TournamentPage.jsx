@@ -26,6 +26,7 @@ function TournamentPage() {
   const [textColorColorChangedMessage, setTextColorChangedMessage] = useState("");
   const [mediaBg, setMediaBg] = useState("");
   const [userInvite, setUserInvite] = useState("");
+  const [userInviteConfirmation, setUserInviteConfirmation] = useState(false);
 
   const navigate = useNavigate();
   const {user} = useContext(AuthContext);
@@ -202,7 +203,12 @@ function TournamentPage() {
 
   const handleUserInvite = async () => {
     if (userInvite !== "" && user.friendsList.some((friend) => friend.username === userInvite)) {
-      await axios.post(`${import.meta.env.VITE_BASE_URL_API}/tournaments/invite/${tournament._id}`, {from: user.username, to: userInvite});
+      try {
+        await axios.post(`${import.meta.env.VITE_BASE_URL_API}/tournaments/invite/${tournament._id}`, {from: user.username, to: userInvite});
+        setUserInviteConfirmation(true);
+      } catch (error) {
+        console.log("Error sending invitation: ", error);
+      }
     }
   }
   
@@ -219,6 +225,10 @@ function TournamentPage() {
     setBackgroundColorChangedMessage("");
     setTextColorChangedMessage("");
   }, [tournament])
+
+  useEffect(() => {
+    setUserInviteConfirmation(false);
+  }, [userInvite])
 
   useEffect(() => {
     checkParticipation();
@@ -327,28 +337,31 @@ function TournamentPage() {
               )})}
             {(user.username !== tournament.organizer.username && !alreadyParticipating && tournament.participants.length + 1 < tournament.maxParticipants && tournament.status === "Open") && <button type="button" className="tournament-card-participate" onClick={addParticipant}>Participate!</button>}
             {(user.username !== tournament.organizer.username && alreadyParticipating && tournament.status === "Open") && <button type="button" className="tournament-card-delete" onClick={removeParticipant}>Resign</button>}
-            {user.username === tournament.organizer.username &&
+            {user.username === tournament.organizer.username && tournament.status === "Open" &&
               <>
-                <input placeholder="Invite users" list="friends" id="friend-selector" className="landing-font tournament-card-invite-users" value={userInvite} onChange={(e) => setUserInvite(e.target.value)} />
+                <input placeholder=" Invite users" list="friends" id="friend-selector" className="landing-font tournament-card-invite-users" value={userInvite} onChange={(e) => setUserInvite(e.target.value)} />
                 <datalist id="friends">
                   {user.friendsList.map((friend) => <option key={friend.id}>{friend.username}</option>)}
                 </datalist>
                 <button type="button" className="tournament-card-add-file" onClick={handleUserInvite}>Invite</button>
+                {userInviteConfirmation && <p>Invitation sent successfully!</p>}
               </>
             }
           </ul>
           </>
           :
           <>
-          <div className="tournament-card-participant-list-w-prof-ctn" key={tournament.organizer._id}>
+          <div key={tournament.organizer._id}>
             <ul className="tournament-card-participant-list-w-prof">
               <li>{tournament.professions[0]}</li>
-              <li><img src={tournament.organizer.profileImage} style={{width: "25px", borderRadius: "100px"}} />{tournament.organizer.username}<span>👑</span></li>
+              <Link to={`/profile/${tournament.organizer.username}`} className="tournament-card-participant-link" style={{backgroundColor: "green"}}>
+                <li><img src={tournament.organizer.profileImage} style={{width: "25px", borderRadius: "100px"}} />{tournament.organizer.username}<span>👑</span></li>
+              </Link>
             </ul>
           </div>
           {tournament.professions.filter((profession) => profession !== "").map((profession, index) => {
             return (
-              <div className="tournament-card-participant-list-w-prof-ctn" key={index}>
+              <div key={index}>
               {index !== 0 &&
                 <ul className="tournament-card-participant-list-w-prof">
                   <li>{profession}</li>
@@ -368,7 +381,16 @@ function TournamentPage() {
               </div>
             )
           })}
-          
+            {user.username === tournament.organizer.username && tournament.status === "Open" &&
+              <>
+                <input placeholder=" Invite users" list="friends" id="friend-selector" className="landing-font tournament-card-invite-users" value={userInvite} onChange={(e) => setUserInvite(e.target.value)} />
+                <datalist id="friends">
+                  {user.friendsList.map((friend) => <option key={friend.id}>{friend.username}</option>)}
+                </datalist>
+                <button type="button" className="tournament-card-add-file" onClick={handleUserInvite}>Invite</button>
+                {userInviteConfirmation && <p>Invitation sent successfully!</p>}
+              </>
+            }
           </>}
         </div>
         

@@ -71,10 +71,11 @@ function Profile() {
     const fileToUpload = document.getElementById("a-file-chosen").files[0];
     let formData = new FormData();
     formData.append("imageUrl", fileToUpload);
-    console.log(fileToUpload);
     try {
       const uploadedFile = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/uploadavatar/${user.username}`, formData, {withCredentials: true});
       setAvatar(uploadedFile.data.fileUrl);
+      renewToken();
+      getUserData();
     } catch (error) {
       console.log("Error uploading background image: ", error);
     }
@@ -87,6 +88,8 @@ function Profile() {
     try {
       const uploadedFile = await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/uploadbg/${user.username}`, formData, {withCredentials: true});
       setBgImage(uploadedFile.data.fileUrl);
+      renewToken();
+      getUserData();
     } catch (error) {
       console.log("Error uploading background image: ", error);
     }
@@ -97,11 +100,6 @@ function Profile() {
     setAvatar(userProfile.profileImage);
     setBgImage(userProfile.profileBackgroundImage);
   }, [userProfile])
-
-
-  useEffect(() => {
-    console.log(messages);
-  }, [messages])
 
   useEffect(() => {
     getUserData();
@@ -116,13 +114,13 @@ function Profile() {
   return (
     <>
     {loading ? <p>Loading details...</p> :
-    <div className="profile-page-main-ctn landing-font" style={{color: userProfile.profileTextColor, background: `url(${userProfile.profileBackgroundImage}`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundAttachment: "fixed"}}>
+    <div className="profile-page-main-ctn landing-font" style={{color: userProfile.profileTextColor, backgroundImage: `url(${userProfile.profileBackgroundImage}`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundAttachment: "fixed"}}>
       <div className="profile-page-settings-btn-ctn">
         {ownPage && <Link className="profile-page-settings-img" to='/profile/settings'><img src="../images/settings.png" /></Link>}
       </div>
       <div className="profile-page-top-ctn">
         <div>
-        <img src={userProfile.profileImage} style={{width: "100px", borderRadius: "100px"}} />
+        <img src={userProfile.profileImage} style={{width: "250px", borderRadius: "100px"}} />
         </div>
         <div className="profile-page-name-ctn">
           <h1>{userProfile.username}</h1>
@@ -265,17 +263,21 @@ function Profile() {
         </ul>
       </div>
       <hr style={{width: "90%"}}/>
-      <div className="profile-page-detail-main">
-        <h3>{userProfile.username[userProfile.username.length] === "s" ? `${userProfile.username}' Upcoming Tournaments` : `${userProfile.username}'s Upcoming Tournaments` }</h3>
+      <div className="profile-friend-upcoming">
+        <div>
+          <h3>{userProfile.username[userProfile.username.length] === "s" ? `${userProfile.username}' Upcoming Tournaments` : `${userProfile.username}'s Upcoming Tournaments` }</h3>
+        </div>
+        <div>
           {userProfile.tournaments.filter((tournament) => tournament.status !== "Ended").map((tournament) => {
             return(
-              <Link to={`/tournaments/${tournament._id}`} key={tournament._id} style={{textDecoration: "none", color: "blue"}} >
-              <ul>
-                <li>{tournament.name}</li>
-              </ul>
+              <Link to={`/tournaments/${tournament._id}`} key={tournament._id} className="tournament-search-result-link" style={{alignSelf: "flex-start"}}>
+                <ul>
+                  <li>{tournament.name}</li>
+                </ul>
               </Link>
             )
           })}
+        </div>
       </div>
       <hr style={{width: "90%"}}/>
       <div className="profile-page-detail-main">
