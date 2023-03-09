@@ -47,7 +47,6 @@ function ProfileSettings() {
     }}
  
   return (
-    
   <div style = {{padding : "50px"}} className = "profile-settings-form-top-level landing-font">
     <div>
       <p style={{textAlign: "center"}}>Update your Slogan / Interests</p>
@@ -74,7 +73,6 @@ function ProfileSettings() {
     <form onSubmit={handleDeleteUser} className= "profile-settings-form form-auth">
     <button type='submit' > Delete Account </button> 
      </form>  
-       
  </div>  
 )}
 

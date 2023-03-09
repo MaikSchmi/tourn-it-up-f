@@ -27,7 +27,8 @@ function TournamentCreate() {
   const [minParticipants, setMinParticipants] = useState(0);
   const [maxParticipants, setMaxParticipants] = useState(0);
   const [professionsRequired, setProfessionsRequired] = useState(false);
-  const [professions, setProfessions] = useState([])
+  const [professions, setProfessions] = useState([]);
+  const [professionsVal, setProfessionsVal] = useState([]);
 
   const [submitError, setSubmitError] = useState("");
   const [errName, setErrName] = useState("");
@@ -78,7 +79,6 @@ function TournamentCreate() {
     ((maxParticipants > 0 && minParticipants > 0) && maxParticipants < minParticipants) ? setErrMaxMin("Please correct the participant amount.") : setErrMaxMin("");
     !tosChecked ? setErrTosChecked("Please review and accept the Terms of Service and Code of Conduct.") : setErrTosChecked("");
 
-
     const formDetails = {
         name,
         type,
@@ -111,6 +111,9 @@ function TournamentCreate() {
   }
 
   const addProfessionInput = () => {
+    let newValue = "";
+    setProfessionsVal(prevProfessionsVals => ([...prevProfessionsVals, newValue]));
+
     const inputElement = <li key={v4()}><input type="text" /></li>;
     setProfessions(prevProfessions => ([...prevProfessions, inputElement]));
     console.log(professions);

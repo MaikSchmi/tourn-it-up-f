@@ -10,7 +10,7 @@ function InputField() {
     
   return (
     <li key={v4()}>
-      <input value={text} onChange={(e) => setText(e.target.value)}/>
+      <input type="text" value={text} onChange={(e) => setText(e.target.value)}/>
     </li>
   )
 }
