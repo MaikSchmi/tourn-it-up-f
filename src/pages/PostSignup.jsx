@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import UpdateInterests from '../components/UpdateInterests';
 import { AuthContext } from '../contexts/Auth.context';
 
 function PostSignup() {
   const { user } = useContext(AuthContext);
+  
   return (
     <div className="post-signup-ctn landing-font form-page-top-level">
       <div>

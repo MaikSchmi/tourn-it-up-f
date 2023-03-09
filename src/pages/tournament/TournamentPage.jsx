@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, redirect, useNavigate, useParams } from 'react-router-dom'
 import DeleteConfirmPopup from '../../components/DeleteConfirmPopup';
 import { AuthContext } from '../../contexts/Auth.context';
 import { v4 } from "uuid";
@@ -24,6 +24,7 @@ function TournamentPage() {
   const [backgroundColorChangedMessage, setBackgroundColorChangedMessage] = useState("");
   const [textColorColorChangedMessage, setTextColorChangedMessage] = useState("");
   const [mediaBg, setMediaBg] = useState("");
+  const [userInvite, setUserInvite] = useState("");
 
   const navigate = useNavigate();
   const {user} = useContext(AuthContext);
@@ -31,11 +32,16 @@ function TournamentPage() {
   const saveReminder = `PREVIEW - click "Save changes" to apply.` 
 
   const getTournamentInfo = async () => {
-    const tournamentInfo = await axios.get(`${import.meta.env.VITE_BASE_URL_API}/tournaments/${id}`);
-    setTournament(await tournamentInfo.data.tournament);
-    setParticipants(await tournamentInfo.data.participants); 
-    checkParticipation();    
-    setLoadingDetails(false);
+    try {
+      const tournamentInfo = await axios.get(`${import.meta.env.VITE_BASE_URL_API}/tournaments/${id}`);
+      setTournament(await tournamentInfo.data.tournament);
+      setParticipants(await tournamentInfo.data.participants); 
+      checkParticipation();    
+      setLoadingDetails(false);
+    } catch (error) {
+      console.log("Error fetching tournament: ", error);
+      navigate("/*")
+    }
   }
 
   const updateTournamentStatus = () => {
@@ -152,6 +158,12 @@ function TournamentPage() {
       console.log(error);
     }
   }
+
+  const handleUserInvite = async () => {
+    if (userInvite !== "" && user.friendsList.some((friend) => friend.username === userInvite)) {
+      await axios.post(`${import.meta.env.VITE_BASE_URL_API}/tournaments/invite/${tournament._id}`, {from: user.username, to: userInvite});
+    }
+  }
   
   useEffect(() => {
     updateTournamentStatus();
@@ -163,13 +175,11 @@ function TournamentPage() {
     !loadingDetails && setBackgroundColor(tournament.backgroundColor.slice(0, 7));
     !loadingDetails && setBackgroundOpacity(parseInt(tournament.backgroundColor.slice(7), 16));
     !loadingDetails && setTextColor(tournament.textColor);
-    
     setBackgroundColorChangedMessage("");
     setTextColorChangedMessage("");
   }, [tournament])
 
   useEffect(() => {
-    console.log(participants)
     checkParticipation();
   }, [participants])
 
@@ -193,7 +203,7 @@ function TournamentPage() {
   return loadingDetails ? <div>Loading ...</div> : (
     <div className="landing-font tournament-card-main-ctn bg-image" style={{backgroundImage: `url(${background})`}}>
       <DeleteConfirmPopup value={{deleteConfirmed, aboutToDelete, setAboutToDelete}}/> 
-      {(participants.length && user.username === participants[0].username && tournament.status === "Open") ?
+      {(participants.length && user.username === tournament.organizer.username && tournament.status === "Open") ?
       <div className="tournament-card-btn-ctn">
         <button className="tournament-card-edit" type="button" onClick={handleEditClick}>Edit Tournament</button> 
         <button className="tournament-card-delete" type="button" onClick={() => setAboutToDelete(true)}>Delete Tournament</button>
@@ -274,6 +284,15 @@ function TournamentPage() {
               )})}
             {(user.username !== tournament.organizer.username && !alreadyParticipating && tournament.participants.length + 1 < tournament.maxParticipants && tournament.status === "Open") && <button type="button" className="tournament-card-participate" onClick={addParticipant}>Participate!</button>}
             {(user.username !== tournament.organizer.username && alreadyParticipating && tournament.status === "Open") && <button type="button" className="tournament-card-delete" onClick={removeParticipant}>Resign</button>}
+            {user.username === tournament.organizer.username &&
+              <>
+                <input placeholder="Invite users" list="friends" id="friend-selector" className="landing-font tournament-card-invite-users" value={userInvite} onChange={(e) => setUserInvite(e.target.value)} />
+                <datalist id="friends">
+                  {user.friendsList.map((friend) => <option key={friend.id}>{friend.username}</option>)}
+                </datalist>
+                <button type="button" className="tournament-card-add-file" onClick={handleUserInvite}>Invite</button>
+              </>
+            }
           </ul>
         </div>
         <div className="tournament-card-section background-modify">
@@ -307,7 +326,7 @@ function TournamentPage() {
       <div className="tournament-card-comment-main-ctn">
         <div className="tournament-card-comment-section background-modify">
           <h3>Comments</h3>
-          {alreadyParticipating &&
+          {(alreadyParticipating || user.username === tournament.organizer.username) &&
           <>
             <textarea cols="30" rows="3" value={comment} onChange={(e) => setComment(e.target.value)} />
             <button className="tournament-card-participate" onClick={addComment} type="button">Post</button>

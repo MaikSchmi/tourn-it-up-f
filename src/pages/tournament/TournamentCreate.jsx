@@ -4,13 +4,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../contexts/Auth.context';
 import hobbies from "../../hobbies.json";
 import { v4 } from "uuid";
-import InputField from '../../components/InputField';
 
 function TournamentCreate() {
   const [hobbyList, setHobbyList] = useState([]);
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
-  const { user, setUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   
   const [name, setName] = useState("");
   const [type, setType] = useState("Cooperative");

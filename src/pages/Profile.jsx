@@ -10,6 +10,7 @@ function Profile() {
   const [userProfile, setUserProfile] = useState({});
   const [avatar, setAvatar] = useState("");
   const [bgImage, setBgImage] = useState("");
+  const [messages, setMessages] = useState([]);
 
   const { user, renewToken } = useContext(AuthContext);
   const { username } = useParams("username");
@@ -21,6 +22,15 @@ function Profile() {
       setLoading(false);
     } catch (error) {
       console.log("Error getting user data: ", error);
+    }
+  }
+
+  const getMessages = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL_API}/auth/profile/messages/${user.username}`);
+      setMessages(await response.data.messages);
+    } catch (error) {
+      console.log("Error getting messages: ", error);
     }
   }
 
@@ -44,6 +54,15 @@ function Profile() {
       getUserData();
     } catch (error) {
       console.log("Error removing friend: ", error)
+    }
+  }
+
+  const handleDeleteMessage = async (messageId) => {
+    try {
+      await axios.post(`${import.meta.env.VITE_BASE_URL_API}/auth/profile/messages/delete/${messageId}`, {currentUser: user.username});
+      getMessages();
+    } catch (error) {
+      console.log("Error deleting message: ", error);
     }
   }
 
@@ -79,13 +98,19 @@ function Profile() {
     setBgImage(userProfile.profileBackgroundImage);
   }, [userProfile])
 
+
+  useEffect(() => {
+    console.log(messages);
+  }, [messages])
+
   useEffect(() => {
     getUserData();
-  }, [username])
+  }, [username, messages])
 
   useEffect(() => {
     setOwnFriends(user.friendsList);
     getUserData();
+    getMessages();
   }, [])
 
   return (
@@ -137,6 +162,40 @@ function Profile() {
       </div>
       <hr style={{width: "90%"}}/>
       <div className="profile-page-detail-main">
+        <h3>Invitations / Notifications</h3>
+        <div className="profile-messages">
+          {messages.length ?
+            messages.map((message) => {
+              return (
+                <>
+                {message.type === "Invitation" ?
+
+                <ul key={message._id}>
+                  <li>{message.subject}</li>
+                  <li>{message.message}</li>
+                  <li>{message.relatedTournament !== null ? <Link to={`/tournaments/${message.relatedTournament._id}`}>Go to Tournament</Link> : <p>TOURNAMENT DELETED</p>}</li>
+                  <li>-</li>
+                  <li><button type="button" className="remove-friend-btn" onClick={() => handleDeleteMessage(message._id)}>Delete Message</button></li>
+                </ul>
+
+                :
+
+                <ul key={message._id}>
+                  <li>{message.subject}</li>
+                  <li>{message.message}</li>
+                  <li>-</li>
+                  <li><button type="button" className="remove-friend-btn" onClick={() => handleDeleteMessage(message._id)}>Delete Message</button></li>
+                </ul>
+                
+                }
+                </>
+              )
+            }) : <p>No messages.</p>
+          }
+        </div>
+      </div>
+      <hr style={{width: "90%"}}/>
+      <div className="profile-page-detail-main">
         <h3>Profile Details & Settings</h3>
         <div className = "profile-page-detail-ctn">
           <div className="profile-page-detail-table">
@@ -145,7 +204,7 @@ function Profile() {
                 <tr>
                   <th>User Status</th>
                   <td>{user.status}</td>
-                  <td>{user.status !== "Premium Member" && <Link className="profile-page-detail-table-link" to="/membership-options">Update Membership Options</Link>}</td>
+                  <td>{user.status !== "Premium Member" ? <Link className="profile-page-detail-table-link" to="/membership-options">Upgrade</Link> : <Link className="profile-page-detail-table-link" to="/membership-options">Change Membership</Link>}</td>
                 </tr>
                 <tr>
                   <th>Your Interests</th>
@@ -154,7 +213,7 @@ function Profile() {
                       {user.interest.length ? user.interest.map((int, index) => <li key={index}>{int}</li>) : <li>You have no interests indicated yet! Interests help you finding tournaments for you.</li>}
                     </ul>  
                   </td>
-                  <td>{user.status !== "Premium Member" && <Link className="profile-page-detail-table-link" to="/membership-options">Update Your Interests</Link>}</td>
+                  <td><Link className="profile-page-detail-table-link" to="/profile/settings">Update Your Interests</Link></td>
                 </tr>
                 <tr>
                   <th>Profile Picture</th>

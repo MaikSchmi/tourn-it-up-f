@@ -753,6 +753,11 @@ textarea {
     font-size: 10px;
     margin-bottom: 10px;
 }
+.tournament-card-invite-users {
+    color: white;
+    background-color: rgb(54, 38, 96);
+    padding: 5px 0;
+}
 .tournament-card-add-file:hover {    
     background-color: rgb(79, 218, 28);
     font-weight: bold;
@@ -1131,6 +1136,18 @@ input[type="color"]::-webkit-color-swatch {
     cursor: pointer;
 }
 
+.profile-messages {
+    height: 300px;
+    overflow-y: scroll;
+    margin-bottom: 30px;
+    padding-right: 20px;
+}
+.profile-messages ul {
+    list-style-type: none;
+    border: 1px solid white;
+    padding: 10px;
+}
+
 .profile-page-detail-main {
     display: flex;
     flex-direction: column;
@@ -1162,7 +1179,7 @@ input[type="color"]::-webkit-color-swatch {
 
 .profile-settings-form-top-level {
     background-color: rgb(229, 227, 227);
-    
+
 }
 .profile-settings-form {
     margin-top: -10px;
