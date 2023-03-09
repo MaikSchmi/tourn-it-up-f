@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/Auth.context';
 import interests from "../hobbies.json";
 
-
 function UpdateInterests() {
   const [interest0, setInterest0] = useState("");
   const [interest1, setInterest1] = useState("");

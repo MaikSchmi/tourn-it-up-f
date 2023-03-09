@@ -79,6 +79,15 @@ function TournamentCreate() {
     ((maxParticipants > 0 && minParticipants > 0) && maxParticipants < minParticipants) ? setErrMaxMin("Please correct the participant amount.") : setErrMaxMin("");
     !tosChecked ? setErrTosChecked("Please review and accept the Terms of Service and Code of Conduct.") : setErrTosChecked("");
 
+    let professionsString = "";
+    if (professionsRequired) {
+      for (let i = 0; i < professionsVal.length; i++) {
+        const inputField = document.getElementById(`input-${i}`);
+        if (inputField.value !== null) professionsString += inputField.value + ',';
+      }
+      console.log(professionsString);
+    }
+
     const formDetails = {
         name,
         type,
@@ -96,6 +105,8 @@ function TournamentCreate() {
         minParticipants,
         maxParticipants,
         tosChecked: tosChecked,
+        professionsRequired,
+        professionsString,
       }
     
       try {
@@ -111,15 +122,20 @@ function TournamentCreate() {
   }
 
   const addProfessionInput = () => {
-    let newValue = "";
-    setProfessionsVal(prevProfessionsVals => ([...prevProfessionsVals, newValue]));
-
-    const inputElement = <li key={v4()}><input type="text" /></li>;
+    setProfessionsVal(prevProfessionsVals => ([...prevProfessionsVals, {value: ""}]));
+    const inputElement = <li><input type="text" value={professionsVal[professionsVal.length]} onChange={(e) => handleProfessionsOnChange(e)} className="profession-input" id={`input-${professionsVal.length}`} /></li>;
     setProfessions(prevProfessions => ([...prevProfessions, inputElement]));
-    console.log(professions);
+  }
+
+  const handleProfessionsOnChange = (e) => {
+    for (let i = 0; i < professionsVal.length; i++) {
+      const inputField = document.getElementById(`input-${i}`);
+      inputField.value !== null && console.log(inputField.value);
+    }
   }
 
   const removeProfessionInputs = () => {
+    setProfessionsVal([]);
     setProfessions([]);
   }
 
@@ -213,12 +229,13 @@ function TournamentCreate() {
           </div>
           <div id="professions-list" className="tournament-create-form-professions-ctn form-not-loaded">
             <ul id="professions-list-ul">
+            <p>Note: The amount of professions you indicate will determine the total amount of min / max participants. As the organizer, you will automatically assume the first indicated position.</p>
             <button className="add-profession-button" type="button" onClick={addProfessionInput}>+</button>
               {professions.map((profession) => {
                 return (
-                  <>
+                  <span key={v4()}>
                     {profession}
-                  </>
+                  </span>
                 )
               })}
               {professions.length ? <button type="button" className="remove-profession-button" onClick={() => removeProfessionInputs()}>Reset</button> : <></>}

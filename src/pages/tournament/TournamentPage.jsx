@@ -11,6 +11,7 @@ function TournamentPage() {
   const [loadingDetails, setLoadingDetails] = useState(true);
   const [tournament, setTournament] = useState({});
   const [participants, setParticipants] = useState([]);
+  const [organizer, setOrganizer] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [alreadyParticipating, setAlreadyParticipating] = useState(false);
   const [aboutToDelete, setAboutToDelete] = useState(false);
@@ -36,7 +37,8 @@ function TournamentPage() {
       const tournamentInfo = await axios.get(`${import.meta.env.VITE_BASE_URL_API}/tournaments/${id}`);
       setTournament(await tournamentInfo.data.tournament);
       setParticipants(await tournamentInfo.data.participants); 
-      checkParticipation();    
+      setOrganizer(await tournamentInfo.data.tournament.organizer);
+      checkParticipation();
       setLoadingDetails(false);
     } catch (error) {
       console.log("Error fetching tournament: ", error);
@@ -80,8 +82,14 @@ function TournamentPage() {
     }
   }
 
+  const handleSignupForProf = async (index) => {
+    console.log(tournament.professions[index], tournament.participantSlots[index])
+    
+
+  }
+
   const checkParticipation = () => {
-    if (participants.find(participant => participant.username === user.username)) {
+    if (participants.find(participant => participant.username === user.username) || user.username === organizer.username) {
       setAlreadyParticipating(true);
     } else {
       setAlreadyParticipating(false);
@@ -203,7 +211,7 @@ function TournamentPage() {
   return loadingDetails ? <div>Loading ...</div> : (
     <div className="landing-font tournament-card-main-ctn bg-image" style={{backgroundImage: `url(${background})`}}>
       <DeleteConfirmPopup value={{deleteConfirmed, aboutToDelete, setAboutToDelete}}/> 
-      {(participants.length && user.username === tournament.organizer.username && tournament.status === "Open") ?
+      {(user.username === tournament.organizer.username && tournament.status === "Open") ?
       <div className="tournament-card-btn-ctn">
         <button className="tournament-card-edit" type="button" onClick={handleEditClick}>Edit Tournament</button> 
         <button className="tournament-card-delete" type="button" onClick={() => setAboutToDelete(true)}>Delete Tournament</button>
@@ -264,6 +272,8 @@ function TournamentPage() {
       <div className="tournament-card"> 
         <div className="tournament-card-section background-modify">
           <h3>Participants</h3>
+          {!tournament.professionsRequired ? 
+          <>
           <span>Slots filled: {tournament.participants.length + 1} {tournament.maxParticipants > 0 && <span>/ {tournament.maxParticipants}</span>}</span>
           {tournament.minParticipants > 0 && <span>Minimum needed: {tournament.minParticipants}</span>}
           <ul className="tournament-card-participant-list">
@@ -294,7 +304,34 @@ function TournamentPage() {
               </>
             }
           </ul>
+          </>
+          :
+          <>
+          <div className="tournament-card-participant-list-w-prof-ctn" key={tournament.organizer._id}>
+            <ul className="tournament-card-participant-list-w-prof">
+              <li>{tournament.professions[0]}</li>
+              <li><img src={tournament.organizer.profileImage} style={{width: "25px", borderRadius: "100px"}} />{tournament.organizer.username}<span>👑</span></li>
+            </ul>
+          </div>
+          {tournament.professions.filter((profession) => profession !== "").map((profession, index) => {
+            return (
+              <div className="tournament-card-participant-list-w-prof-ctn" key={index}>
+              {index !== 0 &&
+                <ul className="tournament-card-participant-list-w-prof">
+                  <li>{profession}</li>
+                {index <= tournament.participants.length - 1
+                ? <li><img src={tournament.participants[index].profileImage} style={{width: "25px", borderRadius: "100px"}}/>{tournament.participants[index].username}</li>
+                : !alreadyParticipating ? <button type="button" className="add-friend-btn" onClick={() => handleSignupForProf(index)} >Sign up!</button> : <></>
+                }
+                </ul>
+              }
+              </div>
+            )
+          })}
+          
+          </>}
         </div>
+        
         <div className="tournament-card-section background-modify">
           <div>
             <h3>Details:</h3>
@@ -316,7 +353,7 @@ function TournamentPage() {
               {tournament.mapUrl && <li>Map:<br/><Link to={tournament.mapUrl}>See on Map</Link></li>}
               {tournament.updatePlatformUrl && <li>Connect:<br/><Link to={tournament.updatePlatformUrl}>Connect with the participants!</Link></li>}
               <li>-</li>
-              <li>Where:{tournament.locationCity ? <span>{tournament.locationCity}, </span> : <></>}{tournament.locationCountry}</li>
+              <li>Where: {tournament.locationCity ? <span>{tournament.locationCity}, </span> : <></>}{tournament.locationCountry}</li>
               <li>Starts: <Dates>{tournament.startDate}</Dates></li>
               <li>Ends: <Dates>{tournament.endDate}</Dates></li>
             </ul>
