@@ -2,12 +2,11 @@ import React, { useContext } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import { AuthContext } from '../contexts/Auth.context';
 
-
-
 function NavBar() {
   const { logoutUser, isAuthenticated, user } = useContext(AuthContext);
+
    const handleUserLogout = () => {
-      logoutUser ({justUpdatedDetails: false})
+      logoutUser()
    }
 
   return (

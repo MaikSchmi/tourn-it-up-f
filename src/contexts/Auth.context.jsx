@@ -92,12 +92,11 @@ function AuthContextWrapper(props) {
     localStorage.removeItem("token");
   }
 
-  const logoutUser = (justUpdatedDetails) => {
+  const logoutUser = () => {
     removeToken();
     authenticateUser();
-    if (!justUpdatedDetails){
     navigate("/");
-  }}
+  }
 
   useEffect(()=> {
     authenticateUser() 

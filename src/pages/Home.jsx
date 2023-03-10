@@ -18,7 +18,10 @@ function Home() {
     try {
       const allTournaments = await axios.get(`${import.meta.env.VITE_BASE_URL_API}/tournaments/all`);
       setTournaments(allTournaments.data);
-      setIsLoading(false);
+      setTimeout(() => {
+
+        setIsLoading(false);
+      }, 1000)
     } catch (error) {
       console.log("Error fetching tournaments: ", error);
     }
@@ -62,7 +65,7 @@ function Home() {
         <div className="home-top-ctn">
           <h2>Your upcoming Tournaments</h2>
           <section>
-            {isLoading ? <div>Loading details...</div> : 
+            {isLoading ? <div style={{height: "20vh"}}>Loading details...</div> : 
             <div className="home-search-result-ctn">
               {tournaments.filter(tournament => user.tournaments.includes(tournament._id) && tournament.status !== "Ended").length ? 
                tournaments.filter(tournament => user.tournaments.includes(tournament._id) && tournament.status !== "Ended").sort((a, b) => new Date(a.startDate) - new Date(b.startDate)).map((tournament) => {
@@ -79,7 +82,7 @@ function Home() {
           </section>
           <h2>Search for Tournaments</h2>
           <section>
-            {isLoading ? <div>Loading details...</div> : 
+            {isLoading ? <div style={{height: "20vh"}}>Loading details...</div> : 
             <div className="home-search-ctn">
               <form onSubmit={searchTournament}>
                 <input list="tournament-list" type="text" value={search} onChange={(e) => setSearch(e.target.value)} /><button className="home-create-tournament-btn" type="submit">Search</button>
@@ -105,7 +108,7 @@ function Home() {
             <h3>Past Tournaments</h3>
             <section className="home-bottom-sections">
               <div className="home-search-result-ctn">
-              {isLoading ? <div>Loading details...</div> : 
+              {isLoading ? <div style={{height: "20vh"}}>Loading details...</div> : 
                 tournaments.filter((tournament) => tournament.status === "Ended").length ?
                 tournaments.filter((tournament) => tournament.status === "Ended").map((tournament) => {
                   return (
@@ -121,7 +124,7 @@ function Home() {
           <div>
             <h3>Interesting for you</h3>
             <section className="home-bottom-sections">
-              {isLoading ? <div>Loading details...</div> : 
+              {isLoading ? <div style={{height: "20vh"}}>Loading details...</div> : 
               <div className="home-search-result-ctn ">
                 {tournaments.filter((tournament) => user.interest.some(interest => interest === tournament.challenge)).length ?
                 tournaments.filter((tournament) => user.interest.some(interest => interest === tournament.challenge)).map((tournament) => {
