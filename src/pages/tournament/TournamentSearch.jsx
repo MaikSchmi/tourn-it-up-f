@@ -56,15 +56,13 @@ function TournamentSearch() {
   }
 
   useEffect(() => {
-    setSearchResults([...tournaments].filter((tournament => tournament.name.toLowerCase().includes(search.toLowerCase()) || tournament.challenge.toLowerCase().includes(search.toLowerCase()) || tournament.locationCountry.toLowerCase().includes(search.toLowerCase()) || tournament.locationCity.toLowerCase().includes(search.toLowerCase()))))
+    setSearchResults([...tournaments].filter((tournament => tournament.name.includes(search) || tournament.challenge.includes(search) || tournament.locationCountry.includes(search) || tournament.locationCity.includes(search))))
     setSearchResultsCount(searchResults.length)
-    
   }, [tournaments])
 
   useEffect(() => {
     getTournaments();
     searchParams.append("q", search);
-    console.log(search);
     navigate(`/tournaments/search?q=${search}`);
   }, [search])
 
@@ -187,7 +185,7 @@ function TournamentSearch() {
         })
         .map((result) => {
           return (
-            <Link to={`/tournaments/${result._id}`} className="tournament-search-result-link" key={result._id}>
+            <Link to={`/tournaments/${result._id}`} className="tournament-search-result-link res" key={result._id}>
               <ul style={{backgroundImage: result.backgroundImage ? `url(${result.backgroundImage})` : "", backgroundSize: "415px", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundColor: result.backgroundColor !== "#00000000" && result.backgroundColor.slice(0, 7)+"FF"}}>
                 {(isAuthenticated && result.organizer.username === user.username) && <li style={{alignSelf: "center"}}>👑</li>}
                 <li style={{padding: "5px", textAlign: "center", color: result.textColor, backgroundColor: result.backgroundColor.slice(0, 7) + "FF"}}>{result.name}</li>
