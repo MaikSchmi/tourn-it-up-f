@@ -18,10 +18,7 @@ function Home() {
     try {
       const allTournaments = await axios.get(`${import.meta.env.VITE_BASE_URL_API}/tournaments/all`);
       setTournaments(allTournaments.data);
-      setTimeout(() => {
-
-        setIsLoading(false);
-      }, 1000)
+      setIsLoading(false);
     } catch (error) {
       console.log("Error fetching tournaments: ", error);
     }
