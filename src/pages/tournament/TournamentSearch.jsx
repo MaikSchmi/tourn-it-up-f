@@ -56,13 +56,15 @@ function TournamentSearch() {
   }
 
   useEffect(() => {
-    setSearchResults([...tournaments].filter((tournament => tournament.name.includes(search) || tournament.challenge.includes(search) || tournament.locationCountry.includes(search) || tournament.locationCity.includes(search))))
+    setSearchResults([...tournaments].filter((tournament => tournament.name.toLowerCase().includes(search.toLowerCase()) || tournament.challenge.toLowerCase().includes(search.toLowerCase()) || tournament.locationCountry.toLowerCase().includes(search.toLowerCase()) || tournament.locationCity.toLowerCase().includes(search.toLowerCase()))))
     setSearchResultsCount(searchResults.length)
+    
   }, [tournaments])
 
   useEffect(() => {
     getTournaments();
     searchParams.append("q", search);
+    console.log(search);
     navigate(`/tournaments/search?q=${search}`);
   }, [search])
 
