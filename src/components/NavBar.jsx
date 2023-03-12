@@ -14,7 +14,7 @@ function NavBar() {
     <div className="nav-ctn">
       <nav className="nav-one">
         <ul>
-          <li><Link to="/" className="nav-logo">TournItUp</Link></li>
+          <li><Link to="/" className="nav-logo">GreatTournaments</Link></li>
         </ul>
       </nav>
       <nav className="nav-two">

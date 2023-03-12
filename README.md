@@ -68,5 +68,5 @@ https://trello.com/b/Fv24hjnw/awesome-idea-organization
 Git:
 BACKEND: https://github.com/MaikSchmi/tourn-it-up-b
 FRONTEND: https://github.com/MaikSchmi/tourn-it-up-f
-DEPLOYED-PROJECT: https://tournitup.netlify.app
+DEPLOYED-PROJECT: https://greattournaments.netlify.app
 

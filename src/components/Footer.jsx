@@ -18,7 +18,7 @@ function Footer() {
         </div>
         }
         <div className="footer-bottom-ctn">
-          <h4>© 2023 TournItUp --- <span>by Asmaa and Maik</span> --- All Rights Reserved</h4>
+          <h4>© 2023 GreatTournaments --- <span>by Asmaa and Maik</span> --- Final Project for Ironhack Bootcamp - All Rights Reserved</h4>
         </div>
       </div>
     </>

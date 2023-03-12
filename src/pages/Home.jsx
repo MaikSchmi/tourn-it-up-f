@@ -58,7 +58,7 @@ function Home() {
   return (
     <>
       <div className="home-ctn landing-font bg-image">
-        <h1 style={{textDecoration: "underline"}}>TournItUp - Tournaments</h1>
+        <h1 style={{textDecoration: "underline"}}>GreatTournaments - Tournaments</h1>
         <div className="home-top-ctn">
           <h2>Your upcoming Tournaments</h2>
           <section>

@@ -54,7 +54,7 @@ function MembershipOptions() {
           </section>
           <section className="membership-option-card premium-plan">
             <h3 className="premium-plan-inner">👑 Premium Member 👑</h3>
-            <p>Join us today as a premium member and gain access to all the feature TournItUp has to offer!</p>
+            <p>Join us today as a premium member and gain access to all the feature GreatTournaments has to offer!</p>
             <h5>Benefits</h5>
             <ul className="premium-plan-inner">
               <li>Create unlimited Tournaments</li>
